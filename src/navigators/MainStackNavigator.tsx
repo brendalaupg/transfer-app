@@ -20,7 +20,10 @@ export default function MainStackNavigator() {
             <Stack.Screen
                 name={'TransferStack'}
                 component={TransferStackNavigator}
-                options={{ headerShown: false }}
+                options={{
+                    headerShown: false,
+                    presentation: 'fullScreenModal',
+                }}
             />
         </Stack.Navigator>
     )

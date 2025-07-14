@@ -2,12 +2,14 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import TransferScreen from '../screens/TransferScreen'
 import ReviewTransferScreen from '../screens/ReviewTransferScreen'
+import FailedTransferScreen from '../screens/FailedTransferScreen'
+import SuccessTransferScreen from '../screens/SuccessTransferScreen'
 
 export type TransferStackParamList = {
     TransferScreen: undefined
     ReviewTransferScreen: undefined
     SuccessTransferScreen: undefined
-    ErrorTransferScreen: undefined
+    FailedTransferScreen: undefined
 }
 
 const Stack = createNativeStackNavigator<TransferStackParamList>()
@@ -22,11 +24,11 @@ export default function TransferStackNavigator() {
             />
             <Stack.Screen
                 name={'SuccessTransferScreen'}
-                component={TransferScreen}
+                component={SuccessTransferScreen}
             />
             <Stack.Screen
-                name={'ErrorTransferScreen'}
-                component={TransferScreen}
+                name={'FailedTransferScreen'}
+                component={FailedTransferScreen}
             />
         </Stack.Navigator>
     )
