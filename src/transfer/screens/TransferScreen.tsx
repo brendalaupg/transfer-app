@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import {
     SafeAreaView,
     ScrollView,
@@ -11,39 +11,55 @@ import {
 import { TransferStackParamList } from '../types'
 import { Button, TextInput } from 'react-native-paper'
 import Typography from '../../common/Typography'
+import TextField from '../../common/TextField'
+import usePhoneValidation from '../../common/validator/usePhoneNumberValidator'
+import useMinMaxValidator from '../../common/validator/useMinMaxValidator'
 
 type NavigationProp = NativeStackNavigationProp<
     TransferStackParamList,
     'TransferScreen'
 >
 
+const TEST_ID_PREFIX = 'transfer_screen'
+
 // TODO: Setup and UI
 const TransferScreen = () => {
     const { navigate } = useNavigation<NavigationProp>()
+
+    const [amount, setAmount] = useState<number>()
+    const [phoneNumber, setPhoneNumber] = useState<string>('')
+
+    const amountValidator = useMinMaxValidator(0, 1_000_000)
+    const phoneNumberValidator = usePhoneValidation()
 
     const onPressSubmit = () => {
         navigate('ReviewTransferScreen')
     }
 
-    const onPressContacts = () => {}
+    // const onPressContacts = () => {}
 
     const renderRecipientInput = () => (
-        <TextInput
-            mode={'outlined'}
-            label={'Recipient (Phone Number)'}
+        <TextField
+            testID={`${TEST_ID_PREFIX}.recipient_input`}
+            title={'Recipient (Phone Number)'}
             numberOfLines={1}
+            value={phoneNumber}
             keyboardType={'number-pad'}
-            right={
-                <TextInput.Icon
-                    icon={'account-outline'}
-                    onPress={() => onPressContacts()}
-                />
-            }
+            validator={phoneNumberValidator}
+            onChangeText={setPhoneNumber}
         />
     )
 
     const renderAmountInput = () => (
-        <TextInput mode={'outlined'} label={'Amount'} placeholder={'RM0.00'} />
+        <TextField
+            testID={`${TEST_ID_PREFIX}.recipient_input`}
+            title={'Amount'}
+            numberOfLines={1}
+            value={amount?.toString()}
+            keyboardType={'number-pad'}
+            validator={amountValidator}
+            onChangeText={(text) => setAmount(Number(text))}
+        />
     )
 
     return (
