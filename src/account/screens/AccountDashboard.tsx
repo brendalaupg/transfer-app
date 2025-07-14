@@ -1,11 +1,10 @@
 import React, { memo } from 'react'
-import { Button, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { AppStackParamList } from '../../app/AppStackNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
-import { useDispatch, useSelector } from 'react-redux'
-import { AccountActions } from '../accountSlice'
-import AccountSelectors from '../accountSelectors'
+import AccountSummary from '../components/AccountSummary'
+import AccountActionsView from '../components/AccountActionsView'
 
 type NavigationProp = NativeStackNavigationProp<
     AppStackParamList,
@@ -16,32 +15,34 @@ type NavigationProp = NativeStackNavigationProp<
 const AccountDashboard = () => {
     const { navigate } = useNavigation<NavigationProp>()
 
-    const accountBalance = useSelector(AccountSelectors.balance)
-
-    const dispatch = useDispatch()
-
     const onPressTransfer = () => {
         navigate('TransferStack')
     }
 
-    const onPressUpdateBalance = () => {
-        dispatch(AccountActions.setBalance(10))
-    }
-
     return (
-        <View>
-            <Text>{'Account Dashboard'}</Text>
-            <Text>{`balance ${accountBalance}`}</Text>
-            <Button
-                title="Update Balance"
-                onPress={() => onPressUpdateBalance()}
-            />
-            <Button
-                title="To Transfer Screen"
-                onPress={() => onPressTransfer()}
-            />
-        </View>
+        <SafeAreaView style={styles.container}>
+            <ScrollView
+                style={styles.scrollView}
+                contentContainerStyle={styles.scrollViewContent}
+            >
+                <AccountSummary />
+                <AccountActionsView onPressTransfer={onPressTransfer} />
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
 export default memo(AccountDashboard)
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    scrollView: {
+        flex: 1,
+    },
+    scrollViewContent: {
+        gap: 12,
+        margin: 16,
+    },
+})
