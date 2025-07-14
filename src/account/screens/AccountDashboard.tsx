@@ -27,6 +27,7 @@ const AccountDashboard = () => {
             >
                 <AccountSummary />
                 <AccountActionsView onPressTransfer={onPressTransfer} />
+                {/* TODO: add transfer list here */}
             </ScrollView>
         </SafeAreaView>
     )
