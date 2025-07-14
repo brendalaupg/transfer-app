@@ -23,7 +23,6 @@ type NavigationProp = NativeStackNavigationProp<
 
 const TEST_ID_PREFIX = 'transfer_screen'
 
-// TODO: Setup and UI
 const TransferScreen = () => {
     const { navigate } = useNavigation<NavigationProp>()
 
@@ -36,6 +35,14 @@ const TransferScreen = () => {
 
     const onPressSubmit = () => {
         if (!amount) {
+            return
+        }
+
+        if (!phoneNumberValidator.validate(phoneNumber)) {
+            return
+        }
+
+        if (amountValidator.validate(amount.toString())) {
             return
         }
 

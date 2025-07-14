@@ -25,6 +25,14 @@ const AccountDashboard = () => {
         navigate('TransferStack')
     }
 
+    const onPressContact = () => {
+        // navigate('ContactsScreen')
+    }
+
+    const onPressHistory = () => {
+        navigate('TransferHistoryScreen')
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
@@ -38,7 +46,11 @@ const AccountDashboard = () => {
                     {displayName}
                 </Typography>
                 <AccountSummary />
-                <AccountActionsView onPressTransfer={onPressTransfer} />
+                <AccountActionsView
+                    onPressTransfer={onPressTransfer}
+                    onPressContact={onPressContact}
+                    onPressHistory={onPressHistory}
+                />
                 {/* TODO: add transfer list here */}
             </ScrollView>
         </SafeAreaView>

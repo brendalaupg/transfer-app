@@ -22,6 +22,7 @@ export type TransferStackParamList = {
     }
     SuccessTransferScreen: undefined
     FailedTransferScreen: undefined
+    TransferHistoryScreen: undefined
 }
 
 export interface TransferState {

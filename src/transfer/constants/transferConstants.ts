@@ -1,9 +1,5 @@
 import { Transfer, TransferState } from '../types'
 
-export const TRANSFER_INITIAL_STATE: TransferState = {
-    transferHistory: [],
-}
-
 export const MOCK_TRANSFER_LIST: Transfer[] = [
     {
         id: 'txn_001',
@@ -32,3 +28,7 @@ export const MOCK_TRANSFER_LIST: Transfer[] = [
         note: 'Gift',
     },
 ]
+
+export const TRANSFER_INITIAL_STATE: TransferState = {
+    transferHistory: MOCK_TRANSFER_LIST,
+}
