@@ -2,9 +2,10 @@ import React, { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import AccountSelectors from '../accountSelectors'
 import { StyleSheet, View } from 'react-native'
-import { IconButton, Portal, Snackbar, Text } from 'react-native-paper'
+import { IconButton, Portal, Snackbar } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
 import * as Clipboard from 'expo-clipboard'
+import Typography from '../../common/Typography'
 
 const AccountSummary = () => {
     const accountBalance = useSelector(AccountSelectors.balance)
@@ -41,17 +42,34 @@ const AccountSummary = () => {
         </Portal>
     )
 
+    const renderAccountBalance = () => (
+        <>
+            <Typography variant={'body'} size={'medium'}>
+                {'Account Balance'}
+            </Typography>
+            <Typography variant={'label'} size={'large'}>
+                {accountBalance}
+            </Typography>
+        </>
+    )
+
+    const renderAccountNumber = () => (
+        <View style={styles.accountNumberContainer}>
+            <Typography variant={'body'} size={'medium'}>
+                {accountNumber}
+            </Typography>
+            <IconButton
+                icon={'content-copy'}
+                size={20}
+                onPress={() => onPressCopyAccountNumber()}
+            />
+        </View>
+    )
+
     return (
         <View style={styles.container}>
-            <Text style={styles.labelTitle}>{'Account Balance'}</Text>
-            <Text style={styles.label}>{accountBalance}</Text>
-            <View style={styles.accountNumberContainer}>
-                <Text style={styles.label}>{accountNumber}</Text>
-                <IconButton
-                    icon={'content-copy'}
-                    onPress={() => onPressCopyAccountNumber()}
-                />
-            </View>
+            {renderAccountBalance()}
+            {renderAccountNumber()}
             {renderSnackbar()}
         </View>
     )
@@ -65,15 +83,6 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.backgroundSecondary,
         borderRadius: 16,
         padding: 16,
-        gap: 4,
-    },
-    labelTitle: {
-        fontSize: 16,
-        fontWeight: '500',
-    },
-    label: {
-        fontSize: 20,
-        fontWeight: '400',
     },
     accountNumberContainer: {
         flexDirection: 'row',

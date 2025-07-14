@@ -31,11 +31,12 @@ const AccountDashboard = () => {
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
             >
-                <Typography
-                    variant={'header'}
-                    size={'extra-large'}
-                    style={styles.welcomeLabel}
-                >{`Welcome back, ${displayName}`}</Typography>
+                <Typography variant={'header'} size={'extra-large'}>
+                    {'Welcome back'}
+                </Typography>
+                <Typography variant={'label'} size={'large'}>
+                    {displayName}
+                </Typography>
                 <AccountSummary />
                 <AccountActionsView onPressTransfer={onPressTransfer} />
                 {/* TODO: add transfer list here */}
@@ -57,9 +58,5 @@ const styles = StyleSheet.create({
     scrollViewContent: {
         gap: 12,
         margin: 16,
-    },
-    welcomeLabel: {
-        fontWeight: 600,
-        fontSize: 16,
     },
 })

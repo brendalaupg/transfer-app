@@ -17,9 +17,7 @@ export default function AppStackNavigator() {
                 name={'AccountDashboard'}
                 component={AccountDashboard}
                 options={{
-                    headerTitle: 'Home',
-                    headerLargeTitle: true,
-                    headerTransparent: true,
+                    headerShown: false,
                 }}
             />
             <Stack.Screen
