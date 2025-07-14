@@ -37,38 +37,58 @@ const AmountTextField = (props: AmountTextFieldProps) => {
         setFormattedValue(formattedString)
     }
 
+    const renderPrefix = () => (
+        <Typography
+            style={styles.currency}
+            variant={'header'}
+            size={'extra-large'}
+        >
+            {'RM'}
+        </Typography>
+    )
+
+    const renderTextInput = () => (
+        <View style={styles.amountContainer}>
+            {!value && (
+                <Typography
+                    style={styles.placeholder}
+                    variant={'header'}
+                    size={'extra-large'}
+                >
+                    {'0.00'}
+                </Typography>
+            )}
+            <TextInput
+                value={formattedValue}
+                style={styles.textInput}
+                onChangeText={onChangeText}
+                keyboardType={'numeric'}
+            />
+        </View>
+    )
+
     return (
-        <View style={styles.container}>
+        <View>
             <Typography
                 style={styles.currency}
-                variant={'header'}
-                size={'extra-large'}
+                variant={'label'}
+                size={'medium'}
             >
-                {'RM'}
+                {'Amount'}
             </Typography>
-            <View style={styles.amountContainer}>
-                {!value && (
-                    <Typography
-                        style={styles.placeholder}
-                        variant={'header'}
-                        size={'extra-large'}
-                    >
-                        {'0.00'}
-                    </Typography>
-                )}
-                <TextInput
-                    value={formattedValue}
-                    style={styles.textInput}
-                    onChangeText={onChangeText}
-                    keyboardType={'numeric'}
-                />
+            <View style={styles.content}>
+                {renderPrefix()}
+                {renderTextInput()}
             </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    title: {
+        color: COLORS.textPrimary,
+    },
+    content: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
