@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit'
-import { RootState } from './store'
+import { RootState } from '../app/store'
 import { AccountState } from './types'
 
 const account = (state: RootState) => state.account
@@ -7,7 +7,7 @@ const account = (state: RootState) => state.account
 const AccountSelectors = {
     balance: createSelector(
         [account],
-        (account: AccountState) => account.balanceAmount
+        (account: AccountState) => account.balance
     ),
     accountNumber: createSelector(
         [account],

@@ -1,11 +1,11 @@
 import React, { memo } from 'react'
 import { Button, Text, View } from 'react-native'
-import { AppStackParamList } from '../app/AppStackNavigator'
+import { AppStackParamList } from '../../app/AppStackNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { AccountActions } from '../app/accountSlice'
-import AccountSelectors from '../app/accountSelectors'
+import { AccountActions } from '../accountSlice'
+import AccountSelectors from '../accountSelectors'
 
 type NavigationProp = NativeStackNavigationProp<
     AppStackParamList,
@@ -25,7 +25,7 @@ const AccountDashboard = () => {
     }
 
     const onPressUpdateBalance = () => {
-        dispatch(AccountActions.setAmount(10))
+        dispatch(AccountActions.setBalance(10))
     }
 
     return (

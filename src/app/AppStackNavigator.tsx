@@ -1,7 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import AccountDashboard from '../screens/AccountDashboard'
-import TransferStackNavigator from '../navigators/TransferStackNavigator'
+import AccountDashboard from '../account/screens/AccountDashboard'
+import TransferStackNavigator from '../transfer/navigator/TransferStackNavigator'
 
 export type AppStackParamList = {
     AccountDashboard: undefined

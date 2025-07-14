@@ -1,8 +1,8 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
 import { Button, Text, View } from 'react-native'
-import { TransferStackParamList } from '../navigators/TransferStackNavigator'
 import { useNavigation } from '@react-navigation/native'
+import { TransferStackParamList } from '../types'
 
 type NavigationProp = NativeStackNavigationProp<
     TransferStackParamList,

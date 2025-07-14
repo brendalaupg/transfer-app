@@ -1,8 +1,3 @@
-export interface AccountState {
-    balanceAmount: number
-    accountNumber: string
-}
-
 export interface Recipient {
     id: string
     accountNumber: string

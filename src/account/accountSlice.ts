@@ -5,7 +5,7 @@ const accountSlice = createSlice({
     name: 'account',
     initialState: ACCOUNT_INITIAL_STATE,
     reducers: {
-        setAmount(state, action) {
+        setBalance(state, action) {
             state.balanceAmount = action.payload
         },
         setAccountNumber(state, action) {

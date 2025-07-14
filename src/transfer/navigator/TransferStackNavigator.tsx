@@ -1,16 +1,10 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import TransferScreen from '../screens/TransferScreen'
 import ReviewTransferScreen from '../screens/ReviewTransferScreen'
-import FailedTransferScreen from '../screens/FailedTransferScreen'
 import SuccessTransferScreen from '../screens/SuccessTransferScreen'
-
-export type TransferStackParamList = {
-    TransferScreen: undefined
-    ReviewTransferScreen: undefined
-    SuccessTransferScreen: undefined
-    FailedTransferScreen: undefined
-}
+import TransferScreen from '../screens/TransferScreen'
+import FailedTransferScreen from '../screens/FailedTransferScreen'
+import { TransferStackParamList } from '../types'
 
 const Stack = createNativeStackNavigator<TransferStackParamList>()
 
