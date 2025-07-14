@@ -14,13 +14,14 @@ import { TransferStackParamList } from '../../transfer/types'
 import ContactListItem from '../components/ContactListItem'
 import { Button } from 'react-native-paper'
 import Typography from '../../common/Typography'
+import ContactListHeader from '../components/ContactListHeader'
 
 type NavigationProp = NativeStackNavigationProp<
     TransferStackParamList,
     'TransferHistoryScreen'
 >
 
-const ContactListScreen = (props: NavigationProp) => {
+const ContactListScreen = () => {
     const [contacts, setContacts] = useState<ExpoContacts.Contact[]>([])
     const [permissionStatus, setPermissionStatus] = useState<
         'undetermined' | 'granted' | 'denied'
@@ -87,13 +88,7 @@ const ContactListScreen = (props: NavigationProp) => {
                 <ContactListItem contact={item} index={index} />
             )}
             ListEmptyComponent={renderEmptyState}
-            ListHeaderComponent={() => (
-                <View style={{ padding: 16 }}>
-                    <Typography variant={'header'} size={'extra-large'}>
-                        {'Your Contacts'}
-                    </Typography>
-                </View>
-            )}
+            ListHeaderComponent={ContactListHeader}
         />
     )
 

@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Divider, Icon, Text } from 'react-native-paper'
 import * as ExpoContacts from 'expo-contacts'
 import Typography from '../../common/Typography'
 import { COLORS } from '../../constants/colors'
@@ -38,15 +38,23 @@ const ContactListItem = (props: ContactListItemProps) => {
             testID={`contact-item-${index}`}
         >
             <View style={styles.container}>
-                <Typography
-                    style={styles.name}
-                    variant={'label'}
-                    size={'medium'}
-                >
-                    {contact.name}
-                </Typography>
-                {renderPhoneNumber()}
+                <View style={styles.itemContent}>
+                    <Typography
+                        style={styles.name}
+                        variant={'label'}
+                        size={'medium'}
+                    >
+                        {contact.name}
+                    </Typography>
+                    {renderPhoneNumber()}
+                </View>
+                <Icon
+                    source={'chevron-right'}
+                    size={24}
+                    color={COLORS.textSecondary}
+                />
             </View>
+            <Divider />
         </TouchableOpacity>
     )
 }
@@ -58,6 +66,11 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#eee',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    itemContent: {
+        gap: 4,
     },
     name: {
         color: COLORS.textPrimary,
