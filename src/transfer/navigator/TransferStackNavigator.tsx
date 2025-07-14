@@ -5,16 +5,27 @@ import SuccessTransferScreen from '../screens/SuccessTransferScreen'
 import TransferScreen from '../screens/TransferScreen'
 import FailedTransferScreen from '../screens/FailedTransferScreen'
 import { TransferStackParamList } from '../types'
+import CloseButtonHeader from '../../common/CloseButtonHeader'
+import BackButtonHeader from '../../common/BackButtonHeader'
 
 const Stack = createNativeStackNavigator<TransferStackParamList>()
 
 export default function TransferStackNavigator() {
     return (
         <Stack.Navigator initialRouteName={'TransferScreen'}>
-            <Stack.Screen name={'TransferScreen'} component={TransferScreen} />
+            <Stack.Screen
+                name={'TransferScreen'}
+                component={TransferScreen}
+                options={{
+                    headerLeft: () => <CloseButtonHeader />,
+                }}
+            />
             <Stack.Screen
                 name={'ReviewTransferScreen'}
                 component={ReviewTransferScreen}
+                options={{
+                    headerLeft: () => <BackButtonHeader />,
+                }}
             />
             <Stack.Screen
                 name={'SuccessTransferScreen'}
