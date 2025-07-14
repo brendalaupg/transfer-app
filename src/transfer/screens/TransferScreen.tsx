@@ -14,6 +14,7 @@ import Typography from '../../common/Typography'
 import TextField from '../../common/TextField'
 import usePhoneValidation from '../../common/validator/usePhoneNumberValidator'
 import useMinMaxValidator from '../../common/validator/useMinMaxValidator'
+import AmountTextField from '../components/AmountTextField'
 
 type NavigationProp = NativeStackNavigationProp<
     TransferStackParamList,
@@ -50,17 +51,7 @@ const TransferScreen = () => {
         />
     )
 
-    const renderAmountInput = () => (
-        <TextField
-            testID={`${TEST_ID_PREFIX}.recipient_input`}
-            title={'Amount'}
-            numberOfLines={1}
-            value={amount?.toString()}
-            keyboardType={'number-pad'}
-            validator={amountValidator}
-            onChangeText={(text) => setAmount(Number(text))}
-        />
-    )
+    const renderAmountInput = () => <AmountTextField />
 
     return (
         <SafeAreaView style={styles.container}>
