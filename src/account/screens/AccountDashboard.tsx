@@ -26,7 +26,7 @@ const AccountDashboard = () => {
     }
 
     const onPressContact = () => {
-        // navigate('ContactsScreen')
+        navigate('ContactListScreen')
     }
 
     const onPressHistory = () => {

@@ -3,11 +3,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AccountDashboard from '../account/screens/AccountDashboard'
 import TransferStackNavigator from '../transfer/navigator/TransferStackNavigator'
 import TransferHistoryScreen from '../transfer/screens/TransferHistoryScreen'
+import ContactListScreen from '../contacts/screens/ContactListScreen'
+import BackButtonHeader from '../common/BackButtonHeader'
 
 export type AppStackParamList = {
     AccountDashboard: undefined
     TransferStack: undefined
     TransferHistoryScreen: undefined
+    ContactListScreen: undefined
 }
 
 const Stack = createNativeStackNavigator<AppStackParamList>()
@@ -34,6 +37,15 @@ export default function AppStackNavigator() {
                 name={'TransferHistoryScreen'}
                 component={TransferHistoryScreen}
                 options={{
+                    headerTransparent: true,
+                    headerTitle: '',
+                }}
+            />
+            <Stack.Screen
+                name={'ContactListScreen'}
+                component={ContactListScreen}
+                options={{
+                    headerLeft: () => <BackButtonHeader />,
                     headerTransparent: true,
                     headerTitle: '',
                 }}
