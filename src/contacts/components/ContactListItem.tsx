@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Divider, Icon, Text } from 'react-native-paper'
+import { Divider, IconButton, Text } from 'react-native-paper'
 import * as ExpoContacts from 'expo-contacts'
 import Typography from '../../common/Typography'
 import { COLORS } from '../../constants/colors'
@@ -32,27 +32,37 @@ const ContactListItem = (props: ContactListItemProps) => {
         </>
     )
 
+    const renderMetadata = () => (
+        <View style={styles.metadata}>
+            <IconButton
+                icon={'send'}
+                onPress={() => onPress?.(contact)}
+                containerColor={COLORS.accentPrimary}
+                iconColor={COLORS.textOnPrimary}
+            />
+            <Typography variant={'label'} size={'medium'}>
+                {'Send'}
+            </Typography>
+        </View>
+    )
+
+    const renderItemContent = () => (
+        <View style={styles.itemContent}>
+            <Typography style={styles.name} variant={'label'} size={'medium'}>
+                {contact.name}
+            </Typography>
+            {renderPhoneNumber()}
+        </View>
+    )
+
     return (
         <TouchableOpacity
             onPress={() => onPress?.(contact)}
             testID={`contact-item-${index}`}
         >
             <View style={styles.container}>
-                <View style={styles.itemContent}>
-                    <Typography
-                        style={styles.name}
-                        variant={'label'}
-                        size={'medium'}
-                    >
-                        {contact.name}
-                    </Typography>
-                    {renderPhoneNumber()}
-                </View>
-                <Icon
-                    source={'chevron-right'}
-                    size={24}
-                    color={COLORS.textSecondary}
-                />
+                {renderItemContent()}
+                {renderMetadata()}
             </View>
             <Divider />
         </TouchableOpacity>
@@ -63,11 +73,11 @@ export default memo(ContactListItem)
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
     itemContent: {
         gap: 4,
@@ -77,5 +87,9 @@ const styles = StyleSheet.create({
     },
     phone: {
         color: COLORS.textSecondary,
+    },
+    metadata: {
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })

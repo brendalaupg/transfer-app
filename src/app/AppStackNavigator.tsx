@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AccountDashboard from '../account/screens/AccountDashboard'
 import TransferStackNavigator from '../transfer/navigator/TransferStackNavigator'
 import TransferHistoryScreen from '../transfer/screens/TransferHistoryScreen'
-import ContactListScreen from '../contacts/screens/ContactListScreen'
 import BackButtonHeader from '../common/BackButtonHeader'
+import ContactListScreen from '../contacts/screens/ContactListScreen'
 
 export type AppStackParamList = {
     AccountDashboard: undefined

@@ -1,3 +1,5 @@
+import { ContactItem } from '../contacts/types'
+
 export interface Transfer {
     id: string
     createdAt: string
@@ -16,13 +18,16 @@ export interface CreateTransfer {
 }
 
 export type TransferStackParamList = {
-    TransferScreen: undefined
+    TransferScreen: {
+        contact?: ContactItem
+    }
     ReviewTransferScreen: {
         transferInfo: CreateTransfer
     }
     SuccessTransferScreen: undefined
     FailedTransferScreen: undefined
     TransferHistoryScreen: undefined
+    ContactListScreen: undefined
 }
 
 export interface TransferState {

@@ -9,17 +9,15 @@ import {
     Platform,
 } from 'react-native'
 import * as ExpoContacts from 'expo-contacts'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { TransferStackParamList } from '../../transfer/types'
 import ContactListItem from '../components/ContactListItem'
 import { Button } from 'react-native-paper'
 import Typography from '../../common/Typography'
 import ContactListHeader from '../components/ContactListHeader'
-
-type NavigationProp = NativeStackNavigationProp<
-    TransferStackParamList,
-    'TransferHistoryScreen'
->
+import {
+    NavigationProp,
+    ParamListBase,
+    useNavigation,
+} from '@react-navigation/native'
 
 const ContactListScreen = () => {
     const [contacts, setContacts] = useState<ExpoContacts.Contact[]>([])
@@ -27,6 +25,8 @@ const ContactListScreen = () => {
         'undetermined' | 'granted' | 'denied'
     >('undetermined')
     const [isLoading, setIsLoading] = useState(true)
+
+    const navigation: NavigationProp<ParamListBase> = useNavigation()
 
     useEffect(() => {
         const getPermissionAndContacts = async () => {
@@ -80,12 +80,28 @@ const ContactListScreen = () => {
     const keyExtractor = (item: ExpoContacts.Contact) =>
         item.id || item.name || item.phoneNumbers?.[0]?.number || 'unknown'
 
+    const onPressContact = (contact: ExpoContacts.Contact) => {
+        navigation.navigate('TransferStack', {
+            screen: 'TransferScreen',
+            params: {
+                contact: {
+                    name: contact.name,
+                    phoneNumber: contact.phoneNumbers?.[0]?.number || '',
+                },
+            },
+        })
+    }
+
     const renderContactList = () => (
         <FlatList
             data={contacts}
             keyExtractor={keyExtractor}
             renderItem={({ item, index }) => (
-                <ContactListItem contact={item} index={index} />
+                <ContactListItem
+                    contact={item}
+                    index={index}
+                    onPress={onPressContact}
+                />
             )}
             ListEmptyComponent={renderEmptyState}
             ListHeaderComponent={ContactListHeader}

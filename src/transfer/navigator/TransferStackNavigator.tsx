@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator<TransferStackParamList>()
 
 export default function TransferStackNavigator() {
     return (
-        <Stack.Navigator initialRouteName={'TransferScreen'}>
+        <Stack.Navigator>
             <Stack.Screen
                 name={'TransferScreen'}
                 component={TransferScreen}

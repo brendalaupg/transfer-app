@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo, useState } from 'react'
 import {
     SafeAreaView,
@@ -16,18 +15,21 @@ import usePhoneValidation from '../../common/validator/usePhoneNumberValidator'
 import useMinMaxValidator from '../../common/validator/useMinMaxValidator'
 import AmountTextField from '../components/AmountTextField'
 
-type NavigationProp = NativeStackNavigationProp<
+type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
     'TransferScreen'
 >
 
 const TEST_ID_PREFIX = 'transfer_screen'
 
-const TransferScreen = () => {
-    const { navigate } = useNavigation<NavigationProp>()
+const TransferScreen = (props: NavigationProp) => {
+    const { navigation, route } = props
+    const { contact } = route?.params || {}
+
+    const initialPhoneNumber = contact?.phoneNumber || ''
 
     const [amount, setAmount] = useState<number>()
-    const [phoneNumber, setPhoneNumber] = useState<string>('')
+    const [phoneNumber, setPhoneNumber] = useState<string>(initialPhoneNumber)
     const [note, setNote] = useState<string>('')
 
     const amountValidator = useMinMaxValidator(0, 1_000_000)
@@ -46,7 +48,7 @@ const TransferScreen = () => {
             return
         }
 
-        navigate('ReviewTransferScreen', {
+        navigation?.navigate('ReviewTransferScreen', {
             transferInfo: {
                 amount,
                 recipiantName: 'John Doe',
