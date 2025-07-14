@@ -7,6 +7,7 @@ import FailedTransferScreen from '../screens/FailedTransferScreen'
 import { TransferStackParamList } from '../types'
 import CloseButtonHeader from '../../common/CloseButtonHeader'
 import BackButtonHeader from '../../common/BackButtonHeader'
+import { View } from 'react-native'
 
 const Stack = createNativeStackNavigator<TransferStackParamList>()
 
@@ -18,6 +19,8 @@ export default function TransferStackNavigator() {
                 component={TransferScreen}
                 options={{
                     headerLeft: () => <CloseButtonHeader />,
+                    headerTitle: '',
+                    headerTransparent: true,
                 }}
             />
             <Stack.Screen
@@ -25,20 +28,26 @@ export default function TransferStackNavigator() {
                 component={ReviewTransferScreen}
                 options={{
                     headerLeft: () => <BackButtonHeader />,
+                    headerTitle: '',
+                    headerTransparent: true,
                 }}
             />
             <Stack.Screen
                 name={'SuccessTransferScreen'}
                 component={SuccessTransferScreen}
                 options={{
-                    headerShown: false,
+                    headerLeft: () => <View />,
+                    headerTitle: '',
+                    headerTransparent: true,
                 }}
             />
             <Stack.Screen
                 name={'FailedTransferScreen'}
                 component={FailedTransferScreen}
                 options={{
-                    headerShown: false,
+                    headerLeft: () => <View />,
+                    headerTitle: '',
+                    headerTransparent: true,
                 }}
             />
         </Stack.Navigator>
