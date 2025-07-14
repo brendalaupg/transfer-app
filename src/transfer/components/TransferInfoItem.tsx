@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import Typography from '../../common/Typography'
 
 interface TransferInfoProps {
     title: string
@@ -11,9 +11,13 @@ const TransferInfoItem = (props: TransferInfoProps) => {
     const { title, value } = props
 
     return (
-        <View>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.value}>{value}</Text>
+        <View style={styles.container}>
+            <Typography variant={'body'} size={'medium'}>
+                {title}
+            </Typography>
+            <Typography variant={'label'} size={'large'}>
+                {value}
+            </Typography>
         </View>
     )
 }
@@ -21,12 +25,7 @@ const TransferInfoItem = (props: TransferInfoProps) => {
 export default memo(TransferInfoItem)
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 17,
-        fontWeight: '400',
-    },
-    value: {
-        fontSize: 20,
-        fontWeight: '500',
+    container: {
+        gap: 4,
     },
 })
