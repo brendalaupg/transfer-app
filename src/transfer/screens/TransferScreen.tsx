@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
-import { Button, SafeAreaView, Text } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { TransferStackParamList } from '../types'
+import { Button, TextInput } from 'react-native-paper'
 
 type NavigationProp = NativeStackNavigationProp<
     TransferStackParamList,
@@ -17,15 +18,42 @@ const TransferScreen = () => {
         navigate('ReviewTransferScreen')
     }
 
+    const renderAmountInput = () => (
+        <TextInput mode={'outlined'} label={'Amount'} placeholder={'RM0.00'} />
+    )
+
     return (
-        <SafeAreaView>
-            <Text>{'Transfer Screen'}</Text>
-            <Button
-                title={'Go to Review Transfer screen'}
-                onPress={() => onPressSubmit()}
-            />
+        <SafeAreaView style={styles.container}>
+            <ScrollView
+                style={styles.scrollView}
+                contentContainerStyle={styles.scrollViewContent}
+            >
+                {renderAmountInput()}
+                <TextInput
+                    mode={'outlined'}
+                    label={'Additional Note (optional)'}
+                    multiline={true}
+                    style={{ minHeight: 150 }}
+                />
+                <Button mode={'contained'} onPress={() => onPressSubmit()}>
+                    {'Transfer'}
+                </Button>
+            </ScrollView>
         </SafeAreaView>
     )
 }
 
 export default memo(TransferScreen)
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    scrollView: {
+        flex: 1,
+    },
+    scrollViewContent: {
+        gap: 12,
+        margin: 16,
+    },
+})
