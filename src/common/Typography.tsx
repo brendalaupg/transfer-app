@@ -11,7 +11,7 @@ type TypographyVariant =
     | 'overline'
     | 'label'
 
-type TypographySize = 'small' | 'medium' | 'large'
+type TypographySize = 'small' | 'medium' | 'large' | 'extra-large'
 
 interface TypographyProps extends Omit<TextProps<never>, 'style' | 'variant'> {
     variant: TypographyVariant
@@ -60,6 +60,8 @@ const Typography: React.FC<TypographyProps> = ({
                 return 16
             case 'large':
                 return 20
+            case 'extra-large':
+                return 28
             default:
                 return 16
         }

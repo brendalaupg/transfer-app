@@ -1,7 +1,7 @@
 export const COLORS = {
     // Backgrounds
-    backgroundPrimary: '#FFFFFF',
-    backgroundSecondary: '#F4F6FB',
+    backgroundPrimary: '#F2F2F2',
+    backgroundSecondary: '#FFFFFF',
     // Accents
     accentPrimary: '#2F01E7',
     accentSecondary: '#32DDD7',

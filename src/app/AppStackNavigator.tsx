@@ -19,6 +19,7 @@ export default function AppStackNavigator() {
                 options={{
                     headerTitle: 'Home',
                     headerLargeTitle: true,
+                    headerTransparent: true,
                 }}
             />
             <Stack.Screen

@@ -62,7 +62,7 @@ export default memo(AccountSummary)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.backgroundPrimary,
+        backgroundColor: COLORS.backgroundSecondary,
         borderRadius: 16,
         padding: 16,
         gap: 4,

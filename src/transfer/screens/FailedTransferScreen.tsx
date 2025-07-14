@@ -88,21 +88,22 @@ export default memo(FailedTransferScreen)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.backgroundPrimary,
+        // backgroundColor: COLORS.backgroundPrimary,
+        backgroundColor: 'blue',
     },
     scrollView: {
         flex: 1,
+    },
+    scrollViewContent: {
+        gap: 12,
+        margin: 16,
+        alignItems: 'center',
     },
     buttonContainer: {
         height: 70,
         paddingHorizontal: 16,
         paddingTop: 8,
         gap: 8,
-    },
-    scrollViewContent: {
-        gap: 12,
-        margin: 16,
-        alignItems: 'center',
     },
     transferContainer: {
         flex: 1,

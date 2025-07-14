@@ -30,7 +30,7 @@ export default memo(AccountActionView)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.backgroundPrimary,
+        backgroundColor: COLORS.backgroundSecondary,
         flexDirection: 'row',
         padding: 16,
         borderRadius: 16,

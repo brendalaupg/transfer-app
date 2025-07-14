@@ -9,6 +9,7 @@ const CloseButtonHeader = () => {
         const parent = navigation.getParent()
 
         if (!parent) {
+            console.log('Navigation: unable to find parent')
             return
         }
 
@@ -19,7 +20,9 @@ const CloseButtonHeader = () => {
         }
     }
 
-    return <IconButton icon={'close'} onPress={() => onPressClose()} />
+    return (
+        <IconButton size={28} icon={'close'} onPress={() => onPressClose()} />
+    )
 }
 
 export default memo(CloseButtonHeader)

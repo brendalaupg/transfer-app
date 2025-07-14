@@ -5,7 +5,6 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
-    Text,
     View,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
@@ -15,6 +14,7 @@ import TransferInfoItem from '../components/TransferInfoItem'
 import { formatToRM } from '../../common/stringUtils'
 import { Divider } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
+import Typography from '../../common/Typography'
 
 type NavigationProp = NativeStackNavigationProp<
     TransferStackParamList,
@@ -76,7 +76,9 @@ const ReviewTransferScreen = () => {
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
             >
-                <Text style={styles.title}>{'Review your transfer'}</Text>
+                <Typography variant={'header'} size={'extra-large'}>
+                    {'Review your transfer'}
+                </Typography>
                 {renderTransferDetails()}
                 {renderTempButtons()}
             </ScrollView>

@@ -5,9 +5,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
 import AccountSummary from '../components/AccountSummary'
 import AccountActionsView from '../components/AccountActionsView'
-import { Text } from 'react-native-paper'
 import AccountSelectors from '../accountSelectors'
 import { useSelector } from 'react-redux'
+import Typography from '../../common/Typography'
+import { COLORS } from '../../constants/colors'
 
 type NavigationProp = NativeStackNavigationProp<
     AppStackParamList,
@@ -30,9 +31,11 @@ const AccountDashboard = () => {
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
             >
-                <Text
+                <Typography
+                    variant={'header'}
+                    size={'extra-large'}
                     style={styles.welcomeLabel}
-                >{`Welcome back, ${displayName}`}</Text>
+                >{`Welcome back, ${displayName}`}</Typography>
                 <AccountSummary />
                 <AccountActionsView onPressTransfer={onPressTransfer} />
                 {/* TODO: add transfer list here */}
@@ -46,6 +49,7 @@ export default memo(AccountDashboard)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.backgroundPrimary,
     },
     scrollView: {
         flex: 1,

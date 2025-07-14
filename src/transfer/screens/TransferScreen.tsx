@@ -4,6 +4,7 @@ import React, { memo } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { TransferStackParamList } from '../types'
 import { Button, TextInput } from 'react-native-paper'
+import Typography from '../../common/Typography'
 
 type NavigationProp = NativeStackNavigationProp<
     TransferStackParamList,
@@ -28,6 +29,9 @@ const TransferScreen = () => {
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
             >
+                <Typography variant={'header'} size={'extra-large'}>
+                    {'Transfer'}
+                </Typography>
                 {renderAmountInput()}
                 <TextInput
                     mode={'outlined'}
