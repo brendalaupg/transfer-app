@@ -30,10 +30,16 @@ export default function TransferStackNavigator() {
             <Stack.Screen
                 name={'SuccessTransferScreen'}
                 component={SuccessTransferScreen}
+                options={{
+                    headerShown: false,
+                }}
             />
             <Stack.Screen
                 name={'FailedTransferScreen'}
                 component={FailedTransferScreen}
+                options={{
+                    headerShown: false,
+                }}
             />
         </Stack.Navigator>
     )
