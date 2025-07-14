@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { Button, Text, View } from 'react-native'
-import { MainStackParamList } from '../navigators/MainStackNavigator'
+import { AppStackParamList } from '../app/AppStackNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,7 +8,7 @@ import { AccountActions } from '../app/accountSlice'
 import AccountSelectors from '../app/accountSelectors'
 
 type NavigationProp = NativeStackNavigationProp<
-    MainStackParamList,
+    AppStackParamList,
     'AccountDashboard'
 >
 

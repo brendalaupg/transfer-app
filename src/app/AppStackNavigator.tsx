@@ -1,16 +1,16 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AccountDashboard from '../screens/AccountDashboard'
-import TransferStackNavigator from './TransferStackNavigator'
+import TransferStackNavigator from '../navigators/TransferStackNavigator'
 
-export type MainStackParamList = {
+export type AppStackParamList = {
     AccountDashboard: undefined
     TransferStack: undefined
 }
 
-const Stack = createNativeStackNavigator<MainStackParamList>()
+const Stack = createNativeStackNavigator<AppStackParamList>()
 
-export default function MainStackNavigator() {
+export default function AppStackNavigator() {
     return (
         <Stack.Navigator initialRouteName={'AccountDashboard'}>
             <Stack.Screen
