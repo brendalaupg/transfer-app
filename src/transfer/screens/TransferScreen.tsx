@@ -29,12 +29,24 @@ const TransferScreen = () => {
 
     const [amount, setAmount] = useState<number>()
     const [phoneNumber, setPhoneNumber] = useState<string>('')
+    const [note, setNote] = useState<string>('')
 
     const amountValidator = useMinMaxValidator(0, 1_000_000)
     const phoneNumberValidator = usePhoneValidation()
 
     const onPressSubmit = () => {
-        navigate('ReviewTransferScreen')
+        if (!amount) {
+            return
+        }
+
+        navigate('ReviewTransferScreen', {
+            transferInfo: {
+                amount,
+                recipiantName: 'John Doe',
+                recipiant: phoneNumber,
+                note,
+            },
+        })
     }
 
     // const onPressContacts = () => {}
@@ -51,7 +63,9 @@ const TransferScreen = () => {
         />
     )
 
-    const renderAmountInput = () => <AmountTextField />
+    const renderAmountInput = () => (
+        <AmountTextField value={amount} onChange={setAmount} />
+    )
 
     return (
         <SafeAreaView style={styles.container}>
@@ -77,8 +91,15 @@ const TransferScreen = () => {
                         label={'Additional Note (optional)'}
                         multiline={true}
                         style={{ minHeight: 150 }}
+                        onChangeText={(text) => setNote(text)}
+                        value={note}
+                        testID={`${TEST_ID_PREFIX}.note_input`}
                     />
-                    <Button mode={'contained'} onPress={() => onPressSubmit()}>
+                    <Button
+                        disabled={!phoneNumber || !amount}
+                        mode={'contained'}
+                        onPress={() => onPressSubmit()}
+                    >
                         {'Transfer'}
                     </Button>
                 </ScrollView>

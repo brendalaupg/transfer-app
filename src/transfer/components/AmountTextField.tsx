@@ -10,13 +10,19 @@ import { COLORS } from '../../constants/colors'
 
 const MAX_LENGTH = 10 // Maximum length for the input, adjust as needed
 
-const AmountTextField = () => {
-    const [amount, setAmount] = useState<number>()
+interface AmountTextFieldProps {
+    value?: number
+    onChange?: (amount: number) => void
+}
+
+const AmountTextField = (props: AmountTextFieldProps) => {
+    const { value, onChange } = props
+
     const [formattedValue, setFormattedValue] = useState<string>()
 
     const onChangeText = (text: string) => {
         if (!text) {
-            setAmount(undefined)
+            onChange?.(0)
             setFormattedValue('')
             return
         }
@@ -24,10 +30,10 @@ const AmountTextField = () => {
 
         const limited = cleaned.slice(0, MAX_LENGTH)
         const cents = parseInt(limited || '0', 10) // fallback to 0 if empty
-        const value = cents / 100
+        const _value = cents / 100
 
-        const formattedString = `${value.toFixed(2)}`
-        setAmount(value)
+        const formattedString = `${_value.toFixed(2)}`
+        onChange?.(_value)
         setFormattedValue(formattedString)
     }
 
@@ -41,7 +47,7 @@ const AmountTextField = () => {
                 {'RM'}
             </Typography>
             <View style={styles.amountContainer}>
-                {!amount && (
+                {!value && (
                     <Typography
                         style={styles.placeholder}
                         variant={'header'}

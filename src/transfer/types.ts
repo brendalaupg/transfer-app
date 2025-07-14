@@ -1,10 +1,3 @@
-export type TransferStackParamList = {
-    TransferScreen: undefined
-    ReviewTransferScreen: undefined
-    SuccessTransferScreen: undefined
-    FailedTransferScreen: undefined
-}
-
 export interface Transfer {
     id: string
     createdAt: string
@@ -17,8 +10,18 @@ export interface Transfer {
 
 export interface CreateTransfer {
     amount: number
+    recipiantName: string
     recipiant: string
-    note?: number
+    note?: string
+}
+
+export type TransferStackParamList = {
+    TransferScreen: undefined
+    ReviewTransferScreen: {
+        transferInfo: CreateTransfer
+    }
+    SuccessTransferScreen: undefined
+    FailedTransferScreen: undefined
 }
 
 export interface TransferState {

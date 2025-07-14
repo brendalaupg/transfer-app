@@ -1,4 +1,4 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
 import {
     Button,
@@ -9,30 +9,30 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { TransferStackParamList } from '../types'
-import { MOCK_TRANSFER_LIST } from '../constants/transferConstants'
 import TransferInfoItem from '../components/TransferInfoItem'
 import { formatToRM } from '../../common/stringUtils'
 import { Divider } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
 
-type NavigationProp = NativeStackNavigationProp<
+type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
     'ReviewTransferScreen'
 >
 
 // TODO: Setup and UI
-const ReviewTransferScreen = () => {
-    const { navigate } = useNavigation<NavigationProp>()
+const ReviewTransferScreen = (props: NavigationProp) => {
+    const { route } = props
+    const transferInfo = route.params.transferInfo
 
-    const transferInfo = MOCK_TRANSFER_LIST[2]
+    const { navigation } = useNavigation<NavigationProp>()
 
     const onPressFailed = () => {
-        navigate('FailedTransferScreen')
+        navigation.navigate('FailedTransferScreen')
     }
 
     const onPressSuccess = () => {
-        navigate('SuccessTransferScreen')
+        navigation.navigate('SuccessTransferScreen')
     }
 
     const renderTempButtons = () => (
@@ -51,8 +51,8 @@ const ReviewTransferScreen = () => {
     const renderTransferDetails = () => (
         <View style={styles.transferDetailContainer}>
             <TransferInfoItem
-                title={transferInfo.recipientName}
-                value={transferInfo.toAccountNumber}
+                title={transferInfo.recipiantName}
+                value={transferInfo.recipiant}
                 key={'review-recipient-info'}
             />
             <Divider />
