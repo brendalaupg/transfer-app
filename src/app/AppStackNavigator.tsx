@@ -16,6 +16,10 @@ export default function AppStackNavigator() {
             <Stack.Screen
                 name={'AccountDashboard'}
                 component={AccountDashboard}
+                options={{
+                    headerTitle: 'Home',
+                    headerLargeTitle: true,
+                }}
             />
             <Stack.Screen
                 name={'TransferStack'}
