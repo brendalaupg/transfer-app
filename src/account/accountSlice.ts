@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ACCOUNT_INITIAL_STATE } from '../constants/initialState'
+import { ACCOUNT_INITIAL_STATE } from './accountConstants'
 
 const accountSlice = createSlice({
     name: 'account',
     initialState: ACCOUNT_INITIAL_STATE,
     reducers: {
         setBalance(state, action) {
-            state.balanceAmount = action.payload
+            state.balance = action.payload
         },
         setAccountNumber(state, action) {
             state.accountNumber = action.payload

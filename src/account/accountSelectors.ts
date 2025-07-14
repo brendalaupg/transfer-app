@@ -5,10 +5,9 @@ import { AccountState } from './types'
 const account = (state: RootState) => state.account
 
 const AccountSelectors = {
-    balance: createSelector(
-        [account],
-        (account: AccountState) => account.balance
-    ),
+    balance: createSelector([account], (account: AccountState) => {
+        return account.balance
+    }),
     accountNumber: createSelector(
         [account],
         (account: AccountState) => account.accountNumber

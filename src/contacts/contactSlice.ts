@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ACCOUNT_INITIAL_STATE } from '../constants/initialState'
+import { CONTACT_INITIAL_STATE } from './contactConstants'
 
 const contactSlice = createSlice({
     name: 'contact',
-    initialState: ACCOUNT_INITIAL_STATE,
+    initialState: CONTACT_INITIAL_STATE,
     reducers: {
         setContacts(state, action) {
             state.contacts = action.payload
