@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, SafeAreaView, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { TransferStackParamList } from '../types'
 
@@ -18,13 +18,13 @@ const SuccessTransferScreen = () => {
     }
 
     return (
-        <View>
+        <SafeAreaView>
             <Text>{'Success Transfer Screen'}</Text>
             <Button
                 title={'Go back to Account screen'}
                 onPress={() => onPressDone()}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 

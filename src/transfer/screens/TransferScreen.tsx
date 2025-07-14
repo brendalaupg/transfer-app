@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, SafeAreaView, Text } from 'react-native'
 import { TransferStackParamList } from '../types'
 
 type NavigationProp = NativeStackNavigationProp<
@@ -18,13 +18,13 @@ const TransferScreen = () => {
     }
 
     return (
-        <View>
+        <SafeAreaView>
             <Text>{'Transfer Screen'}</Text>
             <Button
                 title={'Go to Review Transfer screen'}
                 onPress={() => onPressSubmit()}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 
