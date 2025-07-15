@@ -9,8 +9,6 @@ import {
 import { Icon } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
-import * as LocalAuthentication from 'expo-local-authentication'
-import { AuthenticationType } from 'expo-local-authentication'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../app/store'
 import {
@@ -19,6 +17,7 @@ import {
 } from '../transferAsyncThunk'
 import { Transfer, TransferStackParamList } from '../types'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import useBiometrics from '../components/useBiometrics'
 
 /** Since this is a demo app, the pin is mocked */
 const HARD_CODED_PIN: string = '000000'
@@ -26,8 +25,6 @@ const HARD_CODED_PIN: string = '000000'
 const MAX_LENGTH: number = 6
 
 const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '']
-
-type BiometricsType = 'fingerprint' | 'face_recognition' | 'iris'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -39,45 +36,45 @@ const PasscodeScreen = (props: NavigationProp) => {
     const newTransfer = route.params.transfer
 
     const [passcode, setPasscode] = useState<string>('')
-    const [biometricType, setBiometricsType] = useState<
-        BiometricsType | undefined
-    >()
     const [isLoading, setIsLoading] = useState(false)
 
     const dispatch = useDispatch<AppDispatch>()
+    const { biometricType, checkBiometricsHardware } = useBiometrics()
 
-    const checkBiometricsHardware = async () => {
-        const result = await LocalAuthentication.hasHardwareAsync()
-        if (!result) {
-            return
+    const handleBiometrics = async () => {
+        try {
+            const result = await dispatch(authenticateWithBiometrics()).unwrap()
+
+            if (result) {
+                processTransfer()
+            } else {
+                throw Error('Error, failed to authenticate')
+            }
+        } catch {
+            handleFailure()
+        } finally {
+            setIsLoading(false)
         }
+    }
 
-        const supportedBiometrics =
-            await LocalAuthentication.supportedAuthenticationTypesAsync()
-        // we prioritise face id first
-        if (
-            supportedBiometrics.find(
-                (value) => value === AuthenticationType.FACIAL_RECOGNITION
-            )
-        ) {
-            setBiometricsType('face_recognition')
-        } else if (
-            supportedBiometrics.find(
-                (value) => value === AuthenticationType.IRIS
-            )
-        ) {
-            setBiometricsType('iris')
-        } else if (
-            supportedBiometrics.find(
-                (value) => value === AuthenticationType.FINGERPRINT
-            )
-        ) {
-            setBiometricsType('fingerprint')
+    /**
+     * Checks if there's biometrics available.
+     * if so, we initiate biometrics auth for secure user convenience
+     * */
+    const initiateBiometrics = async () => {
+        try {
+            const result = await checkBiometricsHardware()
+
+            if (result) {
+                handleBiometrics()
+            }
+        } catch (error) {
+            console.error(error)
         }
     }
 
     useEffect(() => {
-        checkBiometricsHardware()
+        initiateBiometrics()
     }, [])
 
     const handleKeyPress = (key: string) => {
@@ -172,25 +169,9 @@ const PasscodeScreen = (props: NavigationProp) => {
         }
     }, [passcode])
 
-    const onPressBiometrics = async () => {
-        try {
-            const result = await dispatch(authenticateWithBiometrics()).unwrap()
-
-            if (result) {
-                processTransfer()
-            } else {
-                throw Error('Error, failed to authenticate')
-            }
-        } catch {
-            handleFailure()
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
     const renderBottomBar = () => (
         <View style={styles.bottomBar}>
-            <TouchableOpacity onPress={() => onPressBiometrics()}>
+            <TouchableOpacity onPress={() => handleBiometrics()}>
                 <Icon source={biometricsIcon} size={40} />
             </TouchableOpacity>
             <View style={{ width: 30 }} />
