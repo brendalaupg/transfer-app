@@ -2,8 +2,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo, useState } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 import { Transfer, TransferStackParamList } from '../types'
-import TransferInfoItem from '../components/TransferInfoItem'
-import { formatToRM } from '../../common/stringUtils'
 import { ActivityIndicator, Button, Divider } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
@@ -13,6 +11,7 @@ import {
     authenticateWithBiometrics,
     transferMoney,
 } from '../transferAsyncThunk'
+import TransferInfoCard from '../constants/TransferInfoCard'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -22,8 +21,7 @@ type NavigationProp = NativeStackScreenProps<
 // TODO: Setup and UI
 const ReviewTransferScreen = (props: NavigationProp) => {
     const { navigation, route } = props
-    const createTransfer = route.params.transferInfo
-    const { recipiant, recipiantName, amount, note } = createTransfer
+    const newTransfer = route.params.transferInfo
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -31,7 +29,7 @@ const ReviewTransferScreen = (props: NavigationProp) => {
 
     const onPressFailed = () => {
         navigation.navigate('FailedTransferScreen', {
-            transferInfo: createTransfer,
+            transferInfo: newTransfer,
             error: 'Transfer failed. Please try again later.',
         })
     }
@@ -41,24 +39,6 @@ const ReviewTransferScreen = (props: NavigationProp) => {
             transferInfo,
         })
     }
-
-    const renderTransferDetails = () => (
-        <View style={styles.transferDetailContainer}>
-            <TransferInfoItem
-                title={recipiantName}
-                value={recipiant}
-                key={'review-recipient-info'}
-            />
-            <Divider />
-            <TransferInfoItem
-                title={'Amount'}
-                value={`${formatToRM(amount)}`}
-                key={'review-amount'}
-            />
-            <Divider />
-            <TransferInfoItem title={'Note'} value={note} key={'review-note'} />
-        </View>
-    )
 
     const onPressSubmit = async () => {
         try {
@@ -74,9 +54,7 @@ const ReviewTransferScreen = (props: NavigationProp) => {
             console.log('Biometric authentication successful')
 
             setIsLoading(true)
-            const transfer = await dispatch(
-                transferMoney(createTransfer)
-            ).unwrap()
+            const transfer = await dispatch(transferMoney(newTransfer)).unwrap()
             onPressSuccess(transfer)
         } catch {
             onPressFailed()
@@ -111,7 +89,7 @@ const ReviewTransferScreen = (props: NavigationProp) => {
                     <Typography variant={'header'} size={'extra-large'}>
                         {'Review your transfer'}
                     </Typography>
-                    {renderTransferDetails()}
+                    <TransferInfoCard item={newTransfer} />
                 </ScrollView>
                 {renderSubmitButton()}
             </SafeAreaView>

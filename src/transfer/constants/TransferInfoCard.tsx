@@ -28,6 +28,18 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
 
     const info: RowProps[] = [
         {
+            title: 'To',
+            label: isTransfer(item)
+                ? item.toAccountNumber
+                : (item as CreateTransfer).recipiant,
+        },
+        {
+            title: 'Recipient Name',
+            label: isTransfer(item)
+                ? item.recipientName
+                : (item as CreateTransfer).recipiantName,
+        },
+        {
             title: 'Transfer ID',
             label: isTransfer(item) ? item.id : undefined,
         },
@@ -42,18 +54,6 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
         {
             title: 'From',
             label: item.fromAccountNumber,
-        },
-        {
-            title: 'To',
-            label: isTransfer(item)
-                ? item.toAccountNumber
-                : (item as CreateTransfer).recipiant,
-        },
-        {
-            title: 'Recipient Name',
-            label: isTransfer(item)
-                ? item.recipientName
-                : (item as CreateTransfer).recipiantName,
         },
         {
             title: 'Note',

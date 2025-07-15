@@ -76,10 +76,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonContainer: {
-        height: 70,
         paddingHorizontal: 16,
         paddingTop: 8,
-        gap: 8,
+        gap: 16,
     },
     transferContainer: {
         flex: 1,
