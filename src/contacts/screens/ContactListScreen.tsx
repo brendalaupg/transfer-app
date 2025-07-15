@@ -22,6 +22,7 @@ import { getContactPermission } from '../contactsAsyncThunk'
 import ContactSelectors from '../contactSelectors'
 import { ContactItem } from '../types'
 import ListHeader from '../../common/ListHeader'
+import { COLORS } from '../../constants/colors'
 
 const ContactListScreen = () => {
     const contacts = useSelector(ContactSelectors.contacts)
@@ -123,6 +124,7 @@ export default ContactListScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.backgroundSecondary,
     },
     centered: {
         flex: 1,

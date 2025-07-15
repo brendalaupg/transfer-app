@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.backgroundSecondary,
         borderRadius: 16,
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingTop: 16,
     },
     accountNumberContainer: {
         flexDirection: 'row',
