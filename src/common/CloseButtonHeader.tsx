@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { memo } from 'react'
-import { IconButton } from 'react-native-paper'
+import { TouchableOpacity } from 'react-native'
+import { Icon } from 'react-native-paper'
+import { COLORS } from '../constants/colors'
 
 const CloseButtonHeader = () => {
     const navigation = useNavigation()
@@ -21,7 +23,9 @@ const CloseButtonHeader = () => {
     }
 
     return (
-        <IconButton size={28} icon={'close'} onPress={() => onPressClose()} />
+        <TouchableOpacity onPress={onPressClose}>
+            <Icon size={28} source={'close'} color={COLORS.textPrimary} />
+        </TouchableOpacity>
     )
 }
 

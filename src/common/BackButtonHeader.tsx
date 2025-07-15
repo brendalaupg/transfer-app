@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { memo } from 'react'
-import { IconButton } from 'react-native-paper'
+import { TouchableOpacity } from 'react-native'
+import { Icon } from 'react-native-paper'
+import { COLORS } from '../constants/colors'
 
 const BackButtonHeader = () => {
     const navigation = useNavigation()
@@ -13,7 +15,15 @@ const BackButtonHeader = () => {
         }
     }
 
-    return <IconButton icon={'chevron-left'} onPress={() => onPressBack()} />
+    return (
+        <TouchableOpacity onPress={onPressBack}>
+            <Icon
+                size={32}
+                source={'chevron-left'}
+                color={COLORS.textPrimary}
+            />
+        </TouchableOpacity>
+    )
 }
 
 export default memo(BackButtonHeader)
