@@ -13,7 +13,7 @@ const transferSlice = createSlice({
     },
     extraReducers: (builder: ActionReducerMapBuilder<TransferState>) => {
         builder.addCase(transferMoney.fulfilled, (state, action) => {
-            state.transferHistory.push(action.payload)
+            state.transferHistory.unshift(action.payload)
         })
         builder.addCase(transferMoney.rejected, (state, action) => {
             console.error('Transfer failed:', action.payload)

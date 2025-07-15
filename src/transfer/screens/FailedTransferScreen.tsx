@@ -20,7 +20,9 @@ const FailedTransferScreen = () => {
     const transferInfo = MOCK_TRANSFER_LIST[1]
 
     const onPressTryAgain = () => {
-        navigate('TransferScreen')
+        navigate('TransferScreen', {
+            transferInfo,
+        })
     }
 
     const onPressBack = () => {

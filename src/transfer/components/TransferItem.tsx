@@ -17,7 +17,7 @@ const TransferItem = (props: TransferItemProps) => {
 
     const renderLeadingIcon = () => (
         <View style={styles.leadingIcon}>
-            <Icon size={30} source={'bank-transfer-out'} />
+            <Icon size={30} source={'call-made'} />
         </View>
     )
 

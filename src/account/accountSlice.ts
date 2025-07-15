@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ACCOUNT_INITIAL_STATE } from './accountConstants'
+import { transferMoney } from '../transfer/transferAsyncThunk'
 
 const accountSlice = createSlice({
     name: 'account',
@@ -11,6 +12,12 @@ const accountSlice = createSlice({
         setAccountNumber(state, action) {
             state.accountNumber = action.payload
         },
+    },
+    extraReducers: (builder) => {
+        // Add any async thunks or other reducers here if needed
+        builder.addCase(transferMoney.fulfilled, (state, action) => {
+            state.balance -= action.payload.amount
+        })
     },
 })
 

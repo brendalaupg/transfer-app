@@ -9,6 +9,7 @@ import TransferItem from '../components/TransferItem'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { AppStackParamList } from '../../app/AppStackNavigator'
+import ListHeader from '../../common/ListHeader'
 
 type NavigationProp = NativeStackNavigationProp<
     AppStackParamList,
@@ -38,8 +39,14 @@ const TransferHistoryScreen = () => {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <SectionList
+                ListHeaderComponent={
+                    <ListHeader
+                        title={'Transfer History'}
+                        testId={'history-header'}
+                    />
+                }
                 sections={history}
                 keyExtractor={(item, index) => item.id + index}
                 renderItem={({ item, index }) => (

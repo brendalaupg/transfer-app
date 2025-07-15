@@ -11,7 +11,6 @@ import {
 import ContactListItem from '../components/ContactListItem'
 import { Button } from 'react-native-paper'
 import Typography from '../../common/Typography'
-import ContactListHeader from '../components/ContactListHeader'
 import {
     NavigationProp,
     ParamListBase,
@@ -22,6 +21,7 @@ import { AppDispatch } from '../../app/store'
 import { getContactPermission } from '../contactsAsyncThunk'
 import ContactSelectors from '../contactSelectors'
 import { ContactItem } from '../types'
+import ListHeader from '../../common/ListHeader'
 
 const ContactListScreen = () => {
     const contacts = useSelector(ContactSelectors.contacts)
@@ -98,7 +98,12 @@ const ContactListScreen = () => {
                 />
             )}
             ListEmptyComponent={renderEmptyState}
-            ListHeaderComponent={ContactListHeader}
+            ListHeaderComponent={
+                <ListHeader
+                    title={'Contact List'}
+                    testId={'contact-list-header'}
+                />
+            }
         />
     )
 
