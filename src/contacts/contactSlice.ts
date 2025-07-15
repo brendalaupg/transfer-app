@@ -10,9 +10,6 @@ const contactSlice = createSlice({
         setContacts(state, action) {
             state.contacts = action.payload
         },
-        setIsContactLoading(state, action) {
-            state.isContactLoading = action.payload
-        },
     },
     extraReducers(builder: ActionReducerMapBuilder<ContactState>) {
         builder.addCase(getContactPermission.fulfilled, (state, action) => {
@@ -24,12 +21,10 @@ const contactSlice = createSlice({
                 }))
             )
             state.permissionStatus = 'granted'
-            state.isContactLoading = false
         })
         builder.addCase(getContactPermission.rejected, (state) => {
             state.contacts = []
             state.permissionStatus = 'denied'
-            state.isContactLoading = false
         })
     },
 })

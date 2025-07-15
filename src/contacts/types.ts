@@ -6,6 +6,5 @@ export interface ContactItem {
 
 export interface ContactState {
     contacts: ContactItem[]
-    isContactLoading: boolean
     permissionStatus: 'granted' | 'denied' | 'undetermined'
 }

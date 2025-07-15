@@ -9,10 +9,6 @@ const ContactSelectors = {
         [contact],
         (contact: ContactState) => contact.contacts
     ),
-    isContactsLoading: createSelector(
-        [contact],
-        (contact: ContactState) => contact.isContactLoading
-    ),
     isPermissionGranted: createSelector(
         [contact],
         (contact: ContactState) => contact.permissionStatus === 'granted'

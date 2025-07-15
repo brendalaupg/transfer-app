@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
     SafeAreaView,
     StyleSheet,
@@ -7,7 +7,7 @@ import {
     FlatList,
     Linking,
 } from 'react-native'
-import { Button } from 'react-native-paper'
+import { ActivityIndicator, Button } from 'react-native-paper'
 import {
     NavigationProp,
     ParamListBase,
@@ -32,16 +32,25 @@ const ContactListScreen = () => {
     const contacts = useSelector((state: RootState) =>
         ContactSelectors.contacts(state)
     )
-    const isLoading = useSelector((state: RootState) =>
-        ContactSelectors.isContactsLoading(state)
-    )
+
     const isPermissionGranted = useSelector((state: RootState) =>
         ContactSelectors.isPermissionGranted(state)
     )
 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const getContacts = async () => {
+        try {
+            setIsLoading(true)
+            await dispatch(getContactPermission()).unwrap()
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     useEffect(() => {
         if (!isPermissionGranted) {
-            dispatch(getContactPermission())
+            getContacts()
         }
     }, [dispatch, isPermissionGranted])
 
@@ -85,32 +94,35 @@ const ContactListScreen = () => {
     )
 
     const listHeader = useMemo(
-        () => <ListHeader title="Contact List" testId="contact-list-header" />,
+        () => (
+            <ListHeader title={'Contact List'} testId={'contact-list-header'} />
+        ),
         []
     )
 
     const renderLoading = () => (
-        <View style={styles.centered}>
-            <Typography variant="body" size="small">
-                Loading contacts...
+        <View style={styles.centeredContainer}>
+            <ActivityIndicator size={'large'} />
+            <Typography variant={'label'} size={'medium'}>
+                {'Loading Contacts'}
             </Typography>
         </View>
     )
 
     const renderEmptyState = () => (
-        <View style={styles.centered}>
-            <Typography variant="body" size="small">
-                No contacts found.
+        <View style={styles.centeredContainer}>
+            <Typography variant={'body'} size={'small'}>
+                {'No contacts found.'}
             </Typography>
         </View>
     )
 
     const renderPermissionDenied = () => (
-        <View style={styles.centered}>
-            <Typography variant="body" size="small">
-                Contact permission is required to show your contacts.
+        <View style={styles.centeredContainer}>
+            <Typography variant={'body'} size={'small'}>
+                {'Contact permission is required to show your contacts.'}
             </Typography>
-            <Button onPress={handleOpenSettings}>Open Settings</Button>
+            <Button onPress={handleOpenSettings}>{'Open Settings'}</Button>
         </View>
     )
 
@@ -146,10 +158,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.backgroundSecondary,
     },
-    centered: {
+    centeredContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 16,
+        gap: 8,
     },
 })
