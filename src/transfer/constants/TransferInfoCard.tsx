@@ -26,7 +26,7 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
         return 'id' in obj && 'createdAt' in obj
     }
 
-    const info: RowProps[] = [
+    const transferInfo: RowProps[] = [
         {
             title: 'To',
             label: isTransfer(item)
@@ -63,6 +63,8 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
         },
     ]
 
+    const filteredInfo = transferInfo.filter((value) => value.label)
+
     const renderRow = (
         key: string,
         isLastRow: boolean,
@@ -84,15 +86,13 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
 
     return (
         <View style={styles.container} testID={testId}>
-            {info.map(
-                (value, index) =>
-                    value.label &&
-                    renderRow(
-                        index.toString(),
-                        index + 1 === info.length,
-                        value.title,
-                        value.label
-                    )
+            {filteredInfo.map((value, index) =>
+                renderRow(
+                    index.toString(),
+                    index + 1 === filteredInfo.length,
+                    value.title,
+                    value.label
+                )
             )}
         </View>
     )
