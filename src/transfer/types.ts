@@ -24,8 +24,13 @@ export type TransferStackParamList = {
     ReviewTransferScreen: {
         transferInfo: CreateTransfer
     }
-    SuccessTransferScreen: undefined
-    FailedTransferScreen: undefined
+    SuccessTransferScreen: {
+        transferInfo: Transfer
+    }
+    FailedTransferScreen: {
+        transferInfo: CreateTransfer
+        error?: string
+    }
     TransferHistoryScreen: undefined
     ContactListScreen: undefined
 }

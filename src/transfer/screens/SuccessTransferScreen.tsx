@@ -1,26 +1,26 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { TransferStackParamList } from '../types'
 import { Button, Divider, Icon, Text } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
-import { MOCK_TRANSFER_LIST } from '../constants/transferConstants'
 
-type NavigationProp = NativeStackNavigationProp<
+type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
     'SuccessTransferScreen'
 >
 
 // TODO: Setup and UI
-const SuccessTransferScreen = () => {
-    const { getParent } = useNavigation<NavigationProp>()
-
-    // TODO: replace with actual transfer
-    const transferInfo = MOCK_TRANSFER_LIST[0]
+const SuccessTransferScreen = (props: NavigationProp) => {
+    const { route, navigation } = props
+    const { transferInfo } = route.params
 
     const onPressDone = () => {
-        getParent()?.goBack()
+        const parent = navigation.getParent()
+
+        if (parent && parent.canGoBack()) {
+            parent.goBack()
+        }
     }
 
     const transactionInfo = (title: string, label: string) => (

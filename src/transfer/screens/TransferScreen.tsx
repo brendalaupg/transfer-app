@@ -12,7 +12,6 @@ import { Button, TextInput } from 'react-native-paper'
 import Typography from '../../common/Typography'
 import TextField from '../../common/TextField'
 import usePhoneValidation from '../../common/validator/usePhoneNumberValidator'
-import useMinMaxValidator from '../../common/validator/useMinMaxValidator'
 import AmountTextField from '../components/AmountTextField'
 
 type NavigationProp = NativeStackScreenProps<
@@ -32,19 +31,21 @@ const TransferScreen = (props: NavigationProp) => {
     const [phoneNumber, setPhoneNumber] = useState<string>(initialPhoneNumber)
     const [note, setNote] = useState<string>('')
 
-    const amountValidator = useMinMaxValidator(0, 1_000_000)
     const phoneNumberValidator = usePhoneValidation()
 
     const onPressSubmit = () => {
         if (!amount) {
+            console.error('Amount is required')
             return
         }
 
         if (!phoneNumberValidator.validate(phoneNumber)) {
+            console.error('Invalid phone number:', phoneNumber)
             return
         }
 
-        if (amountValidator.validate(amount.toString())) {
+        if (amount <= 0) {
+            console.error('Invalid amount:', amount)
             return
         }
 

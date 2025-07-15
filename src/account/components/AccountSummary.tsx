@@ -19,7 +19,6 @@ const AccountSummary = () => {
             const result = await Clipboard.setStringAsync(accountNumber)
 
             if (result) {
-                console.log('copied!')
                 setIsSnackbarVisible(true)
             } else {
                 throw Error('Unable to copy account number')

@@ -17,4 +17,5 @@ export const COLORS = {
     disabled: '#E0E0E0',
     // Etcs
     divider: '#E0E0E0',
+    overlay: '#00000080', // Semi-transparent black
 }

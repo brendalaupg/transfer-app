@@ -9,7 +9,7 @@ const CloseButtonHeader = () => {
         const parent = navigation.getParent()
 
         if (!parent) {
-            console.log('Navigation: unable to find parent')
+            console.error('Navigation: unable to find parent')
             return
         }
 

@@ -1,5 +1,7 @@
 import { Transfer, TransferState } from '../types'
 
+export const TRANSFER_PREFIX = 'txn_'
+
 export const MOCK_TRANSFER_LIST: Transfer[] = [
     {
         id: 'txn_001',

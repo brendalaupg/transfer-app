@@ -1,19 +1,15 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { memo } from 'react'
-import {
-    Button,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    View,
-} from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { TransferStackParamList } from '../types'
+import React, { memo, useState } from 'react'
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { Transfer, TransferStackParamList } from '../types'
 import TransferInfoItem from '../components/TransferInfoItem'
 import { formatToRM } from '../../common/stringUtils'
-import { Divider } from 'react-native-paper'
+import { ActivityIndicator, Button, Divider } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
+import { AppDispatch } from '../../app/store'
+import { useDispatch } from 'react-redux'
+import { transferMoney } from '../transferAsyncThunk'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -22,67 +18,91 @@ type NavigationProp = NativeStackScreenProps<
 
 // TODO: Setup and UI
 const ReviewTransferScreen = (props: NavigationProp) => {
-    const { route } = props
-    const transferInfo = route.params.transferInfo
+    const { navigation, route } = props
+    const createTransfer = route.params.transferInfo
+    const { recipiant, recipiantName, amount, note } = createTransfer
 
-    const { navigation } = useNavigation<NavigationProp>()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const dispatch = useDispatch<AppDispatch>()
 
     const onPressFailed = () => {
-        navigation.navigate('FailedTransferScreen')
+        navigation.navigate('FailedTransferScreen', {
+            transferInfo: createTransfer,
+            error: 'Transfer failed. Please try again later.',
+        })
     }
 
-    const onPressSuccess = () => {
-        navigation.navigate('SuccessTransferScreen')
+    const onPressSuccess = (transferInfo: Transfer) => {
+        navigation.navigate('SuccessTransferScreen', {
+            transferInfo,
+        })
     }
-
-    const renderTempButtons = () => (
-        <>
-            <Button
-                title={'Go to Success screen'}
-                onPress={() => onPressSuccess()}
-            />
-            <Button
-                title={'Go to Failed screen'}
-                onPress={() => onPressFailed()}
-            />
-        </>
-    )
 
     const renderTransferDetails = () => (
         <View style={styles.transferDetailContainer}>
             <TransferInfoItem
-                title={transferInfo.recipiantName}
-                value={transferInfo.recipiant}
+                title={recipiantName}
+                value={recipiant}
                 key={'review-recipient-info'}
             />
             <Divider />
             <TransferInfoItem
                 title={'Amount'}
-                value={`${formatToRM(transferInfo.amount)}`}
+                value={`${formatToRM(amount)}`}
                 key={'review-amount'}
             />
             <Divider />
-            <TransferInfoItem
-                title={'Note'}
-                value={transferInfo.note}
-                key={'review-note'}
-            />
+            <TransferInfoItem title={'Note'} value={note} key={'review-note'} />
+        </View>
+    )
+
+    const onPressSubmit = async () => {
+        try {
+            setIsLoading(true)
+            const transfer = await dispatch(
+                transferMoney(createTransfer)
+            ).unwrap()
+            onPressSuccess(transfer)
+        } catch {
+            onPressFailed()
+            return
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const renderSubmitButton = () => (
+        <View style={styles.buttonContainer}>
+            <Divider />
+            <Button mode={'contained'} onPress={() => onPressSubmit()}>
+                {'Transfer'}
+            </Button>
+        </View>
+    )
+
+    const renderLoading = () => (
+        <View style={styles.loadingContainer}>
+            <ActivityIndicator size={'large'} />
         </View>
     )
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView
-                style={styles.scrollView}
-                contentContainerStyle={styles.scrollViewContent}
-            >
-                <Typography variant={'header'} size={'extra-large'}>
-                    {'Review your transfer'}
-                </Typography>
-                {renderTransferDetails()}
-                {renderTempButtons()}
-            </ScrollView>
-        </SafeAreaView>
+        <>
+            <SafeAreaView style={styles.container}>
+                <ScrollView
+                    style={styles.scrollView}
+                    contentContainerStyle={styles.scrollViewContent}
+                >
+                    <Typography variant={'header'} size={'extra-large'}>
+                        {'Review your transfer'}
+                    </Typography>
+                    {renderTransferDetails()}
+                </ScrollView>
+                {renderSubmitButton()}
+            </SafeAreaView>
+            {isLoading && renderLoading()}
+        </>
     )
 }
 
@@ -105,7 +125,6 @@ const styles = StyleSheet.create({
         margin: 16,
     },
     buttonContainer: {
-        height: 70,
         paddingHorizontal: 16,
         paddingTop: 8,
         gap: 8,
@@ -116,5 +135,13 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.backgroundSecondary,
         gap: 8,
         padding: 16,
+    },
+    loadingContainer: {
+        position: 'absolute',
+        backgroundColor: COLORS.overlay,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })

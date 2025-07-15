@@ -1,5 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { ActionReducerMapBuilder, createSlice } from '@reduxjs/toolkit'
 import { TRANSFER_INITIAL_STATE } from './constants/transferConstants'
+import { transferMoney } from './transferAsyncThunk'
+import { TransferState } from './types'
 
 const transferSlice = createSlice({
     name: 'transfer',
@@ -8,6 +10,14 @@ const transferSlice = createSlice({
         setTransfers(state, action) {
             state.transferHistory = action.payload
         },
+    },
+    extraReducers: (builder: ActionReducerMapBuilder<TransferState>) => {
+        builder.addCase(transferMoney.fulfilled, (state, action) => {
+            state.transferHistory.push(action.payload)
+        })
+        builder.addCase(transferMoney.rejected, (state, action) => {
+            console.error('Transfer failed:', action.payload)
+        })
     },
 })
 
