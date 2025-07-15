@@ -5,14 +5,14 @@ export interface Transfer {
     createdAt: string
     fromAccountNumber: string
     toAccountNumber: string
-    recipientName: string
     amount: number
+    recipientName?: string
     note?: string
 }
 
 export interface CreateTransfer {
     amount: number
-    recipiantName: string
+    recipiantName?: string
     recipiant: string
     note?: string
     fromAccountNumber: string
