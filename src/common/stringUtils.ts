@@ -3,9 +3,10 @@ export const formatToRM = (
     showFractionDigits: boolean = true
 ) => {
     if (isNaN(value)) return 'RM 0.00'
+    const prefix = value < 0 ? '-RM ' : 'RM '
     return (
-        'RM ' +
-        Number(value).toLocaleString('en-MY', {
+        prefix +
+        Math.abs(Number(value)).toLocaleString('en-MY', {
             minimumFractionDigits: showFractionDigits ? 2 : 0,
             maximumFractionDigits: showFractionDigits ? 2 : 0,
         })

@@ -15,9 +15,6 @@ const transferSlice = createSlice({
         builder.addCase(transferMoney.fulfilled, (state, action) => {
             state.transferHistory.unshift(action.payload)
         })
-        builder.addCase(transferMoney.rejected, (state, action) => {
-            console.error('Transfer failed:', action.payload)
-        })
     },
 })
 

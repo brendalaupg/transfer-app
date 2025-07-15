@@ -14,9 +14,8 @@ const accountSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // Add any async thunks or other reducers here if needed
         builder.addCase(transferMoney.fulfilled, (state, action) => {
-            state.balance -= action.payload.amount
+            state.balance += action.payload.amount
         })
     },
 })

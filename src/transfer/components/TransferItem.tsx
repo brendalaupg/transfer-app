@@ -14,10 +14,26 @@ interface TransferItemProps {
 
 const TransferItem = (props: TransferItemProps) => {
     const { item, index, onPress } = props
+    const isOutgoing = item.amount < 0
 
     const renderLeadingIcon = () => (
-        <View style={styles.leadingIcon}>
-            <Icon size={30} source={'call-made'} />
+        <View
+            style={[
+                styles.leadingIcon,
+                {
+                    backgroundColor: isOutgoing
+                        ? COLORS.accentSecondary
+                        : COLORS.accentPrimary,
+                },
+            ]}
+        >
+            <Icon
+                size={30}
+                source={isOutgoing ? 'call-made' : 'call-received'}
+                color={
+                    isOutgoing ? COLORS.textOnSecondary : COLORS.textOnPrimary
+                }
+            />
         </View>
     )
 
@@ -82,6 +98,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
-        backgroundColor: COLORS.accentSecondary,
     },
 })
