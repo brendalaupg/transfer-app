@@ -78,7 +78,7 @@ const ContactListScreen = () => {
         navigation.navigate('TransferStack', {
             screen: 'TransferScreen',
             params: {
-                contact: {
+                prefill: {
                     name: contact.name,
                     phoneNumber: contact.phoneNumber,
                 },

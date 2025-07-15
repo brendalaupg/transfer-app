@@ -19,7 +19,7 @@ export interface CreateTransfer {
 
 export type TransferStackParamList = {
     TransferScreen: {
-        contact?: ContactItem
+        prefill?: ContactItem | CreateTransfer
     }
     ReviewTransferScreen: {
         transferInfo: CreateTransfer

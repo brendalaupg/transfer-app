@@ -23,13 +23,19 @@ const TEST_ID_PREFIX = 'transfer_screen'
 
 const TransferScreen = (props: NavigationProp) => {
     const { navigation, route } = props
-    const { contact } = route?.params || {}
+    const { prefill } = route?.params || {}
 
-    const initialPhoneNumber = contact?.phoneNumber || ''
+    const contact = prefill && 'phoneNumber' in prefill ? prefill : undefined
+    const isPrefillTransfer = prefill && 'recipiant' in prefill
+    const initialAmount = isPrefillTransfer ? prefill.amount : undefined
+    const initialNote = isPrefillTransfer ? prefill.note ?? '' : ''
+    const initialRecipient = isPrefillTransfer
+        ? prefill.recipiant
+        : contact?.phoneNumber || ''
 
-    const [amount, setAmount] = useState<number>()
-    const [phoneNumber, setPhoneNumber] = useState<string>(initialPhoneNumber)
-    const [note, setNote] = useState<string>('')
+    const [amount, setAmount] = useState<number | undefined>(initialAmount)
+    const [phoneNumber, setPhoneNumber] = useState<string>(initialRecipient)
+    const [note, setNote] = useState<string>(initialNote)
 
     const phoneNumberValidator = usePhoneValidation()
 

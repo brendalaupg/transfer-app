@@ -18,7 +18,9 @@ interface AmountTextFieldProps {
 const AmountTextField = (props: AmountTextFieldProps) => {
     const { value, onChange } = props
 
-    const [formattedValue, setFormattedValue] = useState<string>()
+    const [formattedValue, setFormattedValue] = useState<string | undefined>(
+        value?.toFixed(2)
+    )
 
     const onChangeText = (text: string) => {
         if (!text) {
@@ -32,7 +34,7 @@ const AmountTextField = (props: AmountTextFieldProps) => {
         const cents = parseInt(limited || '0', 10) // fallback to 0 if empty
         const _value = cents / 100
 
-        const formattedString = `${_value.toFixed(2)}`
+        const formattedString = _value.toFixed(2)
         onChange?.(_value)
         setFormattedValue(formattedString)
     }

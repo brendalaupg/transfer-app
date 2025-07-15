@@ -51,7 +51,6 @@ const AccountDashboard = () => {
                     onPressContact={onPressContact}
                     onPressHistory={onPressHistory}
                 />
-                {/* TODO: add transfer list here */}
             </ScrollView>
         </SafeAreaView>
     )
