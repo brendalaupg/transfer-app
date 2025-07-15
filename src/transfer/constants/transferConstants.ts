@@ -2,7 +2,7 @@ import { Transfer, TransferState } from '../types'
 
 export const TRANSFER_PREFIX = 'txn_'
 
-export const MOCK_TRANSFER_LIST: Transfer[] = [
+export const INITIAL_TRANSFER_LIST: Transfer[] = [
     {
         id: 'txn_001',
         createdAt: '2025-07-14T10:30:00Z',
@@ -38,8 +38,80 @@ export const MOCK_TRANSFER_LIST: Transfer[] = [
         amount: -567.89,
         note: 'Gift',
     },
+    {
+        id: 'txn_005',
+        createdAt: '2025-07-11T17:00:00Z',
+        fromAccountNumber: '111-222-333',
+        toAccountNumber: '777-888-999',
+        recipientName: 'Farid Rahman',
+        amount: -45.0,
+        note: 'Dinner',
+    },
+    {
+        id: 'txn_006',
+        createdAt: '2025-07-11T10:15:00Z',
+        fromAccountNumber: '123-456-789',
+        toAccountNumber: '111-000-222',
+        recipientName: 'Lily Chan',
+        amount: 300.0,
+        note: 'Refund',
+    },
+    {
+        id: 'txn_007',
+        createdAt: '2025-07-10T14:50:00Z',
+        fromAccountNumber: '333-444-555',
+        toAccountNumber: '666-777-888',
+        recipientName: 'Kenji Sato',
+        amount: -75.25,
+        note: 'Snacks',
+    },
+    {
+        id: 'txn_008',
+        createdAt: '2025-07-10T09:30:00Z',
+        fromAccountNumber: '123-456-789',
+        toAccountNumber: '999-888-777',
+        recipientName: 'Nur Aisyah',
+        amount: -1200.0,
+        note: 'Tuition Fee',
+    },
+    {
+        id: 'txn_009',
+        createdAt: '2025-07-09T13:00:00Z',
+        fromAccountNumber: '222-333-444',
+        toAccountNumber: '000-111-222',
+        recipientName: 'John Smith',
+        amount: 50.0,
+        note: 'Shared Grab',
+    },
+    {
+        id: 'txn_010',
+        createdAt: '2025-07-09T08:10:00Z',
+        fromAccountNumber: '555-666-777',
+        toAccountNumber: '333-222-111',
+        recipientName: 'Emily Koh',
+        amount: -300.75,
+        note: 'Groceries',
+    },
+    {
+        id: 'txn_011',
+        createdAt: '2025-07-08T20:00:00Z',
+        fromAccountNumber: '789-654-321',
+        toAccountNumber: '147-258-369',
+        recipientName: 'David Tan',
+        amount: 1000.0,
+        note: 'Salary advance',
+    },
+    {
+        id: 'txn_012',
+        createdAt: '2025-07-08T07:30:00Z',
+        fromAccountNumber: '321-654-987',
+        toAccountNumber: '963-852-741',
+        recipientName: 'Siti Aminah',
+        amount: -88.88,
+        note: 'Online shopping',
+    },
 ]
 
 export const TRANSFER_INITIAL_STATE: TransferState = {
-    transferHistory: MOCK_TRANSFER_LIST,
+    transferHistory: INITIAL_TRANSFER_LIST,
 }

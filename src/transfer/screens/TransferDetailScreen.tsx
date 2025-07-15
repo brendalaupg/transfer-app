@@ -63,7 +63,10 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
             >
                 {renderHeader()}
                 <TransferInfoCard item={transferInfo} />
-                <Button onPress={() => createTransfer()}>
+                <Button
+                    mode={'contained-tonal'}
+                    onPress={() => createTransfer()}
+                >
                     {'Transfer Again'}
                 </Button>
             </ScrollView>

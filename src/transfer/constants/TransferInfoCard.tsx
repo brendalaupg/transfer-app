@@ -115,13 +115,8 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     infoContent: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    button: {
-        flex: 1,
-        width: '100%',
     },
 })

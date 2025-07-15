@@ -41,3 +41,8 @@ export type TransferStackParamList = {
 export interface TransferState {
     transferHistory: Transfer[]
 }
+
+export type TransferHistorySectionData = {
+    title: string
+    data: Transfer[]
+}

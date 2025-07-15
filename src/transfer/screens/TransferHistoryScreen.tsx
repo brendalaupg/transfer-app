@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { COLORS } from '../../constants/colors'
 import TransferSelectors from '../transferSelectors'
 import { StyleSheet, SectionList, SafeAreaView, View } from 'react-native'
-import { Transfer } from '../types'
+import { Transfer, TransferHistorySectionData } from '../types'
 import Typography from '../../common/Typography'
 import TransferItem from '../components/TransferItem'
 import { useNavigation } from '@react-navigation/native'
@@ -38,6 +38,24 @@ const TransferHistoryScreen = () => {
         })
     }
 
+    const renderItem = useCallback(
+        ({ item, index }: { item: Transfer; index: number }) => (
+            <TransferItem
+                item={item}
+                index={index}
+                onPress={onPressTransferItem}
+            />
+        ),
+        [onPressTransferItem]
+    )
+
+    const renderSectionHeader = useCallback(
+        ({ section }: { section: TransferHistorySectionData }) => (
+            <SectionHeader title={section.title} />
+        ),
+        []
+    )
+
     return (
         <SafeAreaView style={styles.container}>
             <SectionList
@@ -49,16 +67,12 @@ const TransferHistoryScreen = () => {
                 }
                 sections={history}
                 keyExtractor={(item, index) => item.id + index}
-                renderItem={({ item, index }) => (
-                    <TransferItem
-                        item={item}
-                        index={index}
-                        onPress={onPressTransferItem}
-                    />
-                )}
-                renderSectionHeader={({ section: { title } }) => (
-                    <SectionHeader title={title} />
-                )}
+                renderItem={renderItem}
+                renderSectionHeader={renderSectionHeader}
+                initialNumToRender={10}
+                maxToRenderPerBatch={10}
+                windowSize={5}
+                removeClippedSubviews={true}
             />
         </SafeAreaView>
     )

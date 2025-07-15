@@ -1,110 +1,130 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import {
     SafeAreaView,
     StyleSheet,
     View,
-    Text,
+    Platform,
     FlatList,
     Linking,
-    Platform,
 } from 'react-native'
-import ContactListItem from '../components/ContactListItem'
 import { Button } from 'react-native-paper'
-import Typography from '../../common/Typography'
 import {
     NavigationProp,
     ParamListBase,
     useNavigation,
 } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../app/store'
-import { getContactPermission } from '../contactsAsyncThunk'
-import ContactSelectors from '../contactSelectors'
-import { ContactItem } from '../types'
+
+import Typography from '../../common/Typography'
 import ListHeader from '../../common/ListHeader'
+import ContactListItem from '../components/ContactListItem'
+
 import { COLORS } from '../../constants/colors'
+import { AppDispatch, RootState } from '../../app/store'
+import { getContactPermission } from '../contactsAsyncThunk'
+import { ContactItem } from '../types'
+import ContactSelectors from '../contactSelectors'
 
 const ContactListScreen = () => {
-    const contacts = useSelector(ContactSelectors.contacts)
-    const isLoading = useSelector(ContactSelectors.isContactsLoading)
-    const isPermissionGranted = useSelector(
-        ContactSelectors.isPermissionGranted
+    const dispatch = useDispatch<AppDispatch>()
+    const navigation: NavigationProp<ParamListBase> = useNavigation()
+
+    const contacts = useSelector((state: RootState) =>
+        ContactSelectors.contacts(state)
+    )
+    const isLoading = useSelector((state: RootState) =>
+        ContactSelectors.isContactsLoading(state)
+    )
+    const isPermissionGranted = useSelector((state: RootState) =>
+        ContactSelectors.isPermissionGranted(state)
     )
 
-    const navigation: NavigationProp<ParamListBase> = useNavigation()
-    const dispatch = useDispatch<AppDispatch>()
-
     useEffect(() => {
-        if (isPermissionGranted) {
-            return
+        if (!isPermissionGranted) {
+            dispatch(getContactPermission())
         }
+    }, [dispatch, isPermissionGranted])
 
-        dispatch(getContactPermission())
-    }, [])
-
-    const handleOpenSettings = () => {
+    const handleOpenSettings = useCallback(() => {
         if (Platform.OS === 'ios') {
             Linking.openURL('app-settings:')
         } else {
             Linking.openSettings()
         }
-    }
+    }, [])
+
+    const keyExtractor = useCallback(
+        (item: ContactItem) => `${item.id}-${item.phoneNumber}`,
+        []
+    )
+
+    const onPressContact = useCallback(
+        (contact: ContactItem) => {
+            navigation.navigate('TransferStack', {
+                screen: 'TransferScreen',
+                params: {
+                    prefill: {
+                        name: contact.name,
+                        phoneNumber: contact.phoneNumber,
+                    },
+                },
+            })
+        },
+        [navigation]
+    )
+
+    const renderItem = useCallback(
+        ({ item, index }: { item: ContactItem; index: number }) => (
+            <ContactListItem
+                contact={item}
+                index={index}
+                onPress={onPressContact}
+            />
+        ),
+        [onPressContact]
+    )
+
+    const listHeader = useMemo(
+        () => <ListHeader title="Contact List" testId="contact-list-header" />,
+        []
+    )
 
     const renderLoading = () => (
         <View style={styles.centered}>
-            <Typography variant={'body'} size={'small'}>
-                {'Loading contacts...'}
+            <Typography variant="body" size="small">
+                Loading contacts...
             </Typography>
         </View>
     )
 
     const renderEmptyState = () => (
         <View style={styles.centered}>
-            <Text>{'No contacts found.'}</Text>
+            <Typography variant="body" size="small">
+                No contacts found.
+            </Typography>
         </View>
     )
 
     const renderPermissionDenied = () => (
         <View style={styles.centered}>
-            <Typography variant={'body'} size={'small'}>
-                {'Contact permission is required to show your contacts.'}
+            <Typography variant="body" size="small">
+                Contact permission is required to show your contacts.
             </Typography>
-            <Button onPress={handleOpenSettings}>{'Open Settings'}</Button>
+            <Button onPress={handleOpenSettings}>Open Settings</Button>
         </View>
     )
-
-    const keyExtractor = (item: ContactItem) => `${item.id}-${item.phoneNumber}`
-
-    const onPressContact = (contact: ContactItem) => {
-        navigation.navigate('TransferStack', {
-            screen: 'TransferScreen',
-            params: {
-                prefill: {
-                    name: contact.name,
-                    phoneNumber: contact.phoneNumber,
-                },
-            },
-        })
-    }
 
     const renderContactList = () => (
         <FlatList
             data={contacts}
             keyExtractor={keyExtractor}
-            renderItem={({ item, index }) => (
-                <ContactListItem
-                    contact={item}
-                    index={index}
-                    onPress={onPressContact}
-                />
-            )}
+            renderItem={renderItem}
             ListEmptyComponent={renderEmptyState}
-            ListHeaderComponent={
-                <ListHeader
-                    title={'Contact List'}
-                    testId={'contact-list-header'}
-                />
-            }
+            ListHeaderComponent={listHeader}
+            initialNumToRender={10}
+            maxToRenderPerBatch={10}
+            windowSize={5}
+            removeClippedSubviews
         />
     )
 
@@ -130,5 +150,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 16,
     },
 })
