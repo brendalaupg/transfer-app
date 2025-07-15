@@ -16,7 +16,7 @@ const TransferSelectors = {
 
         history.forEach((transfer) => {
             const date = new Date(transfer.createdAt).toLocaleDateString(
-                undefined,
+                'en-MY',
                 {
                     year: 'numeric',
                     month: 'long',

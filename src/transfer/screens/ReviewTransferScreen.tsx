@@ -1,16 +1,10 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
-import { Transfer, TransferStackParamList } from '../types'
-import { ActivityIndicator, Button, Divider } from 'react-native-paper'
+import { TransferStackParamList } from '../types'
+import { Button, Divider } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
-import { AppDispatch } from '../../app/store'
-import { useDispatch } from 'react-redux'
-import {
-    authenticateWithBiometrics,
-    transferMoney,
-} from '../transferAsyncThunk'
 import TransferInfoCard from '../constants/TransferInfoCard'
 
 type NavigationProp = NativeStackScreenProps<
@@ -18,50 +12,14 @@ type NavigationProp = NativeStackScreenProps<
     'ReviewTransferScreen'
 >
 
-// TODO: Setup and UI
 const ReviewTransferScreen = (props: NavigationProp) => {
     const { navigation, route } = props
     const newTransfer = route.params.transferInfo
 
-    const [isLoading, setIsLoading] = useState(false)
-
-    const dispatch = useDispatch<AppDispatch>()
-
-    const onPressFailed = () => {
-        navigation.navigate('FailedTransferScreen', {
-            transferInfo: newTransfer,
-            error: 'Transfer failed. Please try again later.',
-        })
-    }
-
-    const onPressSuccess = (transferInfo: Transfer) => {
-        navigation.navigate('SuccessTransferScreen', {
-            transferInfo,
-        })
-    }
-
     const onPressSubmit = async () => {
-        try {
-            const result = await dispatch(authenticateWithBiometrics()).unwrap()
-            if (!result) {
-                console.error(
-                    'Biometric authentication failed or not available'
-                )
-                // default to pin
-                return
-            }
-
-            console.log('Biometric authentication successful')
-
-            setIsLoading(true)
-            const transfer = await dispatch(transferMoney(newTransfer)).unwrap()
-            onPressSuccess(transfer)
-        } catch {
-            onPressFailed()
-            return
-        } finally {
-            setIsLoading(false)
-        }
+        navigation.navigate('PasscodeScreen', {
+            transfer: newTransfer,
+        })
     }
 
     const renderSubmitButton = () => (
@@ -70,12 +28,6 @@ const ReviewTransferScreen = (props: NavigationProp) => {
             <Button mode={'contained'} onPress={() => onPressSubmit()}>
                 {'Transfer'}
             </Button>
-        </View>
-    )
-
-    const renderLoading = () => (
-        <View style={styles.loadingContainer}>
-            <ActivityIndicator size={'large'} />
         </View>
     )
 
@@ -93,7 +45,6 @@ const ReviewTransferScreen = (props: NavigationProp) => {
                 </ScrollView>
                 {renderSubmitButton()}
             </SafeAreaView>
-            {isLoading && renderLoading()}
         </>
     )
 }
@@ -127,13 +78,5 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.backgroundSecondary,
         gap: 8,
         padding: 16,
-    },
-    loadingContainer: {
-        position: 'absolute',
-        backgroundColor: COLORS.overlay,
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 })

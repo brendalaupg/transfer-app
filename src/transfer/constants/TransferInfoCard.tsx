@@ -45,7 +45,9 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
         },
         {
             title: 'At',
-            label: isTransfer(item) ? item.createdAt : undefined,
+            label: isTransfer(item)
+                ? new Date(item.createdAt).toLocaleString('en-MY')
+                : undefined,
         },
         {
             title: 'Amount',

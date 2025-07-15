@@ -8,6 +8,7 @@ import { TransferStackParamList } from '../types'
 import CloseButtonHeader from '../../common/CloseButtonHeader'
 import BackButtonHeader from '../../common/BackButtonHeader'
 import { View } from 'react-native'
+import PasscodeScreen from '../screens/PasscodeScreen'
 
 const Stack = createNativeStackNavigator<TransferStackParamList>()
 
@@ -28,6 +29,15 @@ export default function TransferStackNavigator() {
                 component={ReviewTransferScreen}
                 options={{
                     headerLeft: () => <BackButtonHeader />,
+                    headerTitle: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen
+                name={'PasscodeScreen'}
+                component={PasscodeScreen}
+                options={{
+                    headerLeft: () => <CloseButtonHeader />,
                     headerTitle: '',
                     headerTransparent: true,
                 }}

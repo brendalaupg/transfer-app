@@ -33,6 +33,9 @@ export type TransferStackParamList = {
         error?: string
     }
     ContactListScreen: undefined
+    PasscodeScreen: {
+        transfer: CreateTransfer
+    }
 }
 
 export interface TransferState {
