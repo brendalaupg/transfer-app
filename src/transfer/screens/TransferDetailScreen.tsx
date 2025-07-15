@@ -1,6 +1,6 @@
 import React from 'react'
 import { COLORS } from '../../constants/colors'
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { AppStackParamList } from '../../app/AppStackNavigator'
 import TransferInfoCard from '../constants/TransferInfoCard'
@@ -12,6 +12,7 @@ import {
     useNavigation,
 } from '@react-navigation/native'
 import { CreateTransfer } from '../types'
+import TransferIcon from '../components/TransferIcon'
 
 type TransferDetailNavigationProp = NativeStackScreenProps<
     AppStackParamList,
@@ -41,15 +42,26 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
         })
     }
 
+    const renderHeader = () => (
+        <View style={styles.header}>
+            <Typography variant={'header'} size={'extra-large'}>
+                {'Transfer Details'}
+            </Typography>
+            <TransferIcon
+                isOutgoing={transferInfo.amount < 0}
+                iconSize={36}
+                containerSize={60}
+            />
+        </View>
+    )
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
             >
-                <Typography variant={'header'} size={'extra-large'}>
-                    {'Transfer Details'}
-                </Typography>
+                {renderHeader()}
                 <TransferInfoCard item={transferInfo} />
                 <Button onPress={() => createTransfer()}>
                     {'Transfer Again'}
@@ -70,6 +82,11 @@ const styles = StyleSheet.create({
     scrollViewContent: {
         padding: 16,
         gap: 16,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
 })
 

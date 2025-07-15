@@ -5,6 +5,7 @@ import { COLORS } from '../../constants/colors'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Icon } from 'react-native-paper'
 import { formatToRM } from '../../common/stringUtils'
+import TransferIcon from './TransferIcon'
 
 interface TransferItemProps {
     item: Transfer
@@ -16,27 +17,6 @@ const TransferItem = (props: TransferItemProps) => {
     const { item, index, onPress } = props
     const isOutgoing = item.amount < 0
 
-    const renderLeadingIcon = () => (
-        <View
-            style={[
-                styles.leadingIcon,
-                {
-                    backgroundColor: isOutgoing
-                        ? COLORS.accentSecondary
-                        : COLORS.accentPrimary,
-                },
-            ]}
-        >
-            <Icon
-                size={30}
-                source={isOutgoing ? 'call-made' : 'call-received'}
-                color={
-                    isOutgoing ? COLORS.textOnSecondary : COLORS.textOnPrimary
-                }
-            />
-        </View>
-    )
-
     const renderTrailingIcon = () => (
         <Icon size={24} source={'chevron-right'} color={COLORS.textSecondary} />
     )
@@ -44,7 +24,11 @@ const TransferItem = (props: TransferItemProps) => {
     return (
         <TouchableOpacity key={index} onPress={() => onPress(item)}>
             <View style={styles.container}>
-                {renderLeadingIcon()}
+                <TransferIcon
+                    isOutgoing={isOutgoing}
+                    iconSize={24}
+                    containerSize={40}
+                />
                 <View style={styles.itemContent}>
                     <Typography
                         style={styles.title}
