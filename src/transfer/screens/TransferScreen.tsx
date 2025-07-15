@@ -103,7 +103,7 @@ const TransferScreen = (props: NavigationProp) => {
                     showsVerticalScrollIndicator={false}
                 >
                     <Typography variant={'header'} size={'extra-large'}>
-                        {'Transfer'}
+                        {'New Transfer'}
                     </Typography>
                     {renderRecipientInput()}
                     {renderAmountInput()}
