@@ -15,6 +15,7 @@ export interface CreateTransfer {
     recipiantName: string
     recipiant: string
     note?: string
+    fromAccountNumber: string
 }
 
 export type TransferStackParamList = {

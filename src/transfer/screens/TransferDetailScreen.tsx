@@ -30,6 +30,7 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
             recipiantName: transferInfo.recipientName,
             amount: transferInfo.amount,
             note: transferInfo.note,
+            fromAccountNumber: transferInfo.fromAccountNumber,
         }
 
         navigation.navigate('TransferStack', {

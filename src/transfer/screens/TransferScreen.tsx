@@ -13,6 +13,8 @@ import Typography from '../../common/Typography'
 import TextField from '../../common/TextField'
 import usePhoneValidation from '../../common/validator/usePhoneNumberValidator'
 import AmountTextField from '../components/AmountTextField'
+import { useSelector } from 'react-redux'
+import AccountSelectors from '../../account/accountSelectors'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -37,6 +39,8 @@ const TransferScreen = (props: NavigationProp) => {
     const [phoneNumber, setPhoneNumber] = useState<string>(initialRecipient)
     const [note, setNote] = useState<string>(initialNote)
 
+    const fromAccountNumber = useSelector(AccountSelectors.accountNumber)
+
     const phoneNumberValidator = usePhoneValidation()
 
     const onPressSubmit = () => {
@@ -58,9 +62,10 @@ const TransferScreen = (props: NavigationProp) => {
         navigation?.navigate('ReviewTransferScreen', {
             transferInfo: {
                 amount,
-                recipiantName: 'John Doe',
+                recipiantName: 'John Doe', // temporary placeholder
                 recipiant: phoneNumber,
                 note,
+                fromAccountNumber,
             },
         })
     }
