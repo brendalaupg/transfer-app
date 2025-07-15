@@ -9,6 +9,7 @@ import CloseButtonHeader from '../../common/CloseButtonHeader'
 import BackButtonHeader from '../../common/BackButtonHeader'
 import { View } from 'react-native'
 import PasscodeScreen from '../screens/PasscodeScreen'
+import { ContactSelectionScreen } from '../../contacts/screens/ContactListScreen'
 
 const Stack = createNativeStackNavigator<TransferStackParamList>()
 
@@ -56,6 +57,15 @@ export default function TransferStackNavigator() {
                 component={FailedTransferScreen}
                 options={{
                     headerLeft: () => <View />,
+                    headerTitle: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen
+                name={'ContactSelectionScreen'}
+                component={ContactSelectionScreen}
+                options={{
+                    headerLeft: () => <BackButtonHeader />,
                     headerTitle: '',
                     headerTransparent: true,
                 }}

@@ -4,9 +4,9 @@ import AccountDashboard from '../account/screens/AccountDashboard'
 import TransferStackNavigator from '../transfer/navigator/TransferStackNavigator'
 import TransferHistoryScreen from '../transfer/screens/TransferHistoryScreen'
 import BackButtonHeader from '../common/BackButtonHeader'
-import ContactListScreen from '../contacts/screens/ContactListScreen'
 import TransferDetailScreen from '../transfer/screens/TransferDetailScreen'
 import { Transfer } from '../transfer/types'
+import { ContactListScreen } from '../contacts/screens/ContactListScreen'
 
 export type AppStackParamList = {
     AccountDashboard: undefined

@@ -22,10 +22,16 @@ import ContactListItem from '../components/ContactListItem'
 import { COLORS } from '../../constants/colors'
 import { AppDispatch, RootState } from '../../app/store'
 import { getContactPermission } from '../contactsAsyncThunk'
-import { ContactItem } from '../types'
+import { ContactItem, ContactScreenMode } from '../types'
 import ContactSelectors from '../contactSelectors'
 
-const ContactListScreen = () => {
+interface ContactListProps {
+    mode: ContactScreenMode
+}
+
+const ContactScreen = (props: ContactListProps) => {
+    const { mode } = props
+
     const dispatch = useDispatch<AppDispatch>()
     const navigation: NavigationProp<ParamListBase> = useNavigation()
 
@@ -38,6 +44,8 @@ const ContactListScreen = () => {
     )
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const title = mode === 'list' ? 'Contact List' : 'Select a contact'
 
     const getContacts = async () => {
         try {
@@ -69,15 +77,20 @@ const ContactListScreen = () => {
 
     const onPressContact = useCallback(
         (contact: ContactItem) => {
-            navigation.navigate('TransferStack', {
-                screen: 'TransferScreen',
-                params: {
-                    prefill: {
-                        name: contact.name,
-                        phoneNumber: contact.phoneNumber,
+            if (mode === 'list') {
+                navigation.navigate('TransferStack', {
+                    screen: 'TransferScreen',
+                    params: {
+                        prefill: {
+                            name: contact.name,
+                            phoneNumber: contact.phoneNumber,
+                        },
                     },
-                },
-            })
+                })
+                return
+            }
+
+            navigation.goBack()
         },
         [navigation]
     )
@@ -87,6 +100,7 @@ const ContactListScreen = () => {
             <ContactListItem
                 contact={item}
                 index={index}
+                mode={mode}
                 onPress={onPressContact}
             />
         ),
@@ -94,9 +108,7 @@ const ContactListScreen = () => {
     )
 
     const listHeader = useMemo(
-        () => (
-            <ListHeader title={'Contact List'} testId={'contact-list-header'} />
-        ),
+        () => <ListHeader title={title} testId={'contact-list-header'} />,
         []
     )
 
@@ -151,7 +163,13 @@ const ContactListScreen = () => {
     )
 }
 
-export default ContactListScreen
+export const ContactListScreen = () => {
+    return <ContactScreen mode={'list'} />
+}
+
+export const ContactSelectionScreen = () => {
+    return <ContactScreen mode={'selection'} />
+}
 
 const styles = StyleSheet.create({
     container: {

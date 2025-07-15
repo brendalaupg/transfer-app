@@ -1,18 +1,19 @@
 import React, { memo } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Divider, IconButton, Text } from 'react-native-paper'
+import { Divider, Icon, IconButton, Text } from 'react-native-paper'
 import Typography from '../../common/Typography'
 import { COLORS } from '../../constants/colors'
-import { ContactItem } from '../types'
+import { ContactItem, ContactScreenMode } from '../types'
 
 interface ContactListItemProps {
     contact: ContactItem
     index: number
+    mode: ContactScreenMode
     onPress?: (contact: ContactItem) => void
 }
 
 const ContactListItem = (props: ContactListItemProps) => {
-    const { contact, index, onPress } = props
+    const { contact, index, mode, onPress } = props
 
     const renderPhoneNumber = () => (
         <>
@@ -44,6 +45,16 @@ const ContactListItem = (props: ContactListItemProps) => {
         </View>
     )
 
+    const renderSelectionMetadata = () => (
+        <View style={styles.metadata}>
+            <Icon
+                source={'chevron-right'}
+                size={32}
+                color={COLORS.textSecondary}
+            />
+        </View>
+    )
+
     const renderItemContent = () => (
         <View style={styles.itemContent}>
             <Typography style={styles.name} variant={'label'} size={'medium'}>
@@ -60,7 +71,7 @@ const ContactListItem = (props: ContactListItemProps) => {
         >
             <View style={styles.container}>
                 {renderItemContent()}
-                {renderMetadata()}
+                {mode === 'list' ? renderMetadata() : renderSelectionMetadata()}
             </View>
             <Divider />
         </TouchableOpacity>

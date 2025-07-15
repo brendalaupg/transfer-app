@@ -6,6 +6,7 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     Platform,
+    View,
 } from 'react-native'
 import { TransferStackParamList } from '../types'
 import { Button, TextInput } from 'react-native-paper'
@@ -70,18 +71,23 @@ const TransferScreen = (props: NavigationProp) => {
         })
     }
 
-    // const onPressContacts = () => {}
+    const onPressContacts = () => {
+        navigation.navigate('ContactSelectionScreen')
+    }
 
     const renderRecipientInput = () => (
-        <TextField
-            testID={`${TEST_ID_PREFIX}.recipient_input`}
-            title={'Recipient (Phone Number)'}
-            numberOfLines={1}
-            value={phoneNumber}
-            keyboardType={'number-pad'}
-            validator={phoneNumberValidator}
-            onChangeText={setPhoneNumber}
-        />
+        <View>
+            <TextField
+                testID={`${TEST_ID_PREFIX}.recipient_input`}
+                title={'Recipient (Phone Number)'}
+                numberOfLines={1}
+                value={phoneNumber}
+                keyboardType={'number-pad'}
+                validator={phoneNumberValidator}
+                onChangeText={setPhoneNumber}
+            />
+            <Button onPress={onPressContacts}>{'contacts'}</Button>
+        </View>
     )
 
     const renderAmountInput = () => (

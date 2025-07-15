@@ -32,7 +32,7 @@ export type TransferStackParamList = {
         transferInfo: CreateTransfer
         error?: string
     }
-    ContactListScreen: undefined
+    ContactSelectionScreen: undefined
     PasscodeScreen: {
         transfer: CreateTransfer
     }
