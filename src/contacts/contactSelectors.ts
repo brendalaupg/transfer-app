@@ -4,15 +4,19 @@ import { ContactState } from './types'
 
 const contact = (state: RootState) => state.contact
 
-const AccountSelectors = {
+const ContactSelectors = {
     contacts: createSelector(
         [contact],
         (contact: ContactState) => contact.contacts
     ),
+    isContactsLoading: createSelector(
+        [contact],
+        (contact: ContactState) => contact.isContactLoading
+    ),
     isPermissionGranted: createSelector(
         [contact],
-        (contact: ContactState) => contact.isPermissionGranted
+        (contact: ContactState) => contact.permissionStatus === 'granted'
     ),
 }
 
-export default AccountSelectors
+export default ContactSelectors

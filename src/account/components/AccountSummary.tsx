@@ -6,6 +6,7 @@ import { IconButton, Portal, Snackbar } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
 import * as Clipboard from 'expo-clipboard'
 import Typography from '../../common/Typography'
+import { formatToRM } from '../../common/stringUtils'
 
 const AccountSummary = () => {
     const accountBalance = useSelector(AccountSelectors.balance)
@@ -47,8 +48,8 @@ const AccountSummary = () => {
             <Typography variant={'body'} size={'medium'}>
                 {'Account Balance'}
             </Typography>
-            <Typography variant={'label'} size={'large'}>
-                {accountBalance}
+            <Typography variant={'title'} size={'extra-large'}>
+                {formatToRM(accountBalance)}
             </Typography>
         </>
     )

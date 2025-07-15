@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,7 +8,6 @@ import {
     Linking,
     Platform,
 } from 'react-native'
-import * as ExpoContacts from 'expo-contacts'
 import ContactListItem from '../components/ContactListItem'
 import { Button } from 'react-native-paper'
 import Typography from '../../common/Typography'
@@ -18,32 +17,28 @@ import {
     ParamListBase,
     useNavigation,
 } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../../app/store'
+import { getContactPermission } from '../contactsAsyncThunk'
+import ContactSelectors from '../contactSelectors'
+import { ContactItem } from '../types'
 
 const ContactListScreen = () => {
-    const [contacts, setContacts] = useState<ExpoContacts.Contact[]>([])
-    const [permissionStatus, setPermissionStatus] = useState<
-        'undetermined' | 'granted' | 'denied'
-    >('undetermined')
-    const [isLoading, setIsLoading] = useState(true)
+    const contacts = useSelector(ContactSelectors.contacts)
+    const isLoading = useSelector(ContactSelectors.isContactsLoading)
+    const isPermissionGranted = useSelector(
+        ContactSelectors.isPermissionGranted
+    )
 
     const navigation: NavigationProp<ParamListBase> = useNavigation()
+    const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        const getPermissionAndContacts = async () => {
-            const { status } = await ExpoContacts.requestPermissionsAsync()
-            setPermissionStatus(status)
-            if (status === 'granted') {
-                const { data } = await ExpoContacts.getContactsAsync({
-                    fields: [
-                        ExpoContacts.Fields.Name,
-                        ExpoContacts.Fields.PhoneNumbers,
-                    ],
-                })
-                setContacts(data)
-            }
-            setIsLoading(false)
+        if (isPermissionGranted) {
+            return
         }
-        getPermissionAndContacts()
+
+        dispatch(getContactPermission())
     }, [])
 
     const handleOpenSettings = () => {
@@ -77,16 +72,15 @@ const ContactListScreen = () => {
         </View>
     )
 
-    const keyExtractor = (item: ExpoContacts.Contact) =>
-        item.id || item.name || item.phoneNumbers?.[0]?.number || 'unknown'
+    const keyExtractor = (item: ContactItem) => `${item.id}-${item.phoneNumber}`
 
-    const onPressContact = (contact: ExpoContacts.Contact) => {
+    const onPressContact = (contact: ContactItem) => {
         navigation.navigate('TransferStack', {
             screen: 'TransferScreen',
             params: {
                 contact: {
                     name: contact.name,
-                    phoneNumber: contact.phoneNumbers?.[0]?.number || '',
+                    phoneNumber: contact.phoneNumber,
                 },
             },
         })
@@ -110,7 +104,7 @@ const ContactListScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {permissionStatus === 'granted'
+            {isPermissionGranted
                 ? isLoading
                     ? renderLoading()
                     : renderContactList()

@@ -1,9 +1,11 @@
 export interface ContactItem {
+    id: string
     name: string
     phoneNumber: string
 }
 
 export interface ContactState {
     contacts: ContactItem[]
-    isPermissionGranted: boolean
+    isContactLoading: boolean
+    permissionStatus: 'granted' | 'denied' | 'undetermined'
 }

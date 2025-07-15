@@ -1,14 +1,14 @@
 import React, { memo } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Divider, IconButton, Text } from 'react-native-paper'
-import * as ExpoContacts from 'expo-contacts'
 import Typography from '../../common/Typography'
 import { COLORS } from '../../constants/colors'
+import { ContactItem } from '../types'
 
 interface ContactListItemProps {
-    contact: ExpoContacts.Contact
+    contact: ContactItem
     index: number
-    onPress?: (contact: ExpoContacts.Contact) => void
+    onPress?: (contact: ContactItem) => void
 }
 
 const ContactListItem = (props: ContactListItemProps) => {
@@ -16,10 +16,8 @@ const ContactListItem = (props: ContactListItemProps) => {
 
     const renderPhoneNumber = () => (
         <>
-            {contact.phoneNumbers?.length ? (
-                <Text style={styles.phone}>
-                    {contact.phoneNumbers[0].number}
-                </Text>
+            {contact.phoneNumber ? (
+                <Text style={styles.phone}>{contact.phoneNumber}</Text>
             ) : (
                 <Typography
                     style={styles.phone}
