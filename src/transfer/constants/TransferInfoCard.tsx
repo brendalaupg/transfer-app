@@ -63,7 +63,12 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
         },
     ]
 
-    const renderRow = (key: string, title: string, label?: string) => (
+    const renderRow = (
+        key: string,
+        isLastRow: boolean,
+        title: string,
+        label?: string
+    ) => (
         <View key={key} style={styles.transactionInfoContainer}>
             <View style={styles.infoContent}>
                 <Typography variant={'body'} size={'medium'}>
@@ -73,16 +78,21 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
                     {label}
                 </Typography>
             </View>
-            <Divider />
+            {!isLastRow && <Divider />}
         </View>
     )
 
     return (
         <View style={styles.container} testID={testId}>
             {info.map(
-                (value, idx) =>
+                (value, index) =>
                     value.label &&
-                    renderRow(idx.toString(), value.title, value.label)
+                    renderRow(
+                        index.toString(),
+                        index + 1 === info.length,
+                        value.title,
+                        value.label
+                    )
             )}
         </View>
     )
