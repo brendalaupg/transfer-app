@@ -9,7 +9,10 @@ import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
 import { AppDispatch } from '../../app/store'
 import { useDispatch } from 'react-redux'
-import { transferMoney } from '../transferAsyncThunk'
+import {
+    authenticateWithBiometrics,
+    transferMoney,
+} from '../transferAsyncThunk'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -59,6 +62,17 @@ const ReviewTransferScreen = (props: NavigationProp) => {
 
     const onPressSubmit = async () => {
         try {
+            const result = await dispatch(authenticateWithBiometrics()).unwrap()
+            if (!result) {
+                console.error(
+                    'Biometric authentication failed or not available'
+                )
+                // default to pin
+                return
+            }
+
+            console.log('Biometric authentication successful')
+
             setIsLoading(true)
             const transfer = await dispatch(
                 transferMoney(createTransfer)

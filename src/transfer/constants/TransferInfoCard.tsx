@@ -1,13 +1,15 @@
 import React, { memo } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Transfer } from '../types'
+import { Transfer, CreateTransfer } from '../types'
 import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
 import { Divider } from 'react-native-paper'
 import { formatToRM } from '../../common/stringUtils'
 
+type TransferInfoCardItem = Transfer | CreateTransfer
+
 interface TransferInfoCardProps {
-    item: Transfer
+    item: TransferInfoCardItem
     testId?: string
 }
 
@@ -19,14 +21,19 @@ interface RowProps {
 const TransferInfoCard = (props: TransferInfoCardProps) => {
     const { item, testId } = props
 
+    // Helper to check if item is Transfer
+    const isTransfer = (obj: TransferInfoCardItem): obj is Transfer => {
+        return 'id' in obj && 'createdAt' in obj
+    }
+
     const info: RowProps[] = [
         {
             title: 'Transfer ID',
-            label: item.id,
+            label: isTransfer(item) ? item.id : undefined,
         },
         {
             title: 'At',
-            label: item.createdAt,
+            label: isTransfer(item) ? item.createdAt : undefined,
         },
         {
             title: 'Amount',
@@ -38,11 +45,15 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
         },
         {
             title: 'To',
-            label: item.toAccountNumber,
+            label: isTransfer(item)
+                ? item.toAccountNumber
+                : (item as CreateTransfer).recipiant,
         },
         {
             title: 'Recipient Name',
-            label: item.recipientName,
+            label: isTransfer(item)
+                ? item.recipientName
+                : (item as CreateTransfer).recipiantName,
         },
         {
             title: 'Note',
@@ -66,9 +77,10 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
 
     return (
         <View style={styles.container} testID={testId}>
-            {Object.entries(info).map(
-                ([key, value]) =>
-                    value.label && renderRow(key, value.title, value.label)
+            {info.map(
+                (value, idx) =>
+                    value.label &&
+                    renderRow(idx.toString(), value.title, value.label)
             )}
         </View>
     )

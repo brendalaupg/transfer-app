@@ -1,58 +1,33 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { TransferStackParamList } from '../types'
 import { COLORS } from '../../constants/colors'
 import { Button, Divider, Icon, Text } from 'react-native-paper'
-import { MOCK_TRANSFER_LIST } from '../constants/transferConstants'
+import TransferInfoCard from '../constants/TransferInfoCard'
 
-type NavigationProp = NativeStackNavigationProp<
+type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
     'FailedTransferScreen'
 >
 
-// TODO: Setup and UI
-const FailedTransferScreen = () => {
-    const { navigate, getParent } = useNavigation<NavigationProp>()
+const FailedTransferScreen = (props: NavigationProp) => {
+    const { navigation, route } = props
 
-    // TODO: setup actual transfer
-    const transferInfo = MOCK_TRANSFER_LIST[1]
+    const transferInfo = route.params.transferInfo
 
     const onPressTryAgain = () => {
-        navigate('TransferScreen', {
-            transferInfo,
+        navigation.navigate('TransferScreen', {
+            prefill: transferInfo,
         })
     }
 
-    const onPressBack = () => {
-        getParent()?.goBack()
+    const onPressClose = () => {
+        const parent = navigation.getParent()
+        if (parent) {
+            parent.goBack()
+        }
     }
-
-    const transactionInfo = (title: string, label: string) => (
-        <View style={styles.transactionInfoContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.label}>{label}</Text>
-        </View>
-    )
-
-    const renderTransferDetails = () => (
-        <View style={styles.transferContainer}>
-            {transactionInfo('Amount', `${transferInfo.amount}`)}
-            <Divider />
-            {transactionInfo('From', `${transferInfo.fromAccountNumber}`)}
-            <Divider />
-            {transactionInfo('To', `${transferInfo.toAccountNumber}`)}
-            <Divider />
-            {transactionInfo('Recipient Name', `${transferInfo.recipientName}`)}
-            {transferInfo.note && (
-                <>
-                    <Divider />
-                    {transactionInfo('Note', `${transferInfo.note}`)}
-                </>
-            )}
-        </View>
-    )
 
     const renderBottomButtonContainer = () => (
         <View style={styles.buttonContainer}>
@@ -60,7 +35,7 @@ const FailedTransferScreen = () => {
             <Button mode={'contained'} onPress={() => onPressTryAgain()}>
                 {'Try Again'}
             </Button>
-            <Button mode={'contained-tonal'} onPress={() => onPressBack()}>
+            <Button mode={'contained-tonal'} onPress={() => onPressClose()}>
                 {'Back to Account Dashboard'}
             </Button>
         </View>
@@ -78,7 +53,7 @@ const FailedTransferScreen = () => {
                     color={COLORS.error}
                 />
                 <Text style={styles.successLabel}>{'Transfer Failed'}</Text>
-                {renderTransferDetails()}
+                <TransferInfoCard item={transferInfo} />
             </ScrollView>
             {renderBottomButtonContainer()}
         </SafeAreaView>
@@ -90,8 +65,7 @@ export default memo(FailedTransferScreen)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: COLORS.backgroundPrimary,
-        backgroundColor: 'blue',
+        backgroundColor: COLORS.backgroundPrimary,
     },
     scrollView: {
         flex: 1,
