@@ -3,13 +3,15 @@ import { useSelector } from 'react-redux'
 import { COLORS } from '../../constants/colors'
 import TransferSelectors from '../transferSelectors'
 import { StyleSheet, SectionList, SafeAreaView, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { TransferStackParamList } from '../types'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { Transfer } from '../types'
 import Typography from '../../common/Typography'
+import TransferItem from '../components/TransferItem'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { AppStackParamList } from '../../app/AppStackNavigator'
 
 type NavigationProp = NativeStackNavigationProp<
-    TransferStackParamList,
+    AppStackParamList,
     'TransferHistoryScreen'
 >
 
@@ -29,15 +31,23 @@ const TransferHistoryScreen = () => {
         </View>
     )
 
+    const onPressTransferItem = (transfer: Transfer) => {
+        navigate('TransferDetailScreen', {
+            transferInfo: transfer,
+        })
+    }
+
     return (
         <SafeAreaView>
             <SectionList
                 sections={history}
                 keyExtractor={(item, index) => item.id + index}
-                renderItem={({ item }) => (
-                    <Typography variant={'label'} size={'medium'}>
-                        {`${item.amount} from ${item.fromAccountNumber} to ${item.toAccountNumber}`}
-                    </Typography>
+                renderItem={({ item, index }) => (
+                    <TransferItem
+                        item={item}
+                        index={index}
+                        onPress={onPressTransferItem}
+                    />
                 )}
                 renderSectionHeader={({ section: { title } }) => (
                     <SectionHeader title={title} />
@@ -57,6 +67,7 @@ const styles = StyleSheet.create({
     },
     sectionHeader: {
         padding: 16,
+        backgroundColor: COLORS.backgroundPrimary,
     },
 })
 

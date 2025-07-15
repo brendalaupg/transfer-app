@@ -31,7 +31,6 @@ export type TransferStackParamList = {
         transferInfo: CreateTransfer
         error?: string
     }
-    TransferHistoryScreen: undefined
     ContactListScreen: undefined
 }
 

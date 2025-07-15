@@ -15,7 +15,14 @@ const TransferSelectors = {
         const groupedByDate: { [key: string]: Transfer[] } = {}
 
         history.forEach((transfer) => {
-            const date = new Date(transfer.createdAt).toLocaleDateString()
+            const date = new Date(transfer.createdAt).toLocaleDateString(
+                undefined,
+                {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                }
+            )
             if (!groupedByDate[date]) {
                 groupedByDate[date] = []
             }

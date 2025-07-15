@@ -5,11 +5,14 @@ import TransferStackNavigator from '../transfer/navigator/TransferStackNavigator
 import TransferHistoryScreen from '../transfer/screens/TransferHistoryScreen'
 import BackButtonHeader from '../common/BackButtonHeader'
 import ContactListScreen from '../contacts/screens/ContactListScreen'
+import TransferDetailScreen from '../transfer/screens/TransferDetailScreen'
+import { Transfer } from '../transfer/types'
 
 export type AppStackParamList = {
     AccountDashboard: undefined
     TransferStack: undefined
     TransferHistoryScreen: undefined
+    TransferDetailScreen: { transferInfo: Transfer }
     ContactListScreen: undefined
 }
 
@@ -39,6 +42,16 @@ export default function AppStackNavigator() {
                 options={{
                     headerTransparent: true,
                     headerTitle: '',
+                    headerLeft: () => <BackButtonHeader />,
+                }}
+            />
+            <Stack.Screen
+                name={'TransferDetailScreen'}
+                component={TransferDetailScreen}
+                options={{
+                    headerTransparent: true,
+                    headerTitle: '',
+                    headerLeft: () => <BackButtonHeader />,
                 }}
             />
             <Stack.Screen
