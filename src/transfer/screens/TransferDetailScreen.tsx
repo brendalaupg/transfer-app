@@ -24,6 +24,7 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
     const { transferInfo } = route.params
 
     const navigation: NavigationProp<ParamListBase> = useNavigation()
+    const isOutgoingTransfer = transferInfo.amount < 0
 
     const createTransfer = () => {
         const transfer: CreateTransfer = {
@@ -63,12 +64,14 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
             >
                 {renderHeader()}
                 <TransferInfoCard item={transferInfo} />
-                <Button
-                    mode={'contained-tonal'}
-                    onPress={() => createTransfer()}
-                >
-                    {'Transfer Again'}
-                </Button>
+                {isOutgoingTransfer && (
+                    <Button
+                        mode={'contained-tonal'}
+                        onPress={() => createTransfer()}
+                    >
+                        {'Transfer Again'}
+                    </Button>
+                )}
             </ScrollView>
         </SafeAreaView>
     )
