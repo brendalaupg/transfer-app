@@ -39,7 +39,18 @@ To keep the project focused, a few key details / structure is left out to meet t
 
 ## Demo Video
 
-https://github.com/user-attachments/assets/85ab1838-6421-45b6-9db1-91bb0796ee4b
+| iOS | Android |
+| -------- | ------- |
+| Biometrics | Pin |
+| Success on First try, failure on second |Failure on First try, success on retry |
+| <video src="https://github.com/user-attachments/assets/85ab1838-6421-45b6-9db1-91bb0796ee4b" > | <video src="https://github.com/user-attachments/assets/edf82d91-b650-4393-bf09-97e71ea0634b" > |
+
+
+
+
+
+
+
 
 ## How to Setup
 
