@@ -10,7 +10,6 @@ interface RecipientTextFieldProps {
     phoneNumber?: string
     onPressContact: () => void
     clearRecipient?: () => void
-
     setPhoneNumber: Dispatch<SetStateAction<string>>
 }
 
@@ -25,7 +24,11 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
 
     const [isValid, setIsValid] = useState<boolean | undefined>()
 
-    const displayPhoneNumber = recipient?.phoneNumber ?? phoneNumber
+    const displayPhoneNumber = (
+        recipient?.phoneNumber ??
+        phoneNumber ??
+        ''
+    ).replace(/[^0-9]/g, '')
     const onChangeText = (text: string) => {
         const numericText = text.replace(/[^0-9]/g, '')
         clearRecipient?.()
@@ -76,7 +79,7 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
             >
                 {'Send via Duitnow'}
             </Typography>
-            {!isValid && (
+            {!!displayPhoneNumber.length && !isValid && (
                 <Typography
                     style={styles.errorText}
                     size={'small'}

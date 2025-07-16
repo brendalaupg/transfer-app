@@ -17,7 +17,7 @@ import AccountSelectors from '../../account/accountSelectors'
 import { ContactItem } from '../../contacts/types'
 import { formatToRM } from '../../common/stringUtils'
 import { COLORS } from '../../constants/colors'
-import RecipientTextField from '../components/RecipiantTextField'
+import RecipientTextField from '../components/RecipientTextField'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
