@@ -24,16 +24,13 @@ import { AppDispatch, RootState } from '../../app/store'
 import { getContactPermission } from '../contactsAsyncThunk'
 import { ContactItem, ContactScreenMode } from '../types'
 import ContactSelectors from '../contactSelectors'
-import { TransferStackParamList } from '../../transfer/types'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 interface ContactListProps {
     mode: ContactScreenMode
-    onSelect?: (item: ContactItem) => void
 }
 
 const ContactScreen = (props: ContactListProps) => {
-    const { mode, onSelect } = props
+    const { mode } = props
 
     const dispatch = useDispatch<AppDispatch>()
     const navigation: NavigationProp<ParamListBase> = useNavigation()
@@ -80,21 +77,15 @@ const ContactScreen = (props: ContactListProps) => {
 
     const onPressContact = useCallback(
         (contact: ContactItem) => {
-            if (mode === 'list') {
-                navigation.navigate('TransferStack', {
-                    screen: 'TransferScreen',
-                    params: {
-                        prefill: {
-                            name: contact.name,
-                            phoneNumber: contact.phoneNumber,
-                        },
+            navigation.navigate('TransferStack', {
+                screen: 'TransferScreen',
+                params: {
+                    prefill: {
+                        name: contact.name,
+                        phoneNumber: contact.phoneNumber,
                     },
-                })
-                return
-            }
-
-            onSelect?.(contact)
-            navigation.goBack()
+                },
+            })
         },
         [navigation]
     )
@@ -171,17 +162,8 @@ export const ContactListScreen = () => {
     return <ContactScreen mode={'list'} />
 }
 
-type ContactSelectionScreenNavigationProp = NativeStackScreenProps<
-    TransferStackParamList,
-    'ContactSelectionScreen'
->
-
-export const ContactSelectionScreen = (
-    props: ContactSelectionScreenNavigationProp
-) => {
-    const onSelect = props.route.params?.onSelect
-
-    return <ContactScreen mode={'selection'} onSelect={onSelect} />
+export const ContactSelectionScreen = () => {
+    return <ContactScreen mode={'selection'} />
 }
 
 const styles = StyleSheet.create({

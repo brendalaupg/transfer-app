@@ -17,10 +17,19 @@ export default function TransferStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen
+                name={'ContactSelectionScreen'}
+                component={ContactSelectionScreen}
+                options={{
+                    headerLeft: () => <CloseButtonHeader />,
+                    headerTitle: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen
                 name={'TransferScreen'}
                 component={TransferScreen}
                 options={{
-                    headerLeft: () => <CloseButtonHeader />,
+                    headerLeft: () => <BackButtonHeader />,
                     headerTitle: '',
                     headerTransparent: true,
                 }}
@@ -57,15 +66,6 @@ export default function TransferStackNavigator() {
                 component={FailedTransferScreen}
                 options={{
                     headerLeft: () => <View />,
-                    headerTitle: '',
-                    headerTransparent: true,
-                }}
-            />
-            <Stack.Screen
-                name={'ContactSelectionScreen'}
-                component={ContactSelectionScreen}
-                options={{
-                    headerLeft: () => <BackButtonHeader />,
                     headerTitle: '',
                     headerTransparent: true,
                 }}

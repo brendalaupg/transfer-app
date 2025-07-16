@@ -15,7 +15,6 @@ type NavigationProp = NativeStackNavigationProp<
     'AccountDashboard'
 >
 
-// TODO: Setup and UI
 const AccountDashboard = () => {
     const { navigate } = useNavigation<NavigationProp>()
 

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import { ContactItem } from '../../contacts/types'
 import Typography from '../../common/Typography'
@@ -7,31 +7,21 @@ import { COLORS } from '../../constants/colors'
 
 interface RecipientTextFieldProps {
     recipient?: ContactItem
-    phoneNumber?: string
     onPressContact: () => void
-    clearRecipient?: () => void
-    setPhoneNumber: Dispatch<SetStateAction<string>>
 }
 
 /** Phone number reference from https://ihateregex.io/expr/phone/ */
 const PHONE_REGEX = '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
 
 const RecipientTextField = (props: RecipientTextFieldProps) => {
-    const {
-        recipient,
-        phoneNumber,
-        onPressContact,
-        clearRecipient,
-        setPhoneNumber,
-    } = props
+    const { recipient, onPressContact } = props
 
     const [isValid, setIsValid] = useState<boolean>(false)
 
-    const displayPhoneNumber = (
-        recipient?.phoneNumber ??
-        phoneNumber ??
+    const displayPhoneNumber = (recipient?.phoneNumber ?? '').replace(
+        /[^0-9]/g,
         ''
-    ).replace(/[^0-9]/g, '')
+    )
 
     useEffect(() => {
         if (recipient) {
@@ -43,8 +33,6 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
 
     const onChangeText = (text: string) => {
         const numericText = text.replace(/[^0-9]/g, '')
-        clearRecipient?.()
-        setPhoneNumber(numericText)
         const result = RegExp(PHONE_REGEX).test(numericText)
         setIsValid(result)
     }
@@ -60,10 +48,10 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
             </Typography>
             <TextInput
                 style={styles.textInput}
-                placeholder={'0123456789'}
                 value={displayPhoneNumber}
                 onChangeText={onChangeText}
                 keyboardType={'phone-pad'}
+                editable={false}
             />
         </View>
     )

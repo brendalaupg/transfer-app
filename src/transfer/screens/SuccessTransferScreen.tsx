@@ -11,7 +11,6 @@ type NavigationProp = NativeStackScreenProps<
     'SuccessTransferScreen'
 >
 
-// TODO: Setup and UI
 const SuccessTransferScreen = (props: NavigationProp) => {
     const { route, navigation } = props
     const { transferInfo } = route.params

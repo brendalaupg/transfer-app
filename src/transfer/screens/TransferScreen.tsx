@@ -14,7 +14,6 @@ import Typography from '../../common/Typography'
 import AmountTextField from '../components/AmountTextField'
 import { useSelector } from 'react-redux'
 import AccountSelectors from '../../account/accountSelectors'
-import { ContactItem } from '../../contacts/types'
 import { formatToRM } from '../../common/stringUtils'
 import { COLORS } from '../../constants/colors'
 import RecipientTextField from '../components/RecipientTextField'
@@ -29,17 +28,12 @@ const TransferScreen = (props: NavigationProp) => {
     const { navigation, route } = props
     const { prefill } = route?.params || {}
 
-    const contact = prefill && 'phoneNumber' in prefill ? prefill : undefined
+    const recipient = prefill && 'phoneNumber' in prefill ? prefill : undefined
     const isPrefillTransfer = prefill && 'recipient' in prefill
     const initialAmount = isPrefillTransfer ? prefill.amount : undefined
     const initialNote = isPrefillTransfer ? prefill.note ?? '' : ''
-    const initialRecipient = isPrefillTransfer
-        ? prefill.recipient
-        : contact?.phoneNumber || ''
 
     const [amount, setAmount] = useState<number | undefined>(initialAmount)
-    const [recipient, setRecipient] = useState<ContactItem | undefined>(contact)
-    const [phoneNumber, setPhoneNumber] = useState<string>(initialRecipient)
     const [note, setNote] = useState<string>(initialNote)
 
     const balanceAmount = useSelector(AccountSelectors.balance)
@@ -47,19 +41,12 @@ const TransferScreen = (props: NavigationProp) => {
 
     // Validation
     const isValidAmount = (amount ?? 0) <= balanceAmount
-
-    const hasRecipientOrPhone = !!recipient || !!phoneNumber.trim()
     const hasValidAmount =
         typeof amount === 'number' && amount > 0 && isValidAmount
 
-    const isFormValid = hasRecipientOrPhone && hasValidAmount
+    const isFormValid = hasValidAmount && recipient
 
     const onPressSubmit = () => {
-        if (!hasRecipientOrPhone) {
-            console.error('Recipient or phone number is required')
-            return
-        }
-
         if (!amount) {
             console.error('Amount is required')
             return
@@ -78,33 +65,22 @@ const TransferScreen = (props: NavigationProp) => {
         navigation?.navigate('ReviewTransferScreen', {
             transferInfo: {
                 amount,
-                recipientName: phoneNumber ? undefined : contact?.name,
-                recipient: phoneNumber,
+                recipientName: recipient?.name,
+                recipient: recipient?.phoneNumber ?? '',
                 note,
                 fromAccountNumber,
             },
         })
     }
 
-    const onSelectContact = (contact: ContactItem) => {
-        setRecipient(contact)
-    }
-
     const onPressContacts = () => {
-        navigation.navigate('ContactSelectionScreen', {
-            onSelect: onSelectContact,
-        })
+        navigation.goBack()
     }
 
     const renderRecipientInput = () => (
         <RecipientTextField
             onPressContact={onPressContacts}
             recipient={recipient}
-            clearRecipient={() => {
-                setRecipient?.(undefined)
-            }}
-            phoneNumber={phoneNumber}
-            setPhoneNumber={setPhoneNumber}
         />
     )
 
