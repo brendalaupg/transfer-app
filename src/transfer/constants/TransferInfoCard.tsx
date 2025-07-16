@@ -5,6 +5,8 @@ import { COLORS } from '../../constants/colors'
 import Typography from '../../common/Typography'
 import { Divider } from 'react-native-paper'
 import { formatToRM } from '../../common/stringUtils'
+import { isTransfer } from '../utils/transferUtils'
+import { formatPhoneNumber } from '../../common/utils'
 
 type TransferInfoCardItem = Transfer | CreateTransfer
 
@@ -21,17 +23,18 @@ interface RowProps {
 const TransferInfoCard = (props: TransferInfoCardProps) => {
     const { item, testId } = props
 
-    // Helper to check if item is Transfer
-    const isTransfer = (obj: TransferInfoCardItem): obj is Transfer => {
-        return 'id' in obj && 'createdAt' in obj
+    const getFormattedPhoneNumber = (item: TransferInfoCardItem) => {
+        const phoneNumber = isTransfer(item)
+            ? item.toAccountNumber
+            : (item as CreateTransfer).recipient
+
+        return formatPhoneNumber(phoneNumber)
     }
 
     const transferInfo: RowProps[] = [
         {
             title: 'To',
-            label: isTransfer(item)
-                ? item.toAccountNumber
-                : (item as CreateTransfer).recipient,
+            label: getFormattedPhoneNumber(item),
         },
         {
             title: 'Recipient Name',

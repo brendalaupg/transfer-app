@@ -15,3 +15,9 @@ export const validateMYPhoneNumber = (phone: string) => {
     const malaysianPhoneRegex = /^(?:\+60\d{9,10}|60\d{9,10}|01\d{8,9})$/
     return malaysianPhoneRegex.test(cleaned)
 }
+
+export const formatPhoneNumber = (phone: string) => {
+    return phone
+        .replace(/[^0-9]/g, '') // cleans the phone number
+        .replace(/(\d{2})(\d{4})(\d{4})/, '+$1 $2 $3') // format to readable phonenumber
+}
