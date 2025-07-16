@@ -6,6 +6,7 @@ This project demonstrates a secure payment transfer module, with biometrics prom
 
 -   Features has been scoped down to only transfering payment out of the current account
 -   Currency is all in RM
+-   Transfers are assumed to be all DuitNow phone numbers. There's no validation as to which phone numbers are registered, so we'll just assume any phone number will do.
 -   Clicking on 'Transfer Again' Button in Transfer Details will prefill the New Transfer Screen with the previous values (e.g. recipient, amount, note)
 -   Selecting a contact from contact list will navigate to the New Transfer Screen, and prefill the contact
 -   Each item in the contact list is unique by phone number. A contact that has multiple phone numbers will be listed as different items
@@ -35,13 +36,14 @@ To keep the project focused, a few key details / structure is left out to meet t
 
 1. Install app dependencies with `npm install`
 2. Start the Metro Server with `npm start`
-3. press 's' to switch to development build
+3. press 's' to switch to development build (for iOS)
 4. Start the Simulator / Emulator
 
 -   For iOS, press i to open the iOS simulator
 -   Alternatively, you may open the `xcworkspace` (found in ios subfolder) file Xcode directly, and start the active scheme by clicking on the "Run" button
 
--   Android, press a to open Android emulator
+-   For Android, ensure that the Android emulator is avaiable. If not, Open up Android Studio, open the 'android' subfolder and create an emulator
+-   from the metro bundler, press a to open Android emulator
 
 ## Notes on Testing
 

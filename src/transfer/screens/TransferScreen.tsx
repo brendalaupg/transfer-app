@@ -18,13 +18,12 @@ import { ContactItem } from '../../contacts/types'
 import { formatToRM } from '../../common/stringUtils'
 import { COLORS } from '../../constants/colors'
 import RecipientTextField from '../components/RecipientTextField'
+import NoteTextField from '../components/NoteTextField'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
     'TransferScreen'
 >
-
-const TEST_ID_PREFIX = 'transfer_screen'
 
 const TransferScreen = (props: NavigationProp) => {
     const { navigation, route } = props
@@ -57,11 +56,6 @@ const TransferScreen = (props: NavigationProp) => {
         if (!isValidAmount) {
             console.error('Amount is above current balance')
         }
-
-        // if (!phoneNumberValidator.validate(phoneNumber)) {
-        //     console.error('Invalid phone number:', phoneNumber)
-        //     return
-        // }
 
         if (amount <= 0) {
             console.error('Invalid amount:', amount)
@@ -122,6 +116,22 @@ const TransferScreen = (props: NavigationProp) => {
         </View>
     )
 
+    const renderNoteInput = () => (
+        <NoteTextField note={note} setNote={setNote} />
+    )
+
+    const renderTransferButton = () => (
+        <View style={styles.buttonContainer}>
+            <Button
+                disabled={!phoneNumber || !amount}
+                mode={'contained'}
+                onPress={() => onPressSubmit()}
+            >
+                {'Transfer'}
+            </Button>
+        </View>
+    )
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
@@ -143,23 +153,10 @@ const TransferScreen = (props: NavigationProp) => {
                     <Divider />
                     {renderAmountInput()}
                     <Divider />
-                    <TextInput
-                        mode={'outlined'}
-                        label={'Additional Note (optional)'}
-                        multiline={true}
-                        style={{ minHeight: 150 }}
-                        onChangeText={(text) => setNote(text)}
-                        value={note}
-                        testID={`${TEST_ID_PREFIX}.note_input`}
-                    />
-                    <Button
-                        disabled={!phoneNumber || !amount}
-                        mode={'contained'}
-                        onPress={() => onPressSubmit()}
-                    >
-                        {'Transfer'}
-                    </Button>
+                    {renderNoteInput()}
+                    <Divider />
                 </ScrollView>
+                {renderTransferButton()}
             </KeyboardAvoidingView>
         </SafeAreaView>
     )
@@ -192,5 +189,9 @@ const styles = StyleSheet.create({
     amountSubtitleContainer: {
         flexDirection: 'row',
         gap: 4,
+    },
+    buttonContainer: {
+        marginHorizontal: 16,
+        marginBottom: 16,
     },
 })
