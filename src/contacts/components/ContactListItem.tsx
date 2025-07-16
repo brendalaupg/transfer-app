@@ -40,7 +40,7 @@ const ContactListItem = (props: ContactListItemProps) => {
                 icon={'send'}
                 onPress={() => onPress?.(contact)}
                 containerColor={COLORS.accentPrimary}
-                iconColor={COLORS.textOnPrimary}
+                iconColor={COLORS.contentOnPrimary}
             />
             <Typography variant={'label'} size={'medium'}>
                 {'Send'}
@@ -53,7 +53,7 @@ const ContactListItem = (props: ContactListItemProps) => {
             <Icon
                 source={'chevron-right'}
                 size={32}
-                color={COLORS.textSecondary}
+                color={COLORS.contentSecondary}
             />
         </View>
     )
@@ -107,10 +107,10 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     name: {
-        color: COLORS.textPrimary,
+        color: COLORS.contentPrimary,
     },
     phone: {
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
     },
     metadata: {
         alignItems: 'center',

@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
     textInput: {
         flex: 1,
         height: 48,
-        borderColor: COLORS.textSecondary,
+        borderColor: COLORS.contentSecondary,
         borderWidth: 1,
         borderRadius: 8,
         padding: 8,
     },
     helperText: {
         fontSize: 12,
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
     },
     errorText: {
         color: COLORS.error,

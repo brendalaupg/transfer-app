@@ -93,8 +93,8 @@ const PasscodeScreen = (props: NavigationProp) => {
                 styles.dot,
                 {
                     backgroundColor: isFilled
-                        ? COLORS.textPrimary
-                        : COLORS.textDisabled,
+                        ? COLORS.contentPrimary
+                        : COLORS.contentDisabled,
                 },
             ]}
         />
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
         width: 16,
         height: 16,
         borderRadius: 8,
-        backgroundColor: COLORS.textSecondary,
+        backgroundColor: COLORS.contentSecondary,
     },
     keypadContainer: {
         flexDirection: 'row',

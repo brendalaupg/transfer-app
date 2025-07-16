@@ -6,11 +6,13 @@ export const COLORS = {
     accentPrimary: '#2F01E7',
     accentSecondary: '#32DDD7',
     // Text
-    textPrimary: '#1A1A1A',
-    textOnPrimary: '#FFFFFF',
-    textSecondary: '#4F4F4F',
-    textOnSecondary: '#003D3C',
-    textDisabled: '#A8A8A8',
+    contentPrimary: '#1A1A1A',
+    contentOnPrimary: '#FFFFFF',
+    contentSecondary: '#4F4F4F',
+    contentOnSecondary: '#003D3C',
+    contentTertiary: '#E0F2F1',
+    contentOnTertiary: '#004D40',
+    contentDisabled: '#A8A8A8',
     // States
     success: '#28C76F',
     error: '#F44336',

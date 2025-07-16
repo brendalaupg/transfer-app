@@ -55,7 +55,7 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
                 icon={'account'}
                 size={24}
                 containerColor={COLORS.accentPrimary}
-                iconColor={COLORS.textOnPrimary}
+                iconColor={COLORS.contentOnPrimary}
                 onPress={() => onPressContact()}
             />
             <Typography size={'small'} variant={'label'}>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     title: {
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
     },
     content: {
         flexDirection: 'row',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
     },
     helperText: {
-        color: COLORS.textDisabled,
+        color: COLORS.contentDisabled,
     },
     nameText: {
         color: COLORS.accentPrimary,

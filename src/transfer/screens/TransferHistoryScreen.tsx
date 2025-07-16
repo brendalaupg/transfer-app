@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.backgroundPrimary,
     },
     sectionHeaderText: {
-        color: COLORS.textPrimary,
+        color: COLORS.contentPrimary,
     },
     sectionHeader: {
         padding: 16,

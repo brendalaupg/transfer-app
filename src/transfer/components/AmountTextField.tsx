@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
         left: 0,
     },
     title: {
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
     },
     textInput: {
         flex: 1,
         width: '100%',
-        color: COLORS.textPrimary,
+        color: COLORS.contentPrimary,
         fontSize: 28,
         fontWeight: 'bold',
     },

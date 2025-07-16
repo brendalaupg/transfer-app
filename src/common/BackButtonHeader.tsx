@@ -20,7 +20,7 @@ const BackButtonHeader = () => {
             <Icon
                 size={32}
                 source={'chevron-left'}
-                color={COLORS.textPrimary}
+                color={COLORS.contentPrimary}
             />
         </TouchableOpacity>
     )

@@ -18,7 +18,7 @@ const AccountActionView = (props: AccountActionViewProps) => {
                 icon={'send'}
                 onPress={() => onPressTransfer()}
                 containerColor={COLORS.accentPrimary}
-                iconColor={COLORS.textOnPrimary}
+                iconColor={COLORS.contentOnPrimary}
             />
             <Text style={styles.actionTitle}>{'Transfer'}</Text>
         </View>
@@ -30,7 +30,7 @@ const AccountActionView = (props: AccountActionViewProps) => {
                 icon={'account'}
                 onPress={() => onPressContact()}
                 containerColor={COLORS.accentSecondary}
-                iconColor={COLORS.textOnSecondary}
+                iconColor={COLORS.contentOnSecondary}
             />
             <Text style={styles.actionTitle}>{'Contacts'}</Text>
         </View>
@@ -42,7 +42,7 @@ const AccountActionView = (props: AccountActionViewProps) => {
                 icon={'history'}
                 onPress={() => onPressHistory()}
                 containerColor={COLORS.accentSecondary}
-                iconColor={COLORS.textOnSecondary}
+                iconColor={COLORS.contentOnSecondary}
             />
             <Text style={styles.actionTitle}>{'History'}</Text>
         </View>

@@ -49,10 +49,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     title: {
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
     },
     characterCount: {
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
         textAlign: 'right',
     },
     textInput: {

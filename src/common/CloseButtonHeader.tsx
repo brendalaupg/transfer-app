@@ -24,7 +24,7 @@ const CloseButtonHeader = () => {
 
     return (
         <TouchableOpacity onPress={onPressClose}>
-            <Icon size={28} source={'close'} color={COLORS.textPrimary} />
+            <Icon size={28} source={'close'} color={COLORS.contentPrimary} />
         </TouchableOpacity>
     )
 }

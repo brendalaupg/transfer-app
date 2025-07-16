@@ -68,5 +68,6 @@ const styles = StyleSheet.create({
     scrollViewContent: {
         gap: 12,
         margin: 16,
+        backgroundColor: COLORS.backgroundPrimary,
     },
 })

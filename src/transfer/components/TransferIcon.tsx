@@ -27,7 +27,9 @@ const TransferIcon = (props: TransferIconProps) => (
             size={props.iconSize}
             source={props.isOutgoing ? 'call-made' : 'call-received'}
             color={
-                props.isOutgoing ? COLORS.textOnSecondary : COLORS.textOnPrimary
+                props.isOutgoing
+                    ? COLORS.contentOnSecondary
+                    : COLORS.contentOnPrimary
             }
         />
     </View>

@@ -18,7 +18,11 @@ const TransferItem = (props: TransferItemProps) => {
     const isOutgoing = item.amount < 0
 
     const renderTrailingIcon = () => (
-        <Icon size={24} source={'chevron-right'} color={COLORS.textSecondary} />
+        <Icon
+            size={24}
+            source={'chevron-right'}
+            color={COLORS.contentSecondary}
+        />
     )
 
     return (
@@ -71,10 +75,10 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     title: {
-        color: COLORS.textPrimary,
+        color: COLORS.contentPrimary,
     },
     label: {
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
     },
     leadingIcon: {
         height: 40,

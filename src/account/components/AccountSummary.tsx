@@ -94,6 +94,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     accountBalanceTitle: {
-        color: COLORS.textSecondary,
+        color: COLORS.contentSecondary,
     },
 })
