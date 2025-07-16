@@ -78,7 +78,7 @@ const TransferScreen = (props: NavigationProp) => {
         navigation?.navigate('ReviewTransferScreen', {
             transferInfo: {
                 amount,
-                recipientName: contact?.name,
+                recipientName: phoneNumber ? undefined : contact?.name,
                 recipient: phoneNumber,
                 note,
                 fromAccountNumber,
