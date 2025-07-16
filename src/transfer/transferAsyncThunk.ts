@@ -26,7 +26,7 @@ export const transferMoney = createAsyncThunk(
                     fromAccountNumber: '',
                     toAccountNumber: data.recipient,
                     recipientName: data.recipientName,
-                    amount: data.amount,
+                    amount: -data.amount,
                     note: data.note,
                 }
 
