@@ -1,6 +1,6 @@
 ## Description
 
-This project demonstrates a secure payment transfer module, with biometrics prompt. Its running React Native 0.79.5 and Expo 53.
+This project demonstrates a secure payment transfer module, with biometrics prompt. Its running React Native 0.79.5 and Expo 53. State management is handled with react-redux using redux toolkit, and the ui components are a mixture of react-native-paper + custom components using react native
 
 ## Assumptions
 
