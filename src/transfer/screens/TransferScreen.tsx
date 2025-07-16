@@ -20,6 +20,7 @@ import RecipientTextField from '../components/RecipientTextField'
 import NoteTextField from '../components/NoteTextField'
 import { ContactItem } from '../../contacts/types'
 import { isCreateTransfer } from '../utils/transferUtils'
+import { isContactItem } from '../../contacts/utils/contactUtils'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -33,7 +34,7 @@ const TransferScreen = (props: NavigationProp) => {
     const { prefill } = route?.params || {}
 
     const [recipient, setRecipiant] = useState<ContactItem | undefined>()
-    const [amount, setAmount] = useState<number | undefined>()
+    const [amount, setAmount] = useState<number>(0)
     const [note, setNote] = useState<string>('')
 
     const prefillInitialForm = (prefill: Prefill) => {
@@ -48,12 +49,21 @@ const TransferScreen = (props: NavigationProp) => {
                 recipient: _recipient,
                 recipientName,
             } = prefill
+            console.log('set amount', amount)
             setAmount(amount)
             setNote(note ?? '')
             setRecipiant({
-                id: _recipient ?? '', // Use phone number as id if no better id is available
+                id: _recipient ?? '',
                 name: recipientName ?? '',
                 phoneNumber: _recipient ?? '',
+            })
+        } else if (isContactItem(prefill)) {
+            const { name, phoneNumber } = prefill
+
+            setRecipiant({
+                id: phoneNumber,
+                name,
+                phoneNumber,
             })
         }
     }

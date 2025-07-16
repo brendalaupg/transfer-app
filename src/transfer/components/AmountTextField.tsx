@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextInput, StyleSheet, View } from 'react-native'
 import Typography from '../../common/Typography'
 import { COLORS } from '../../constants/colors'
@@ -17,6 +17,12 @@ interface AmountTextFieldProps {
 
 const AmountTextField = (props: AmountTextFieldProps) => {
     const { value, onChange } = props
+
+    useEffect(() => {
+        if (value) {
+            setFormattedValue(value.toFixed(2))
+        }
+    }, [value])
 
     const [formattedValue, setFormattedValue] = useState<string | undefined>(
         value?.toFixed(2)
