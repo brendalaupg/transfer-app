@@ -21,8 +21,15 @@ To keep the project focused, a few key details / structure is left out to meet t
 -   secure pin should not be hardcoded, and properly set during the beginning of account creation
 
 ## High Level Flow
+### Screen Navigation Diagram
+<img width="1292" height="692" alt="Transfer App Flow" src="https://github.com/user-attachments/assets/0d8b1caa-fae3-4243-91b9-49a88a6b9648" />
 
--   diagram
+### Screenshots
+
+<img width="1300" height="535" alt="Screenshot 2025-07-16 at 7 48 10 PM" src="https://github.com/user-attachments/assets/ebef4f46-ed59-42e8-81b7-9b3c9153971f" />
+
+<img width="1243" height="530" alt="Screenshot 2025-07-16 at 7 46 01 PM" src="https://github.com/user-attachments/assets/0d53037e-c895-4075-a127-ce51f6f73156" />
+
 -   design decisions
 
 ## Demo Video
