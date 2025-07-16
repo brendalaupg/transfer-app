@@ -4,7 +4,7 @@ import { ContactItem } from '../../contacts/types'
 import Typography from '../../common/Typography'
 import { IconButton } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
-import { validatePhoneNumber } from '../../common/utils'
+import { validateMYPhoneNumber } from '../../common/utils'
 
 interface RecipientTextFieldProps {
     recipient?: ContactItem
@@ -16,20 +16,19 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
 
     const [isValid, setIsValid] = useState<boolean>(false)
 
-    const displayPhoneNumber = (recipient?.phoneNumber ?? '').replace(
-        /[^0-9]/g,
-        ''
-    )
+    const displayPhoneNumber = (recipient?.phoneNumber ?? '')
+        .replace(/[^0-9]/g, '') // cleans the phone number
+        .replace(/(\d{2})(\d{4})(\d{4})/, '+$1 $2 $3') // format to readable phonenumber
 
     useEffect(() => {
         if (recipient) {
-            const result = validatePhoneNumber(recipient.phoneNumber)
+            const result = validateMYPhoneNumber(recipient.phoneNumber)
             setIsValid(result)
         }
     }, [recipient])
 
     const onChangeText = (text: string) => {
-        const result = validatePhoneNumber(text)
+        const result = validateMYPhoneNumber(text)
         setIsValid(result)
     }
 

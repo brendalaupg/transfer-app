@@ -1,9 +1,10 @@
 import React, { memo } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Divider, Icon, IconButton, Text } from 'react-native-paper'
+import { Divider, Icon, IconButton } from 'react-native-paper'
 import Typography from '../../common/Typography'
 import { COLORS } from '../../constants/colors'
 import { ContactItem, ContactScreenMode } from '../types'
+import { validateMYPhoneNumber } from '../../common/utils'
 
 interface ContactListItemProps {
     contact: ContactItem
@@ -15,23 +16,25 @@ interface ContactListItemProps {
 const ContactListItem = (props: ContactListItemProps) => {
     const { contact, index, mode, onPress } = props
 
-    const renderPhoneNumber = () => (
+    const isMalaysianNumber = validateMYPhoneNumber(contact.phoneNumber)
+    const renderSubtitle = () => (
         <>
-            {contact.phoneNumber ? (
-                <Text style={styles.phone}>{contact.phoneNumber}</Text>
-            ) : (
+            <Typography size={'medium'} variant={'label'} style={styles.phone}>
+                {contact.phoneNumber}
+            </Typography>
+            {!isMalaysianNumber && (
                 <Typography
-                    style={styles.phone}
+                    size={'small'}
                     variant={'body'}
-                    size={'medium'}
+                    style={styles.unavailable}
                 >
-                    {''}
+                    {'Not available on DuitNow'}
                 </Typography>
             )}
         </>
     )
 
-    const renderMetadata = () => (
+    const renderListMetadata = () => (
         <View style={styles.metadata}>
             <IconButton
                 icon={'send'}
@@ -60,18 +63,29 @@ const ContactListItem = (props: ContactListItemProps) => {
             <Typography style={styles.name} variant={'label'} size={'medium'}>
                 {contact.name}
             </Typography>
-            {renderPhoneNumber()}
+            {renderSubtitle()}
         </View>
     )
 
+    const renderMetaData = () =>
+        mode === 'list' ? renderListMetadata() : renderSelectionMetadata()
+
+    const onPressItem = () => {
+        if (!isMalaysianNumber) {
+            return
+        }
+
+        onPress?.(contact)
+    }
+
     return (
         <TouchableOpacity
-            onPress={() => onPress?.(contact)}
+            onPress={onPressItem}
             testID={`contact-item-${index}`}
         >
             <View style={styles.container}>
                 {renderItemContent()}
-                {mode === 'list' ? renderMetadata() : renderSelectionMetadata()}
+                {isMalaysianNumber && renderMetaData()}
             </View>
             <Divider />
         </TouchableOpacity>
@@ -87,6 +101,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        height: 75,
     },
     itemContent: {
         gap: 4,
@@ -100,5 +115,11 @@ const styles = StyleSheet.create({
     metadata: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    subtitleContainer: {
+        flexDirection: 'row',
+    },
+    unavailable: {
+        color: COLORS.error,
     },
 })

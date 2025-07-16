@@ -13,13 +13,15 @@ const contactSlice = createSlice({
     },
     extraReducers(builder: ActionReducerMapBuilder<ContactState>) {
         builder.addCase(getContactPermission.fulfilled, (state, action) => {
-            state.contacts = action.payload.flatMap((contact) =>
-                (contact.phoneNumbers ?? []).map((phone) => ({
-                    id: contact.id ?? '',
-                    name: contact.name ?? '',
-                    phoneNumber: phone.number ?? '',
-                }))
-            )
+            state.contacts = action.payload
+                .flatMap((contact) =>
+                    (contact.phoneNumbers ?? []).map((phone) => ({
+                        id: contact.id ?? '',
+                        name: contact.name ?? '',
+                        phoneNumber: phone.number ?? '',
+                    }))
+                )
+                .sort((a, b) => a.name.localeCompare(b.name))
             state.permissionStatus = 'granted'
         })
         builder.addCase(getContactPermission.rejected, (state) => {

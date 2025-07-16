@@ -5,12 +5,13 @@ export const isNumeric = (value: unknown): boolean => {
 
     return !isNaN(Number(value)) && !isNaN(parseFloat(String(value)))
 }
-export const validatePhoneNumber = (phone: string) => {
+export const validateMYPhoneNumber = (phone: string) => {
     const cleaned = phone
         .trim()
         .replace(/^(\+)?|[^\d]/g, (_, plus) => (plus ? '+' : ''))
 
-    // Check if it starts with +60 and is followed by 9 or 10 digits (Malaysian numbers)
-    const malaysianPhoneRegex = /^\+60\d{9,10}$/
+    // Check if it starts with +60, 60, or 01 and is followed by 9 or 10 digits (Malaysian numbers)
+    // or starts with 01 and is followed by 8 or 9 digits (local Malaysian format)
+    const malaysianPhoneRegex = /^(?:\+60\d{9,10}|60\d{9,10}|01\d{8,9})$/
     return malaysianPhoneRegex.test(cleaned)
 }
