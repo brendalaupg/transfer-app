@@ -44,7 +44,11 @@ const AccountSummary = () => {
 
     const renderAccountBalance = () => (
         <>
-            <Typography variant={'body'} size={'medium'}>
+            <Typography
+                variant={'body'}
+                size={'medium'}
+                style={styles.accountBalanceTitle}
+            >
                 {'Account Balance'}
             </Typography>
             <Typography variant={'title'} size={'extra-large'}>
@@ -88,5 +92,8 @@ const styles = StyleSheet.create({
     accountNumberContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    accountBalanceTitle: {
+        color: COLORS.textSecondary,
     },
 })
