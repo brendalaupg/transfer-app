@@ -31,13 +31,13 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
             title: 'To',
             label: isTransfer(item)
                 ? item.toAccountNumber
-                : (item as CreateTransfer).recipiant,
+                : (item as CreateTransfer).recipient,
         },
         {
             title: 'Recipient Name',
             label: isTransfer(item)
                 ? item.recipientName
-                : (item as CreateTransfer).recipiantName,
+                : (item as CreateTransfer).recipientName,
         },
         {
             title: 'Transfer ID',

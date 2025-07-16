@@ -12,8 +12,8 @@ export interface Transfer {
 
 export interface CreateTransfer {
     amount: number
-    recipiantName?: string
-    recipiant: string
+    recipientName?: string
+    recipient: string
     note?: string
     fromAccountNumber: string
 }
@@ -32,7 +32,9 @@ export type TransferStackParamList = {
         transferInfo: CreateTransfer
         error?: string
     }
-    ContactSelectionScreen: undefined
+    ContactSelectionScreen: {
+        onSelect?: (contact: ContactItem) => void
+    }
     PasscodeScreen: {
         transfer: CreateTransfer
     }

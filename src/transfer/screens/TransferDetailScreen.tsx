@@ -28,8 +28,8 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
 
     const createTransfer = () => {
         const transfer: CreateTransfer = {
-            recipiant: transferInfo.toAccountNumber,
-            recipiantName: transferInfo.recipientName,
+            recipient: transferInfo.toAccountNumber,
+            recipientName: transferInfo.recipientName,
             amount: Math.abs(transferInfo.amount),
             note: transferInfo.note,
             fromAccountNumber: transferInfo.fromAccountNumber,

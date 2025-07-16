@@ -24,8 +24,8 @@ export const transferMoney = createAsyncThunk(
                     id: `${TRANSFER_PREFIX}${Date.now()}`,
                     createdAt: new Date().toISOString(),
                     fromAccountNumber: '',
-                    toAccountNumber: data.recipiant,
-                    recipientName: data.recipiantName,
+                    toAccountNumber: data.recipient,
+                    recipientName: data.recipientName,
                     amount: data.amount,
                     note: data.note,
                 }

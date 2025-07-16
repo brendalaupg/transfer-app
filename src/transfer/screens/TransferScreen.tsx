@@ -9,16 +9,15 @@ import {
     View,
 } from 'react-native'
 import { TransferStackParamList } from '../types'
-import { Button, TextInput } from 'react-native-paper'
+import { Button, Divider, TextInput } from 'react-native-paper'
 import Typography from '../../common/Typography'
-import TextField from '../../common/TextField'
-import usePhoneValidation from '../../common/validator/usePhoneNumberValidator'
 import AmountTextField from '../components/AmountTextField'
 import { useSelector } from 'react-redux'
 import AccountSelectors from '../../account/accountSelectors'
 import { ContactItem } from '../../contacts/types'
 import { formatToRM } from '../../common/stringUtils'
 import { COLORS } from '../../constants/colors'
+import RecipientTextField from '../components/RecipiantTextField'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -32,22 +31,20 @@ const TransferScreen = (props: NavigationProp) => {
     const { prefill } = route?.params || {}
 
     const contact = prefill && 'phoneNumber' in prefill ? prefill : undefined
-    const isPrefillTransfer = prefill && 'recipiant' in prefill
+    const isPrefillTransfer = prefill && 'recipient' in prefill
     const initialAmount = isPrefillTransfer ? prefill.amount : undefined
     const initialNote = isPrefillTransfer ? prefill.note ?? '' : ''
     const initialRecipient = isPrefillTransfer
-        ? prefill.recipiant
+        ? prefill.recipient
         : contact?.phoneNumber || ''
 
     const [amount, setAmount] = useState<number | undefined>(initialAmount)
-    const [recipiant, setRecipiant] = useState<ContactItem | undefined>(contact)
+    const [recipient, setRecipient] = useState<ContactItem | undefined>(contact)
     const [phoneNumber, setPhoneNumber] = useState<string>(initialRecipient)
     const [note, setNote] = useState<string>(initialNote)
 
     const balanceAmount = useSelector(AccountSelectors.balance)
     const fromAccountNumber = useSelector(AccountSelectors.accountNumber)
-
-    const phoneNumberValidator = usePhoneValidation()
 
     const isValidAmount = (amount ?? 0) <= balanceAmount
 
@@ -61,10 +58,10 @@ const TransferScreen = (props: NavigationProp) => {
             console.error('Amount is above current balance')
         }
 
-        if (!phoneNumberValidator.validate(phoneNumber)) {
-            console.error('Invalid phone number:', phoneNumber)
-            return
-        }
+        // if (!phoneNumberValidator.validate(phoneNumber)) {
+        //     console.error('Invalid phone number:', phoneNumber)
+        //     return
+        // }
 
         if (amount <= 0) {
             console.error('Invalid amount:', amount)
@@ -74,8 +71,8 @@ const TransferScreen = (props: NavigationProp) => {
         navigation?.navigate('ReviewTransferScreen', {
             transferInfo: {
                 amount,
-                recipiantName: contact?.name,
-                recipiant: phoneNumber,
+                recipientName: contact?.name,
+                recipient: phoneNumber,
                 note,
                 fromAccountNumber,
             },
@@ -83,7 +80,7 @@ const TransferScreen = (props: NavigationProp) => {
     }
 
     const onSelectContact = (contact: ContactItem) => {
-        setRecipiant(contact)
+        setRecipient(contact)
     }
 
     const onPressContacts = () => {
@@ -93,18 +90,15 @@ const TransferScreen = (props: NavigationProp) => {
     }
 
     const renderRecipientInput = () => (
-        <View>
-            <TextField
-                testID={`${TEST_ID_PREFIX}.recipient_input`}
-                title={'Recipient (Phone Number)'}
-                numberOfLines={1}
-                value={phoneNumber}
-                keyboardType={'number-pad'}
-                validator={phoneNumberValidator}
-                onChangeText={setPhoneNumber}
-            />
-            <Button onPress={onPressContacts}>{'contacts'}</Button>
-        </View>
+        <RecipientTextField
+            onPressContact={onPressContacts}
+            recipient={recipient}
+            clearRecipient={() => {
+                setRecipient?.(undefined)
+            }}
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+        />
     )
 
     const renderAmountInput = () => (
@@ -146,7 +140,9 @@ const TransferScreen = (props: NavigationProp) => {
                         {'New Transfer'}
                     </Typography>
                     {renderRecipientInput()}
+                    <Divider />
                     {renderAmountInput()}
+                    <Divider />
                     <TextInput
                         mode={'outlined'}
                         label={'Additional Note (optional)'}
@@ -174,7 +170,7 @@ export default memo(TransferScreen)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.backgroundPrimary,
+        backgroundColor: COLORS.backgroundSecondary,
     },
     keyboardAvoidingView: {
         flex: 1,

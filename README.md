@@ -6,7 +6,7 @@ This project demonstrates a secure payment transfer module, with biometrics prom
 
 -   Features has been scoped down to only transfering payment out of the current account
 -   Currency is all in RM
--   Clicking on 'Transfer Again' Button in Transfer Details will prefill the New Transfer Screen with the previous values (e.g. recipiant, amount, note)
+-   Clicking on 'Transfer Again' Button in Transfer Details will prefill the New Transfer Screen with the previous values (e.g. recipient, amount, note)
 -   Selecting a contact from contact list will navigate to the New Transfer Screen, and prefill the contact
 -   Each item in the contact list is unique by phone number. A contact that has multiple phone numbers will be listed as different items
 
@@ -49,8 +49,8 @@ To keep the project focused, a few key details / structure is left out to meet t
 -   there are 3 places to start a new transfer flow, from the Dashboard:
 
 1.  Tap on Transfer (no prefill)
-2.  Tap on Contact, and tap on a contact list item (prefill recipiant)
-3.  Tap on History, and tap on a transfer item (thats transfering out). In the details screen click on the 'Tranfer Again' Button (prefill recipiant, amount and note)
+2.  Tap on Contact, and tap on a contact list item (prefill recipient)
+3.  Tap on History, and tap on a transfer item (thats transfering out). In the details screen click on the 'Tranfer Again' Button (prefill recipient, amount and note)
 
 ## Troubleshotting
 
