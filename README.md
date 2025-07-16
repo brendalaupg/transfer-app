@@ -34,8 +34,8 @@ To keep the project focused, a few key details / structure is left out to meet t
 
 ## Demo Video
 
--   iOS
--   Android
+https://github.com/user-attachments/assets/85ab1838-6421-45b6-9db1-91bb0796ee4b
+
 
 ## How to Setup
 
