@@ -47,14 +47,19 @@ To keep the project focused, a few key details / structure is left out to meet t
 
 ## Notes on Testing
 
+### Device Contacts:
+
+-   Create a Contact on the device, with a Malaysian phone number
+-   numbers that are not validated as a Malayisan phone can't be selected to Transfer, since we're assuming they're using DuitNow
+
+### Biometrics
+
 -   The hardcode pin `000000`
 -   there are 3 places to start a new transfer flow, from the Dashboard:
 
--   What to test:
-
-1.  Tap on Transfer (no prefill)
-2.  Tap on Contact, and tap on a contact list item (prefill recipient)
-3.  Tap on History, and tap on a transfer item (thats transfering out). In the details screen click on the 'Tranfer Again' Button (prefill recipient, amount and note)
+    1.  Tap on Transfer (no prefill)
+    2.  Tap on Contact, and tap on a contact list item (prefill recipient)
+    3.  Tap on History, and tap on a transfer item (thats transfering out). In the details screen click on the 'Tranfer Again' Button (prefill recipient, amount and note)
 
 -   How to Test a Sucessful Transfer:
 
@@ -69,7 +74,7 @@ To keep the project focused, a few key details / structure is left out to meet t
         -   type in any random pin, other than the hardcoded pin '000000', or
         -   when the Face ID appears, go to iOS Simulator -> Features -> Face ID => Non Matching Face
 
-## Troubleshotting
+## Troubleshooting
 
 -   To re-install pods: for iOS, navigate to the ios folder and re-install `cd ios;pod install`
 -   To clean the project:
