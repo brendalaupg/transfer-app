@@ -9,7 +9,7 @@ const useBiometrics = () => {
         BiometricsType | undefined
     >()
 
-    const setResults = (types: AuthenticationType[]) => {
+    const getBiometricsType = (types: AuthenticationType[]) => {
         if (
             types.find(
                 (value) => value === AuthenticationType.FACIAL_RECOGNITION
@@ -32,18 +32,18 @@ const useBiometrics = () => {
         try {
             const result = await LocalAuthentication.hasHardwareAsync()
             if (!result) {
-                return
+                return false
             }
 
             const isEnrolled = await LocalAuthentication.isEnrolledAsync()
             if (!isEnrolled) {
                 console.log('device is not enrolled')
-                return
+                return false
             }
 
             const supportedBiometrics =
                 await LocalAuthentication.supportedAuthenticationTypesAsync()
-            setResults(supportedBiometrics)
+            return getBiometricsType(supportedBiometrics)
         } catch (error) {
             console.error(error)
         }

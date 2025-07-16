@@ -64,7 +64,6 @@ const PasscodeScreen = (props: NavigationProp) => {
     const initiateBiometrics = async () => {
         try {
             const result = await checkBiometricsHardware()
-
             if (result) {
                 handleBiometrics()
             }
