@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import { ContactItem } from '../../contacts/types'
 import Typography from '../../common/Typography'
@@ -32,6 +32,14 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
         phoneNumber ??
         ''
     ).replace(/[^0-9]/g, '')
+
+    useEffect(() => {
+        if (recipient) {
+            const phoneNumber = recipient.phoneNumber.replace(/[^0-9]/g, '')
+            const result = RegExp(PHONE_REGEX).test(phoneNumber)
+            setIsValid(result)
+        }
+    }, [recipient])
 
     const onChangeText = (text: string) => {
         const numericText = text.replace(/[^0-9]/g, '')
