@@ -16,6 +16,9 @@ import usePhoneValidation from '../../common/validator/usePhoneNumberValidator'
 import AmountTextField from '../components/AmountTextField'
 import { useSelector } from 'react-redux'
 import AccountSelectors from '../../account/accountSelectors'
+import { ContactItem } from '../../contacts/types'
+import { formatToRM } from '../../common/stringUtils'
+import { COLORS } from '../../constants/colors'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
@@ -37,17 +40,25 @@ const TransferScreen = (props: NavigationProp) => {
         : contact?.phoneNumber || ''
 
     const [amount, setAmount] = useState<number | undefined>(initialAmount)
+    const [recipiant, setRecipiant] = useState<ContactItem | undefined>(contact)
     const [phoneNumber, setPhoneNumber] = useState<string>(initialRecipient)
     const [note, setNote] = useState<string>(initialNote)
 
+    const balanceAmount = useSelector(AccountSelectors.balance)
     const fromAccountNumber = useSelector(AccountSelectors.accountNumber)
 
     const phoneNumberValidator = usePhoneValidation()
+
+    const isValidAmount = (amount ?? 0) <= balanceAmount
 
     const onPressSubmit = () => {
         if (!amount) {
             console.error('Amount is required')
             return
+        }
+
+        if (!isValidAmount) {
+            console.error('Amount is above current balance')
         }
 
         if (!phoneNumberValidator.validate(phoneNumber)) {
@@ -71,8 +82,14 @@ const TransferScreen = (props: NavigationProp) => {
         })
     }
 
+    const onSelectContact = (contact: ContactItem) => {
+        setRecipiant(contact)
+    }
+
     const onPressContacts = () => {
-        navigation.navigate('ContactSelectionScreen')
+        navigation.navigate('ContactSelectionScreen', {
+            onSelect: onSelectContact,
+        })
     }
 
     const renderRecipientInput = () => (
@@ -91,7 +108,24 @@ const TransferScreen = (props: NavigationProp) => {
     )
 
     const renderAmountInput = () => (
-        <AmountTextField value={amount} onChange={setAmount} />
+        <View style={styles.amountContainer}>
+            <AmountTextField value={amount} onChange={setAmount} />
+            <View style={styles.amountSubtitleContainer}>
+                <Typography
+                    variant={'body'}
+                    size={'small'}
+                >{`Balance: ${formatToRM(balanceAmount)}`}</Typography>
+                {!isValidAmount && (
+                    <Typography
+                        style={styles.error}
+                        variant={'label'}
+                        size={'small'}
+                    >
+                        {'over balance amount'}
+                    </Typography>
+                )}
+            </View>
+        </View>
     )
 
     return (
@@ -140,6 +174,7 @@ export default memo(TransferScreen)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.backgroundPrimary,
     },
     keyboardAvoidingView: {
         flex: 1,
@@ -150,5 +185,16 @@ const styles = StyleSheet.create({
     scrollViewContent: {
         gap: 12,
         margin: 16,
+    },
+    error: {
+        color: COLORS.error,
+    },
+    amountContainer: {
+        flex: 1,
+        gap: 4,
+    },
+    amountSubtitleContainer: {
+        flexDirection: 'row',
+        gap: 4,
     },
 })

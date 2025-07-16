@@ -8,7 +8,7 @@ import { COLORS } from '../../constants/colors'
  * @returns Custom Text Field Input, for handling currency amount
  */
 
-const MAX_LENGTH = 10 // Maximum length for the input, adjust as needed
+const MAX_LENGTH: number = 8
 
 interface AmountTextFieldProps {
     value?: number
@@ -40,11 +40,7 @@ const AmountTextField = (props: AmountTextFieldProps) => {
     }
 
     const renderPrefix = () => (
-        <Typography
-            style={styles.currency}
-            variant={'header'}
-            size={'extra-large'}
-        >
+        <Typography variant={'header'} size={'extra-large'}>
             {'RM'}
         </Typography>
     )
@@ -71,11 +67,7 @@ const AmountTextField = (props: AmountTextFieldProps) => {
 
     return (
         <View>
-            <Typography
-                style={styles.currency}
-                variant={'label'}
-                size={'medium'}
-            >
+            <Typography style={styles.title} variant={'label'} size={'medium'}>
                 {'Amount'}
             </Typography>
             <View style={styles.content}>
@@ -87,9 +79,6 @@ const AmountTextField = (props: AmountTextFieldProps) => {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        color: COLORS.textPrimary,
-    },
     content: {
         flex: 1,
         flexDirection: 'row',
@@ -105,7 +94,9 @@ const styles = StyleSheet.create({
         color: 'grey',
         left: 0,
     },
-    currency: {},
+    title: {
+        color: COLORS.textSecondary,
+    },
     textInput: {
         flex: 1,
         width: '100%',
