@@ -132,10 +132,16 @@ const PasscodeScreen = (props: NavigationProp) => {
         </View>
     )
 
-    const biometricsIcon =
-        biometricType === 'face_recognition'
-            ? 'face-recognition'
-            : 'fingerprint'
+    const biometricsIcon = () => {
+        switch (biometricType) {
+            case 'face_recognition':
+                return 'face-recognition'
+            case 'fingerprint':
+                return 'fingerprint'
+            case 'iris':
+                return 'eye'
+        }
+    }
 
     const handleFailure = () => {
         navigation.navigate('FailedTransferScreen', {
@@ -166,17 +172,19 @@ const PasscodeScreen = (props: NavigationProp) => {
 
         if (passcode === HARD_CODED_PIN) {
             processTransfer()
+        } else {
+            handleFailure()
         }
     }, [passcode])
 
-    const renderBottomBar = () => (
+    const renderPasscodeBottomBar = () => (
         <View style={styles.bottomBar}>
             <TouchableOpacity onPress={() => handleBiometrics()}>
-                <Icon source={biometricsIcon} size={40} />
+                <Icon source={biometricsIcon()} size={30} />
             </TouchableOpacity>
             <View style={{ width: 30 }} />
             <TouchableOpacity onPress={() => onPressBackspace()}>
-                <Icon source={'backspace-outline'} size={40} />
+                <Icon source={'backspace-outline'} size={30} />
             </TouchableOpacity>
         </View>
     )
@@ -187,20 +195,21 @@ const PasscodeScreen = (props: NavigationProp) => {
         </View>
     )
 
+    const renderHeader = () => (
+        <Typography style={styles.title} variant={'header'} size={'large'}>
+            {'Enter Passcode'}
+        </Typography>
+    )
+
     return (
         <>
             <SafeAreaView style={styles.container}>
-                <Typography
-                    style={styles.title}
-                    variant={'header'}
-                    size={'large'}
-                >
-                    {'Enter Passcode'}
-                </Typography>
+                <View style={styles.flexSpacer} />
+                {renderHeader()}
                 {renderInputDots()}
                 <View style={styles.flexSpacer} />
                 {renderKeypad()}
-                {renderBottomBar()}
+                {renderPasscodeBottomBar()}
             </SafeAreaView>
             {isLoading && renderLoading()}
         </>
@@ -258,10 +267,11 @@ const styles = StyleSheet.create({
     bottomBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 60,
         marginBottom: 8,
         alignItems: 'center',
-        width: '100%',
+        width: '80%',
+        paddingHorizontal: 40,
+        height: 50,
     },
     flexSpacer: {
         flex: 1,

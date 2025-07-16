@@ -9,7 +9,7 @@ import {
     View,
 } from 'react-native'
 import { TransferStackParamList } from '../types'
-import { Button, Divider, TextInput } from 'react-native-paper'
+import { Button, Divider } from 'react-native-paper'
 import Typography from '../../common/Typography'
 import AmountTextField from '../components/AmountTextField'
 import { useSelector } from 'react-redux'
@@ -45,20 +45,33 @@ const TransferScreen = (props: NavigationProp) => {
     const balanceAmount = useSelector(AccountSelectors.balance)
     const fromAccountNumber = useSelector(AccountSelectors.accountNumber)
 
+    // Validation
     const isValidAmount = (amount ?? 0) <= balanceAmount
 
+    const hasRecipientOrPhone = !!recipient || !!phoneNumber.trim()
+    const hasValidAmount =
+        typeof amount === 'number' && amount > 0 && isValidAmount
+
+    const isFormValid = hasRecipientOrPhone && hasValidAmount
+
     const onPressSubmit = () => {
+        if (!hasRecipientOrPhone) {
+            console.error('Recipient or phone number is required')
+            return
+        }
+
         if (!amount) {
             console.error('Amount is required')
             return
         }
 
-        if (!isValidAmount) {
-            console.error('Amount is above current balance')
+        if (amount <= 0) {
+            console.error('Amount must be greater than zero')
+            return
         }
 
-        if (amount <= 0) {
-            console.error('Invalid amount:', amount)
+        if (!isValidAmount) {
+            console.error('Amount exceeds balance')
             return
         }
 
@@ -123,7 +136,7 @@ const TransferScreen = (props: NavigationProp) => {
     const renderTransferButton = () => (
         <View style={styles.buttonContainer}>
             <Button
-                disabled={!phoneNumber || !amount}
+                disabled={!isFormValid}
                 mode={'contained'}
                 onPress={() => onPressSubmit()}
             >

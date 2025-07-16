@@ -9,36 +9,43 @@ const useBiometrics = () => {
         BiometricsType | undefined
     >()
 
-    const checkBiometricsHardware = async () => {
-        const result = await LocalAuthentication.hasHardwareAsync()
-        if (!result) {
-            return
-        }
-
-        const supportedBiometrics =
-            await LocalAuthentication.supportedAuthenticationTypesAsync()
-        // we prioritise face id first
+    const setResults = (types: AuthenticationType[]) => {
         if (
-            supportedBiometrics.find(
+            types.find(
                 (value) => value === AuthenticationType.FACIAL_RECOGNITION
             )
         ) {
             setBiometricsType('face_recognition')
             return AuthenticationType.FACIAL_RECOGNITION
-        } else if (
-            supportedBiometrics.find(
-                (value) => value === AuthenticationType.IRIS
-            )
-        ) {
+        } else if (types.find((value) => value === AuthenticationType.IRIS)) {
             setBiometricsType('iris')
             return AuthenticationType.IRIS
         } else if (
-            supportedBiometrics.find(
-                (value) => value === AuthenticationType.FINGERPRINT
-            )
+            types.find((value) => value === AuthenticationType.FINGERPRINT)
         ) {
             setBiometricsType('fingerprint')
             return AuthenticationType.FINGERPRINT
+        }
+    }
+
+    const checkBiometricsHardware = async () => {
+        try {
+            const result = await LocalAuthentication.hasHardwareAsync()
+            if (!result) {
+                return
+            }
+
+            const isEnrolled = await LocalAuthentication.isEnrolledAsync()
+            if (!isEnrolled) {
+                console.log('device is not enrolled')
+                return
+            }
+
+            const supportedBiometrics =
+                await LocalAuthentication.supportedAuthenticationTypesAsync()
+            setResults(supportedBiometrics)
+        } catch (error) {
+            console.error(error)
         }
     }
 

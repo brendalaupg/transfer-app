@@ -54,7 +54,7 @@ const TransferInfoCard = (props: TransferInfoCardProps) => {
             label: formatToRM(item.amount),
         },
         {
-            title: 'From',
+            title: 'From (your account)',
             label: item.fromAccountNumber,
         },
         {
