@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import {
     StyleSheet,
     TouchableOpacity,
@@ -30,17 +30,25 @@ type NavigationProp = NativeStackScreenProps<
     'PasscodeScreen'
 >
 
+const BIOMETRICS_TIMEOUT: number = 1_500
+
 const PasscodeScreen = (props: NavigationProp) => {
     const { navigation, route } = props
     const newTransfer = route.params.transfer
 
     const [passcode, setPasscode] = useState<string>('')
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isBiometricDisabled, setBiometricDisabled] = useState<boolean>(false)
 
     const dispatch = useDispatch<AppDispatch>()
     const { biometricType, checkBiometricsHardware } = useBiometrics()
 
     const handleBiometrics = async () => {
+        if (isBiometricDisabled) {
+            return
+        }
+        setBiometricDisabled(true)
+
         try {
             const result = await dispatch(authenticateWithBiometrics()).unwrap()
 
@@ -53,6 +61,7 @@ const PasscodeScreen = (props: NavigationProp) => {
             handleFailure()
         } finally {
             setIsLoading(false)
+            setTimeout(() => setBiometricDisabled(false), BIOMETRICS_TIMEOUT)
         }
     }
 
@@ -75,15 +84,18 @@ const PasscodeScreen = (props: NavigationProp) => {
         initiateBiometrics()
     }, [])
 
-    const handleKeyPress = (key: string) => {
-        if (passcode.length < MAX_LENGTH) {
-            setPasscode((prev) => prev + key)
-        }
-    }
+    const handleKeyPress = useCallback(
+        (key: string) => {
+            if (passcode.length < MAX_LENGTH) {
+                setPasscode((previous) => previous + key)
+            }
+        },
+        [passcode]
+    )
 
-    const onPressBackspace = () => {
+    const onPressBackspace = useCallback(() => {
         setPasscode((prev) => prev.slice(0, -1))
-    }
+    }, [])
 
     const renderInputDot = (isFilled: boolean, index: number) => (
         <View
