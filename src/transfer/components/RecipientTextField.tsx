@@ -13,6 +13,9 @@ interface RecipientTextFieldProps {
     setPhoneNumber: Dispatch<SetStateAction<string>>
 }
 
+/** Phone number reference from https://ihateregex.io/expr/phone/ */
+const PHONE_REGEX = '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
+
 const RecipientTextField = (props: RecipientTextFieldProps) => {
     const {
         recipient,
@@ -22,18 +25,20 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
         setPhoneNumber,
     } = props
 
-    const [isValid, setIsValid] = useState<boolean | undefined>()
+    const [isValid, setIsValid] = useState<boolean>(false)
 
     const displayPhoneNumber = (
         recipient?.phoneNumber ??
         phoneNumber ??
         ''
     ).replace(/[^0-9]/g, '')
+
     const onChangeText = (text: string) => {
         const numericText = text.replace(/[^0-9]/g, '')
         clearRecipient?.()
         setPhoneNumber(numericText)
-        setIsValid(numericText.length > 9)
+        const result = RegExp(PHONE_REGEX).test(numericText)
+        setIsValid(result)
     }
 
     const renderRecipiantInput = () => (
