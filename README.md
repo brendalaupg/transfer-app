@@ -2,6 +2,9 @@
 
 This project demonstrates a secure payment transfer module, with biometrics prompt. Its running React Native 0.79.5 and Expo 53. State management is handled with react-redux using redux toolkit, and the ui components are a mixture of react-native-paper + custom components using react native
 
+-   Xcode version: 16.4
+-   Android Studio version: Narwhal 2025.1.1.14
+
 ## Assumptions
 
 -   Features has been scoped down to only transfering payment out of the current account
@@ -21,7 +24,9 @@ To keep the project focused, a few key details / structure is left out to meet t
 -   secure pin should not be hardcoded, and properly set during the beginning of account creation
 
 ## High Level Flow
+
 ### Screen Navigation Diagram
+
 <img width="1292" height="692" alt="Transfer App Flow" src="https://github.com/user-attachments/assets/0d8b1caa-fae3-4243-91b9-49a88a6b9648" />
 
 ### Screenshots
@@ -35,7 +40,6 @@ To keep the project focused, a few key details / structure is left out to meet t
 ## Demo Video
 
 https://github.com/user-attachments/assets/85ab1838-6421-45b6-9db1-91bb0796ee4b
-
 
 ## How to Setup
 
