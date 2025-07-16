@@ -4,14 +4,12 @@ import { ContactItem } from '../../contacts/types'
 import Typography from '../../common/Typography'
 import { IconButton } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
+import { validatePhoneNumber } from '../../common/utils'
 
 interface RecipientTextFieldProps {
     recipient?: ContactItem
     onPressContact: () => void
 }
-
-/** Phone number reference from https://ihateregex.io/expr/phone/ */
-const PHONE_REGEX = '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
 
 const RecipientTextField = (props: RecipientTextFieldProps) => {
     const { recipient, onPressContact } = props
@@ -25,15 +23,13 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
 
     useEffect(() => {
         if (recipient) {
-            const phoneNumber = recipient.phoneNumber.replace(/[^0-9]/g, '')
-            const result = RegExp(PHONE_REGEX).test(phoneNumber)
+            const result = validatePhoneNumber(recipient.phoneNumber)
             setIsValid(result)
         }
     }, [recipient])
 
     const onChangeText = (text: string) => {
-        const numericText = text.replace(/[^0-9]/g, '')
-        const result = RegExp(PHONE_REGEX).test(numericText)
+        const result = validatePhoneNumber(text)
         setIsValid(result)
     }
 
@@ -86,7 +82,7 @@ const RecipientTextField = (props: RecipientTextFieldProps) => {
                     size={'small'}
                     variant={'body'}
                 >
-                    {'Invalid Phone Number'}
+                    {'Invalid Phone Number. Must be +60'}
                 </Typography>
             )}
         </>
