@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { TransferStackParamList } from '../types'
 import { COLORS } from '../../constants/colors'
 import { Button, Divider, Icon, Text } from 'react-native-paper'
@@ -42,7 +42,7 @@ const FailedTransferScreen = (props: NavigationProp) => {
     )
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
@@ -56,7 +56,7 @@ const FailedTransferScreen = (props: NavigationProp) => {
                 <TransferInfoCard item={transferInfo} />
             </ScrollView>
             {renderBottomButtonContainer()}
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonContainer: {
-        paddingHorizontal: 16,
-        paddingTop: 8,
-        gap: 16,
+        padding: 16,
+        paddingBottom: 32,
+        gap: 8,
     },
     transferContainer: {
         flex: 1,
@@ -96,14 +96,6 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         width: '100%',
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 400,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: 600,
     },
     successLabel: {
         fontWeight: '700',

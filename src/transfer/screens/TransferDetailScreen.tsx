@@ -1,6 +1,6 @@
 import React from 'react'
 import { COLORS } from '../../constants/colors'
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { AppStackParamList } from '../../app/AppStackNavigator'
 import TransferInfoCard from '../constants/TransferInfoCard'
@@ -57,7 +57,7 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
     )
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
@@ -73,7 +73,7 @@ const TransferDetailScreen = (props: TransferDetailNavigationProp) => {
                     </Button>
                 )}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }
 

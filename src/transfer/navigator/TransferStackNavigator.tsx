@@ -15,14 +15,17 @@ const Stack = createNativeStackNavigator<TransferStackParamList>()
 
 export default function TransferStackNavigator() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
             <Stack.Screen
                 name={'ContactSelectionScreen'}
                 component={ContactSelectionScreen}
                 options={{
                     headerLeft: () => <CloseButtonHeader />,
                     headerTitle: '',
-                    headerTransparent: true,
                 }}
             />
             <Stack.Screen

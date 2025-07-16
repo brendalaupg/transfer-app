@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { COLORS } from '../../constants/colors'
 import TransferSelectors from '../transferSelectors'
-import { StyleSheet, SectionList, SafeAreaView, View } from 'react-native'
+import { StyleSheet, SectionList, View } from 'react-native'
 import { Transfer, TransferHistorySectionData } from '../types'
 import Typography from '../../common/Typography'
 import TransferItem from '../components/TransferItem'
@@ -57,7 +57,7 @@ const TransferHistoryScreen = () => {
     )
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <SectionList
                 ListHeaderComponent={
                     <ListHeader
@@ -73,8 +73,9 @@ const TransferHistoryScreen = () => {
                 maxToRenderPerBatch={10}
                 windowSize={5}
                 removeClippedSubviews={true}
+                style={styles.list}
             />
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.backgroundPrimary,
     },
+    list: {},
     sectionHeaderText: {
         color: COLORS.contentPrimary,
     },

@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { AppStackParamList } from '../../app/AppStackNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
@@ -44,7 +44,7 @@ const AccountDashboard = () => {
     )
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
@@ -57,7 +57,7 @@ const AccountDashboard = () => {
                     onPressHistory={onPressHistory}
                 />
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }
 

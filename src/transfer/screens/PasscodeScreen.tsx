@@ -3,7 +3,6 @@ import {
     StyleSheet,
     TouchableOpacity,
     View,
-    SafeAreaView,
     ActivityIndicator,
 } from 'react-native'
 import { Icon } from 'react-native-paper'
@@ -157,10 +156,13 @@ const PasscodeScreen = (props: NavigationProp) => {
 
     const processTransfer = async () => {
         try {
+            setIsLoading(true)
             const transfer = await dispatch(transferMoney(newTransfer)).unwrap()
             handleSuccess(transfer)
         } catch {
             handleFailure()
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -202,14 +204,14 @@ const PasscodeScreen = (props: NavigationProp) => {
 
     return (
         <>
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.flexSpacer} />
                 {renderHeader()}
                 {renderInputDots()}
                 <View style={styles.flexSpacer} />
                 {renderKeypad()}
                 {renderPasscodeBottomBar()}
-            </SafeAreaView>
+            </View>
             {isLoading && renderLoading()}
         </>
     )

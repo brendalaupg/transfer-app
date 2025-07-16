@@ -53,15 +53,6 @@ const AmountTextField = (props: AmountTextFieldProps) => {
 
     const renderTextInput = () => (
         <View style={styles.amountContainer}>
-            {!value && (
-                <Typography
-                    style={styles.placeholder}
-                    variant={'header'}
-                    size={'extra-large'}
-                >
-                    {'0.00'}
-                </Typography>
-            )}
             <TextInput
                 value={formattedValue}
                 style={styles.textInput}

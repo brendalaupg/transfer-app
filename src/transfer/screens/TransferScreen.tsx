@@ -1,7 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo, useEffect, useState } from 'react'
 import {
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     KeyboardAvoidingView,
@@ -157,7 +156,7 @@ const TransferScreen = (props: NavigationProp) => {
     )
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <KeyboardAvoidingView
                 style={styles.keyboardAvoidingView}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -182,7 +181,7 @@ const TransferScreen = (props: NavigationProp) => {
                 </ScrollView>
                 {renderTransferButton()}
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -215,7 +214,8 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     buttonContainer: {
-        marginHorizontal: 16,
-        marginBottom: 16,
+        padding: 16,
+        paddingBottom: 32,
+        gap: 8,
     },
 })

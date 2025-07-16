@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import {
-    SafeAreaView,
-    StyleSheet,
-    View,
-    Platform,
-    FlatList,
-    Linking,
-} from 'react-native'
+import { StyleSheet, View, Platform, FlatList, Linking } from 'react-native'
+
 import { ActivityIndicator, Button } from 'react-native-paper'
 import {
     NavigationProp,
@@ -148,13 +142,13 @@ const ContactScreen = (props: ContactListProps) => {
     )
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             {isPermissionGranted
                 ? isLoading
                     ? renderLoading()
                     : renderContactList()
                 : renderPermissionDenied()}
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -169,7 +163,7 @@ export const ContactSelectionScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.backgroundSecondary,
+        backgroundColor: COLORS.backgroundPrimary,
     },
     centeredContainer: {
         flex: 1,

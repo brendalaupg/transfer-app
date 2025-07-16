@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { memo } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { TransferStackParamList } from '../types'
 import { Button, Divider } from 'react-native-paper'
 import { COLORS } from '../../constants/colors'
@@ -33,7 +33,7 @@ const ReviewTransferScreen = (props: NavigationProp) => {
 
     return (
         <>
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <ScrollView
                     style={styles.scrollView}
                     contentContainerStyle={styles.scrollViewContent}
@@ -44,7 +44,7 @@ const ReviewTransferScreen = (props: NavigationProp) => {
                     <TransferInfoCard item={newTransfer} />
                 </ScrollView>
                 {renderSubmitButton()}
-            </SafeAreaView>
+            </View>
         </>
     )
 }
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
         margin: 16,
     },
     buttonContainer: {
-        paddingHorizontal: 16,
-        paddingTop: 8,
+        padding: 16,
+        paddingBottom: 32,
         gap: 8,
     },
     transferDetailContainer: {

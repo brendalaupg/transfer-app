@@ -7,6 +7,7 @@ import BackButtonHeader from '../common/BackButtonHeader'
 import TransferDetailScreen from '../transfer/screens/TransferDetailScreen'
 import { Transfer } from '../transfer/types'
 import { ContactListScreen } from '../contacts/screens/ContactListScreen'
+import { View } from 'react-native'
 
 export type AppStackParamList = {
     AccountDashboard: undefined
@@ -25,14 +26,17 @@ export default function AppStackNavigator() {
                 name={'AccountDashboard'}
                 component={AccountDashboard}
                 options={{
-                    headerShown: false,
+                    headerBackground: () => <View />,
+                    headerTitle: '',
                 }}
             />
             <Stack.Screen
                 name={'TransferStack'}
                 component={TransferStackNavigator}
                 options={{
-                    headerShown: false,
+                    headerLeft: () => <BackButtonHeader />,
+                    headerBackground: () => <View />,
+                    headerTitle: '',
                     presentation: 'fullScreenModal',
                 }}
             />
@@ -40,8 +44,8 @@ export default function AppStackNavigator() {
                 name={'TransferHistoryScreen'}
                 component={TransferHistoryScreen}
                 options={{
-                    headerTransparent: true,
                     headerTitle: '',
+                    headerBackground: () => <View />,
                     headerLeft: () => <BackButtonHeader />,
                 }}
             />
@@ -49,8 +53,8 @@ export default function AppStackNavigator() {
                 name={'TransferDetailScreen'}
                 component={TransferDetailScreen}
                 options={{
-                    headerTransparent: true,
                     headerTitle: '',
+                    headerBackground: () => <View />,
                     headerLeft: () => <BackButtonHeader />,
                 }}
             />
@@ -59,7 +63,7 @@ export default function AppStackNavigator() {
                 component={ContactListScreen}
                 options={{
                     headerLeft: () => <BackButtonHeader />,
-                    headerTransparent: true,
+                    headerBackground: () => <View />,
                     headerTitle: '',
                 }}
             />
