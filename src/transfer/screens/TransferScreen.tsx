@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import {
     SafeAreaView,
     ScrollView,
@@ -8,7 +8,7 @@ import {
     Platform,
     View,
 } from 'react-native'
-import { TransferStackParamList } from '../types'
+import { CreateTransfer, TransferStackParamList } from '../types'
 import { Button, Divider } from 'react-native-paper'
 import Typography from '../../common/Typography'
 import AmountTextField from '../components/AmountTextField'
@@ -18,23 +18,49 @@ import { formatToRM } from '../../common/stringUtils'
 import { COLORS } from '../../constants/colors'
 import RecipientTextField from '../components/RecipientTextField'
 import NoteTextField from '../components/NoteTextField'
+import { ContactItem } from '../../contacts/types'
+import { isCreateTransfer } from '../utils/transferUtils'
 
 type NavigationProp = NativeStackScreenProps<
     TransferStackParamList,
     'TransferScreen'
 >
 
+type Prefill = ContactItem | CreateTransfer | undefined
+
 const TransferScreen = (props: NavigationProp) => {
     const { navigation, route } = props
     const { prefill } = route?.params || {}
 
-    const recipient = prefill && 'phoneNumber' in prefill ? prefill : undefined
-    const isPrefillTransfer = prefill && 'recipient' in prefill
-    const initialAmount = isPrefillTransfer ? prefill.amount : undefined
-    const initialNote = isPrefillTransfer ? prefill.note ?? '' : ''
+    const [recipient, setRecipiant] = useState<ContactItem | undefined>()
+    const [amount, setAmount] = useState<number | undefined>()
+    const [note, setNote] = useState<string>('')
 
-    const [amount, setAmount] = useState<number | undefined>(initialAmount)
-    const [note, setNote] = useState<string>(initialNote)
+    const prefillInitialForm = (prefill: Prefill) => {
+        if (!prefill) {
+            return
+        }
+
+        if (isCreateTransfer(prefill)) {
+            const {
+                amount,
+                note,
+                recipient: _recipient,
+                recipientName,
+            } = prefill
+            setAmount(amount)
+            setNote(note ?? '')
+            setRecipiant({
+                id: _recipient ?? '', // Use phone number as id if no better id is available
+                name: recipientName ?? '',
+                phoneNumber: _recipient ?? '',
+            })
+        }
+    }
+
+    useEffect(() => {
+        prefillInitialForm(prefill)
+    }, [prefill])
 
     const balanceAmount = useSelector(AccountSelectors.balance)
     const fromAccountNumber = useSelector(AccountSelectors.accountNumber)
