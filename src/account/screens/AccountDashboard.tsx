@@ -32,18 +32,24 @@ const AccountDashboard = () => {
         navigate('TransferHistoryScreen')
     }
 
+    const renderHeader = () => (
+        <>
+            <Typography variant={'header'} size={'extra-large'}>
+                {'Welcome back'}
+            </Typography>
+            <Typography variant={'label'} size={'large'}>
+                {displayName}
+            </Typography>
+        </>
+    )
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollViewContent}
             >
-                <Typography variant={'header'} size={'extra-large'}>
-                    {'Welcome back'}
-                </Typography>
-                <Typography variant={'label'} size={'large'}>
-                    {displayName}
-                </Typography>
+                {renderHeader()}
                 <AccountSummary />
                 <AccountActionsView
                     onPressTransfer={onPressTransfer}

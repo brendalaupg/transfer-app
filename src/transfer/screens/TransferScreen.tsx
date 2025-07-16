@@ -49,7 +49,6 @@ const TransferScreen = (props: NavigationProp) => {
                 recipient: _recipient,
                 recipientName,
             } = prefill
-            console.log('set amount', amount)
             setAmount(amount)
             setNote(note ?? '')
             setRecipiant({

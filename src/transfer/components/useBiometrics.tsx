@@ -37,7 +37,6 @@ const useBiometrics = () => {
 
             const isEnrolled = await LocalAuthentication.isEnrolledAsync()
             if (!isEnrolled) {
-                console.log('device is not enrolled')
                 return false
             }
 
