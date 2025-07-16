@@ -50,9 +50,24 @@ To keep the project focused, a few key details / structure is left out to meet t
 -   The hardcode pin `000000`
 -   there are 3 places to start a new transfer flow, from the Dashboard:
 
+-   What to test:
+
 1.  Tap on Transfer (no prefill)
 2.  Tap on Contact, and tap on a contact list item (prefill recipient)
 3.  Tap on History, and tap on a transfer item (thats transfering out). In the details screen click on the 'Tranfer Again' Button (prefill recipient, amount and note)
+
+-   How to Test a Sucessful Transfer:
+
+    -   When you navigate to the Passcode screen:
+        -   If Biometrics is not enrolled, type in the hardcoded pin '000000'
+        -   With Biometrics, ensure that its enrolled: iOS Simulator -> Features -> Face ID -> Enrolled
+            -   When you navigate to the Passcode screen
+            -   iOS Simulator -> Features -> Face ID => Matching Face
+
+-   How to Test a Failed Transfer:
+    -   When you navigate to the Passcode screen
+        -   type in any random pin, other than the hardcoded pin '000000', or
+        -   when the Face ID appears, go to iOS Simulator -> Features -> Face ID => Non Matching Face
 
 ## Troubleshotting
 
